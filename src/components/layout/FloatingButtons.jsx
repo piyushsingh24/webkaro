@@ -10,7 +10,7 @@ const FloatingButtons = ({ onChatToggle }) => {
       id: "whatsapp",
       icon: <FaWhatsapp />,
       label: "WhatsApp",
-      href: "https://wa.me/8851151976",
+      href: "https://wa.me/+918851151976",
       color: "bg-green-500",
     },
     {

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { FaCheckCircle, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
-import { sendQuoteForm } from '../utils/emailjs';
+import { sendQuoteForm } from '../utils/web3forms';
 import Input from '../components/ui/Input';
 import Textarea from '../components/ui/Textarea';
 import Button from '../components/ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
+import SEO from '../components/SEO';
 
 const GetQuote = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -105,7 +106,12 @@ const GetQuote = () => {
   };
 
   return (
-    <div className="pt-24 min-h-screen bg-secondary-50">
+    <div className="pt-24 min-h-screen bg-secondary-50 ">
+      <SEO
+        title="Get a Free Quote - Webkaro"
+        description="Request a free quote for your web design or development project. Detailed proposals tailored to your business goals."
+        keywords="free web design quote, project estimate, web development proposal, webkaro quote"
+      />
       <div className="container-custom py-16">
         <div className="max-w-3xl mx-auto">
           {/* Header */}
@@ -155,8 +161,8 @@ const GetQuote = () => {
                         key={type}
                         onClick={() => handleChange('projectType', type)}
                         className={`p-4 rounded-lg border-2 text-left transition-all ${formData.projectType === type
-                            ? 'border-primary-600 bg-primary-50'
-                            : 'border-secondary-200 hover:border-primary-300'
+                          ? 'border-primary-600 bg-primary-50'
+                          : 'border-secondary-200 hover:border-primary-300'
                           }`}
                       >
                         <span className="font-semibold text-secondary-900">{type}</span>
@@ -182,8 +188,8 @@ const GetQuote = () => {
                         key={range}
                         onClick={() => handleChange('budget', range)}
                         className={`p-4 rounded-lg border-2 text-left transition-all ${formData.budget === range
-                            ? 'border-primary-600 bg-primary-50'
-                            : 'border-secondary-200 hover:border-primary-300'
+                          ? 'border-primary-600 bg-primary-50'
+                          : 'border-secondary-200 hover:border-primary-300'
                           }`}
                       >
                         <span className="font-semibold text-secondary-900">{range}</span>
@@ -209,8 +215,8 @@ const GetQuote = () => {
                         key={time}
                         onClick={() => handleChange('timeline', time)}
                         className={`p-4 rounded-lg border-2 text-left transition-all ${formData.timeline === time
-                            ? 'border-primary-600 bg-primary-50'
-                            : 'border-secondary-200 hover:border-primary-300'
+                          ? 'border-primary-600 bg-primary-50'
+                          : 'border-secondary-200 hover:border-primary-300'
                           }`}
                       >
                         <span className="font-semibold text-secondary-900">{time}</span>
@@ -230,7 +236,7 @@ const GetQuote = () => {
                   <h2 className="text-2xl font-bold text-secondary-900 mb-6">
                     Your contact information
                   </h2>
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form onSubmit={handleSubmit} className="space-y-6 text-black">
                     <Input
                       label="Name"
                       name="name"
@@ -272,8 +278,8 @@ const GetQuote = () => {
                     {status.message && (
                       <div
                         className={`p-4 rounded-lg ${status.type === 'success'
-                            ? 'bg-green-50 text-green-700'
-                            : 'bg-red-50 text-red-700'
+                          ? 'bg-green-50 text-green-700'
+                          : 'bg-red-50 text-red-700'
                           }`}
                       >
                         {status.message}
@@ -309,9 +315,9 @@ const GetQuote = () => {
               <div className="flex justify-between mt-8">
                 <Button
                   onClick={handleBack}
-                  variant="ghost"
+                  variant="primary"
                   disabled={currentStep === 1}
-                  className={currentStep === 1 ? 'invisible' : ''}
+                  className={currentStep === 1 ? 'invisible' : '' }
                 >
                   <FaArrowLeft /> Back
                 </Button>

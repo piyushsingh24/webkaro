@@ -3,6 +3,7 @@ import { FaCheckCircle, FaUsers, FaTrophy, FaCalendar } from "react-icons/fa";
 import SectionHeading from "../components/ui/SectionHeading";
 import AnimatedSection from "../components/ui/AnimatedSection";
 import Button from "../components/ui/Button";
+import SEO from "../components/SEO";
 
 const About = () => {
   const stats = [
@@ -37,6 +38,11 @@ const About = () => {
 
   return (
     <div>
+      <SEO
+        title="About Me - Expert Web Developer"
+        description="Learn more about the developer behind Webkaro. I help businesses grow through high-quality, scalable web solutions and transparent collaboration."
+        keywords="about webkaro, web developer story, digital agency founder, expert web development"
+      />
       {/* Hero */}
       <section className=" section-padding bg-gradient-to-br from-amber-400 via-primary-700 to-secondary-900 text-white">
         <div className="container-custom">
@@ -113,7 +119,7 @@ const About = () => {
 
               <AnimatedSection delay={0.4}>
                 <p>
-                  As a Solo developer , It's help to reduced the cost of your whole Web Application 
+                  As a Solo developer , It's help to reduced the cost of your whole Web Application
                 </p>
               </AnimatedSection>
             </div>

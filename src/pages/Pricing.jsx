@@ -3,10 +3,16 @@ import { pricingPlans, addOns } from '../data/pricing';
 import SectionHeading from '../components/ui/SectionHeading';
 import AnimatedSection from '../components/ui/AnimatedSection';
 import Button from '../components/ui/Button';
+import SEO from '../components/SEO';
 
 const Pricing = () => {
   return (
     <div >
+      <SEO
+        title="Pricing - Transparent Web Development Plans"
+        description="Affordable and transparent pricing for web design and development. Choose a plan that fits your business needs and budget."
+        keywords="web design pricing, development costs, affordable web design, webkaro pricing"
+      />
       {/* Hero */}
       <section className="section-padding bg-gradient-to-br from-amber-400 via-primary-700 to-secondary-900 text-white">
         <div className="container-custom">
@@ -29,11 +35,10 @@ const Pricing = () => {
               <AnimatedSection key={plan.id} delay={index * 0.1}>
                 <div
                   className={`relative rounded-2xl p-8 h-full flex flex-col border 
-                  ${
-                    plan.popular
+                  ${plan.popular
                       ? 'bg-gradient-to-br from-primary-600 to-primary-700 text-white shadow-2xl scale-[1.04] border-primary-500'
                       : 'bg-gray-300 text-secondary-900 border-secondary-200 '
-                  }`}
+                    }`}
                 >
                   {plan.popular && (
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2">
@@ -51,17 +56,15 @@ const Pricing = () => {
                         {plan.price}
                       </span>
                       <span
-                        className={`text-sm ${
-                          plan.popular ? 'text-white/80' : 'text-secondary-600'
-                        }`}
+                        className={`text-sm ${plan.popular ? 'text-white/80' : 'text-secondary-600'
+                          }`}
                       >
                         {plan.priceSubtext}
                       </span>
                     </div>
                     <p
-                      className={`text-sm leading-relaxed ${
-                        plan.popular ? 'text-white/85' : 'text-secondary-700'
-                      }`}
+                      className={`text-sm leading-relaxed ${plan.popular ? 'text-white/85' : 'text-secondary-700'
+                        }`}
                     >
                       {plan.description}
                     </p>
@@ -71,9 +74,8 @@ const Pricing = () => {
                   <div className="mb-4">
                     <p className="text-sm font-semibold mb-1">Ideal for</p>
                     <p
-                      className={`text-sm ${
-                        plan.popular ? 'text-white/80' : 'text-secondary-600'
-                      }`}
+                      className={`text-sm ${plan.popular ? 'text-white/80' : 'text-secondary-600'
+                        }`}
                     >
                       {plan.idealFor}
                     </p>
@@ -82,9 +84,8 @@ const Pricing = () => {
                   {/* Timeline */}
                   <div className="mb-6">
                     <p
-                      className={`text-sm font-medium ${
-                        plan.popular ? 'text-white/90' : 'text-secondary-700'
-                      }`}
+                      className={`text-sm font-medium ${plan.popular ? 'text-white/90' : 'text-secondary-700'
+                        }`}
                     >
                       ⏱ Timeline: {plan.timeline}
                     </p>
@@ -95,9 +96,8 @@ const Pricing = () => {
                     {plan.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-3 text-sm">
                         <FaCheck
-                          className={`mt-1 ${
-                            plan.popular ? 'text-green-300' : 'text-green-600'
-                          }`}
+                          className={`mt-1 ${plan.popular ? 'text-green-300' : 'text-green-600'
+                            }`}
                         />
                         <span className="leading-relaxed">{feature}</span>
                       </li>
@@ -115,11 +115,10 @@ const Pricing = () => {
                   <Button
                     to="/get-quote"
                     variant={!plan.popular ? 'primary' : ""}
-                    className={`w-full ${
-                      plan.popular
+                    className={`w-full ${plan.popular
                         ? 'bg-gray-300 text-gray-950 hover:outline-blue-400 hover:bg-gray-900 hover:text-white '
                         : ''
-                    }`}
+                      }`}
                   >
                     {plan.cta}
                   </Button>
