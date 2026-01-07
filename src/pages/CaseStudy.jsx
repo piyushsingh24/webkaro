@@ -3,6 +3,7 @@ import { FaArrowLeft, FaCheck, FaStar } from 'react-icons/fa';
 import { getProjectById } from '../data/portfolio';
 import AnimatedSection from '../components/ui/AnimatedSection';
 import Button from '../components/ui/Button';
+import SEO from '../components/SEO';
 
 const CaseStudy = () => {
   const { projectId } = useParams();
@@ -23,6 +24,11 @@ const CaseStudy = () => {
 
   return (
     <div>
+      <SEO
+        title={`${project.title} Case Study`}
+        description={project.shortDescription}
+        keywords={`${project.category}, ${project.techStack.join(', ')}`}
+      />
       {/* Hero */}
       <section className="section-padding bg-gradient-to-br from-primary-600 to-secondary-800 text-white">
         <div className="container-custom">

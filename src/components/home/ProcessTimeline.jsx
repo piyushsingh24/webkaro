@@ -92,7 +92,7 @@ const ProcessTimeline = () => {
                     </div>
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-secondary-900 mb-2">
+                    <h3 className="text-xl font-bold text-white mb-2">
                       {step.title}
                     </h3>
                     <p className="text-secondary-600">

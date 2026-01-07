@@ -1,27 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FaInstagram, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
 
-const socialLinks = [
-  {
-    id: "whatsapp",
-    icon: FaWhatsapp,
-    label: "WhatsApp",
-    href: "https://wa.me/8851151976",
-  },
-  {
-    id: "instagram",
-    icon: FaInstagram,
-    label: "Instagram",
-    href: "https://instagram.com/webkaro_/",
-  },
-  {
-    id: "email",
-    icon: FaEnvelope,
-    label: "Email",
-    href: "https://mail.google.com/mail/?view=cm&fs=1&to=info@webkaro.in",
-  },
-];
-
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -50,7 +29,7 @@ const Footer = () => {
       id: "whatsapp",
       icon: FaWhatsapp,
       label: "WhatsApp",
-      href: "https://wa.me/8851151976",
+      href: "https://wa.me/+918851151976",
     },
     {
       id: "instagram",
@@ -73,9 +52,12 @@ const Footer = () => {
 
           {/* Brand */}
           <div className="text-center sm:text-left">
-            <h3 className="text-2xl font-bold mb-4">
-              Web<span className="text-primary-500">karo</span>
-            </h3>
+            <Link to="/" className="inline-block mb-4">
+              <img src="/logo.png" alt="Webkaro Logo" className="h-12 w-auto" />
+              <span className="text-xl font-bold ">Web
+                <span className="text-xl font-bold text-blue-600">karo</span>
+              </span>
+            </Link>
             <p className="text-secondary-300 mb-6 text-sm leading-relaxed">
               Building high-performance web experiences that convert. Your trusted partner for custom web development.
             </p>
@@ -151,7 +133,7 @@ const Footer = () => {
                 <div className="flex items-center gap-2">
                   <FaWhatsapp className="text-primary-500" />
                   <a
-                    href="https://wa.me/8851151976"
+                    href="https://wa.me/918851151976"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-primary-500 transition-colors"
@@ -162,7 +144,7 @@ const Footer = () => {
 
                 <div className="flex items-center gap-2 pl-6">
                   <a
-                    href="https://wa.me/7048903201"
+                    href="https://wa.me/917048903201"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="hover:text-primary-500 transition-colors"
@@ -173,7 +155,7 @@ const Footer = () => {
               </li>
 
               <li className="pt-2 text-xs text-secondary-400">
-               3rd pusta Sonia Vihar Delhi 110094  • India
+                3rd pusta Sonia Vihar Delhi 110094  • India
               </li>
             </ul>
           </div>

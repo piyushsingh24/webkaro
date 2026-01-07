@@ -3,6 +3,7 @@ import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 import { getServiceById } from '../data/services';
 import Button from '../components/ui/Button';
 import AnimatedSection from '../components/ui/AnimatedSection';
+import SEO from '../components/SEO';
 
 const ServiceDetail = () => {
   const { serviceId } = useParams();
@@ -25,6 +26,11 @@ const ServiceDetail = () => {
 
   return (
     <div className="overflow-x-hidden ">
+      <SEO
+        title={service.title}
+        description={service.description}
+        keywords={service.techStack.join(', ')}
+      />
       {/* Hero */}
       <section className="section-padding bg-gradient-to-br from-primary-600 to-secondary-800 text-white">
         <div className="container-custom px-4 sm:px-6">

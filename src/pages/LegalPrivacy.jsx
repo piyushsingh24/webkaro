@@ -1,6 +1,13 @@
+import SEO from '../components/SEO';
+
 const LegalPrivacy = () => {
   return (
     <div >
+      <SEO
+        title="Privacy Policy - Webkaro"
+        description="Learn about how we handle your data and protect your privacy."
+        keywords="privacy policy, data protection, webkaro privacy"
+      />
       <section className="section-padding bg-white">
         <div className="container-custom max-w-4xl">
           <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-8">

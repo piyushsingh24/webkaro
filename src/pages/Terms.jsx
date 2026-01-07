@@ -1,6 +1,13 @@
+import SEO from '../components/SEO';
+
 const Terms = () => {
   return (
     <div >
+      <SEO
+        title="Terms & Conditions - Webkaro"
+        description="Read our terms and conditions for using our services and website."
+        keywords="terms and conditions, legal agreement, webkaro terms"
+      />
       <section className="section-padding bg-white">
         <div className="container-custom max-w-4xl">
           <h1 className="text-4xl md:text-5xl font-bold text-secondary-900 mb-8">
@@ -81,7 +88,7 @@ const Terms = () => {
               <p>
                 For questions about these terms, contact us at:
                 <br />
-                Email: info@webkaro.in  
+                Email: info@webkaro.in
               </p>
             </section>
           </div>

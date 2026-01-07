@@ -5,11 +5,12 @@ const TopCompany = () => {
     <div className="w-full h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-700">
       <Link
         to="/"
-        className="text-xl font-bold text-gray-900 dark:text-white"
+        className="flex items-center gap-2"
       >
-        <span className="text-primary-600 text-2xl">
-          <span className="text-gray-900 dark:text-white text-2xl">Web</span>
-          karo</span>{" "}
+        <img src="/logo.png" alt="Webkaro Logo" className="h-10 w-auto" />
+        <span className="text-xl font-bold ">Web
+          <span className="text-xl font-bold text-blue-600">karo</span>
+        </span>
       </Link>
     </div>
   );

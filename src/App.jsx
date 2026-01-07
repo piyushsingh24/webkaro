@@ -8,8 +8,6 @@ import Footer from "./components/layout/Footer";
 import PageTransition from "./components/layout/PageTransition";
 import CustomCursor from "./components/layout/CustomCursor";
 import GeminiChatBot from "./components/layout/GeminiChatBot";
-
-import ThemeToggle from "./components/ui/ThemeToggle";
 import ScrollProgress from "./components/ui/ScrollProgress";
 
 import Home from "./pages/Home";
@@ -24,8 +22,6 @@ import GetQuote from "./pages/GetQuote";
 import LegalPrivacy from "./pages/LegalPrivacy";
 import Terms from "./pages/Terms";
 
-import { initEmailJS } from "./utils/emailjs";
-
 function App() {
   const location = useLocation();
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -37,10 +33,6 @@ function App() {
         ? "dark"
         : "light")
   );
-
-  useEffect(() => {
-    initEmailJS();
-  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
