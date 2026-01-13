@@ -1,4 +1,13 @@
 User-agent: *
 Allow: /
+Allow: /assets/
+Allow: /src/
+
+# Specific rules for Google and Bing
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
 
 Sitemap: https://webkaro.in/sitemap.xml

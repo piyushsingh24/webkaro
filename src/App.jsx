@@ -1,5 +1,5 @@
 import { Routes, Route, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 
 import Navbar from "./components/layout/Navbar";
 import TopCompany from "./components/layout/TopCompany";
@@ -10,17 +10,17 @@ import CustomCursor from "./components/layout/CustomCursor";
 import GeminiChatBot from "./components/layout/GeminiChatBot";
 import ScrollProgress from "./components/ui/ScrollProgress";
 
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Services from "./pages/Services";
-import ServiceDetail from "./pages/ServiceDetail";
-import Portfolio from "./pages/Portfolio";
-import CaseStudy from "./pages/CaseStudy";
-import Pricing from "./pages/Pricing";
-import Contact from "./pages/Contact";
-import GetQuote from "./pages/GetQuote";
-import LegalPrivacy from "./pages/LegalPrivacy";
-import Terms from "./pages/Terms";
+const Home = lazy(() => import("./pages/Home"));
+const About = lazy(() => import("./pages/About"));
+const Services = lazy(() => import("./pages/Services"));
+const ServiceDetail = lazy(() => import("./pages/ServiceDetail"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
+const CaseStudy = lazy(() => import("./pages/CaseStudy"));
+const Pricing = lazy(() => import("./pages/Pricing"));
+const Contact = lazy(() => import("./pages/Contact"));
+const GetQuote = lazy(() => import("./pages/GetQuote"));
+const LegalPrivacy = lazy(() => import("./pages/LegalPrivacy"));
+const Terms = lazy(() => import("./pages/Terms"));
 
 function App() {
   const location = useLocation();
@@ -53,19 +53,25 @@ function App() {
       <ScrollProgress />
       <main className="flex-grow">
         <PageTransition>
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/services/:serviceId" element={<ServiceDetail />} />
-            <Route path="/portfolio" element={<Portfolio />} />
-            <Route path="/portfolio/:projectId" element={<CaseStudy />} />
-            <Route path="/pricing" element={<Pricing />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/get-quote" element={<GetQuote />} />
-            <Route path="/privacy" element={<LegalPrivacy />} />
-            <Route path="/terms" element={<Terms />} />
-          </Routes>
+          <Suspense fallback={
+            <div className="flex items-center justify-center min-h-[60vh]">
+              <div className="w-12 h-12 border-4 border-primary-600 border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          }>
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/services/:serviceId" element={<ServiceDetail />} />
+              <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/portfolio/:projectId" element={<CaseStudy />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/get-quote" element={<GetQuote />} />
+              <Route path="/privacy" element={<LegalPrivacy />} />
+              <Route path="/terms" element={<Terms />} />
+            </Routes>
+          </Suspense>
         </PageTransition>
       </main>
 

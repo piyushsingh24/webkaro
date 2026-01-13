@@ -5,12 +5,13 @@ export const portfolio = [
     category: 'Web Development',
     client: 'Fashion Startup',
     year: '2024',
+    LiveLink: 'https://forever-frontend-orcin.vercel.app/',
     featured: true,
-    thumbnail: '/portfolio/ecommerce-thumb.jpg',
+    thumbnail: '/e-commerce-thumb.png',
     images: [
-      '/portfolio/ecommerce-1.jpg',
-      '/portfolio/ecommerce-2.jpg',
-      '/portfolio/ecommerce-3.jpg'
+      '/e-commerce-1.png',
+      '/e-commerce-2.png',
+      '/e-commerce-3.png'
     ],
     shortDescription: 'High-performance e-commerce platform with seamless checkout.',
     problem:
@@ -44,11 +45,12 @@ export const portfolio = [
     category: 'Web Development',
     client: 'Infrastructure Development Company',
     year: '2024',
+    LiveLink: 'https://smartsportinfra.com',
     featured: true,
-    thumbnail: '/portfolio/sports-thumb.jpg',
+    thumbnail: '/sports-thumb.png',
     images: [
-      '/portfolio/sports-1.jpg',
-      '/portfolio/sports-2.jpg'
+      '/sports-1.png',
+      '/sports-2.png'
     ],
     shortDescription: 'World-class sports infrastructure showcase website.',
     problem:
@@ -61,7 +63,7 @@ export const portfolio = [
       'Faster page loads',
       'Professional global presence'
     ],
-    techStack: ['React', 'Tailwind CSS', 'Node.js', 'Vercel' , "Hostinger" , "google Analytics"],
+    techStack: ['React', 'Tailwind CSS', 'Node.js', 'Vercel', 'Hostinger', 'Google Analytics'],
     metrics: {
       launchTime: '6 weeks',
       performance: '90+ Lighthouse score'
@@ -75,41 +77,86 @@ export const portfolio = [
   },
 
   {
-    id: 'hotel-booking-system',
-    title: 'Hotel Booking System',
-    category: 'Web Development',
-    client: 'Tour & Travel Agency',
+    id: 'job-portal-hackathon-platform',
+    title: 'Job Portal & Hackathon Platform',
+    category: 'Full Stack Development',
+    client: 'Recruitment & Events Platform',
     year: '2025',
+    LiveLink: '#',
     featured: true,
-    thumbnail: '/portfolio/hotel-thumb.jpg',
+    thumbnail: '/job-portal-thumb.png',
     images: [
-      '/portfolio/booking-1.jpg',
-      '/portfolio/booking-2.jpg'
+      '/job-portal-1.png',
+      '/job-portal-2.png'
     ],
-    shortDescription: 'End-to-end hotel booking and management system.',
+    shortDescription:
+      'A unified platform for job listings, hackathon events, and candidate tracking.',
     problem:
-      'Manual booking caused revenue loss and frequent scheduling errors.',
+      'Companies struggled to manage hiring and hackathon events across multiple tools.',
     solution:
-      'Built a booking platform with availability management, payments, and automated notifications.',
+      'Built a centralized platform with job postings, hackathon registrations, admin dashboards, and applicant tracking.',
     results: [
-      '80% online bookings',
-      '60% fewer booking conflicts',
-      '37% revenue increase'
+      'Streamlined recruitment workflow',
+      'Higher candidate engagement',
+      'Centralized event management'
     ],
-    techStack: ['React', 'Node.js', 'Twilio' , 'Django', 'PostgreSQL', 'vercel' , 'Render'],
+    techStack: [
+      'React',
+      'Node.js',
+      'Express.js',
+      'MongoDB',
+      'JWT',
+      'Cloudinary',
+      'Vercel'
+    ],
     metrics: {
-      onlineBookings: '80%',
-      revenueGrowth: '37%'
+      users: 'Growing rapidly',
+      events: 'Multiple hackathons hosted'
     },
     testimonial: {
-      text: 'Our booking process is now smooth and automated.',
-      author: 'Sparsh',
-      role: 'Business Owner'
+      text: 'Managing hiring and hackathons is now effortless.',
+      author: 'Platform Admin',
+      role: 'Operations Head'
     },
     link: '#'
   },
 
-  /* ====== PROJECTS FROM YOUR RESUME ====== */
+  {
+    id: 'college-portfolio-website',
+    title: 'College Portfolio Website',
+    category: 'Web Development',
+    client: 'Educational Institution',
+    year: '2025',
+    LiveLink: 'https://college-portfolio.webkaro.com',
+    featured: true,
+    thumbnail: '/college-portfolio-thumb.png',
+    images: [
+      '/college-portfolio-1.png',
+      '/college-portfolio-2.png'
+    ],
+    shortDescription:
+      'A modern portfolio website showcasing academics, events, and student achievements.',
+    problem:
+      'The college lacked a digital platform to highlight achievements and attract admissions.',
+    solution:
+      'Designed a responsive portfolio website with departments, events, faculty profiles, and gallery.',
+    results: [
+      'Improved online presence',
+      'Higher student engagement',
+      'Better visibility for admissions'
+    ],
+    techStack: ['React', 'Tailwind CSS', 'SEO Optimization', 'Vercel'],
+    metrics: {
+      pages: 'Multiple academic sections',
+      performance: 'Fast & SEO-friendly'
+    },
+    testimonial: {
+      text: 'The website truly reflects our academic excellence.',
+      author: 'College Administration',
+      role: 'Management'
+    },
+    link: '#'
+  },
 
   {
     id: 'camcon-mentorship-platform',
@@ -117,11 +164,11 @@ export const portfolio = [
     category: 'Full Stack Development',
     client: 'EdTech Platform',
     year: '2025',
+    LiveLink: 'https://camcon-frontend.onrender.com/',
     featured: true,
-    thumbnail: '/portfolio/camcon-thumb.jpg',
+    thumbnail: '/camcon-thumb.png',
     images: [
-      '/portfolio/camcon-1.jpg',
-      '/portfolio/camcon-2.jpg'
+      '/camcon-thumb.png',
     ],
     shortDescription:
       'Mentorship platform connecting college seniors with juniors.',
@@ -142,9 +189,8 @@ export const portfolio = [
       'Socket.io',
       'WebRTC',
       'Stripe',
-      'vercel',
-      'Render',
-      'Many More..'
+      'Vercel',
+      'Render'
     ],
     metrics: {
       users: 'Growing',
@@ -164,11 +210,12 @@ export const portfolio = [
     category: 'Full Stack Development',
     client: 'Healthcare Sector',
     year: '2025',
+    LiveLink: 'https://medisync.webkaro.com',
     featured: true,
-    thumbnail: '/portfolio/medisync-thumb.jpg',
+    thumbnail: '/medisync-thumb.jpeg',
     images: [
-      './portfolio/medisync-1.jpg',
-      '/portfolio/medisync-2.jpg'
+      '/medisync-1.jpeg',
+      '/medisync-2.jpeg'
     ],
     shortDescription:
       'Healthcare platform to reduce medicine wastage.',
@@ -181,7 +228,7 @@ export const portfolio = [
       'Affordable healthcare access',
       'Better inventory utilization'
     ],
-    techStack: ['React', 'Node.js', 'MongoDB', 'Paytm', 'AWS', 'Many More..'],
+    techStack: ['React', 'Node.js', 'MongoDB', 'Paytm', 'AWS'],
     metrics: {
       impact: 'Healthcare cost reduction'
     },

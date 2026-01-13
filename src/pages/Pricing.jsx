@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import { pricingPlans, addOns } from '../data/pricing';
 import SectionHeading from '../components/ui/SectionHeading';
@@ -6,12 +7,16 @@ import Button from '../components/ui/Button';
 import SEO from '../components/SEO';
 
 const Pricing = () => {
+  const location = useLocation();
+
   return (
     <div >
       <SEO
         title="Pricing - Transparent Web Development Plans"
         description="Affordable and transparent pricing for web design and development. Choose a plan that fits your business needs and budget."
         keywords="web design pricing, development costs, affordable web design, webkaro pricing"
+        canonical="/pricing"
+        location={location.pathname}
       />
       {/* Hero */}
       <section className="section-padding bg-gradient-to-br from-amber-400 via-primary-700 to-secondary-900 text-white">
@@ -116,8 +121,8 @@ const Pricing = () => {
                     to="/get-quote"
                     variant={!plan.popular ? 'primary' : ""}
                     className={`w-full ${plan.popular
-                        ? 'bg-gray-300 text-gray-950 hover:outline-blue-400 hover:bg-gray-900 hover:text-white '
-                        : ''
+                      ? 'bg-gray-300 text-gray-950 hover:outline-blue-400 hover:bg-gray-900 hover:text-white '
+                      : ''
                       }`}
                   >
                     {plan.cta}

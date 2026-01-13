@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { FaEnvelope, FaWhatsapp, FaMapMarkerAlt, FaCheckCircle } from 'react-icons/fa';
 import { sendContactForm } from '../utils/web3forms';
 import Input from '../components/ui/Input';
@@ -8,6 +9,7 @@ import AnimatedSection from '../components/ui/AnimatedSection';
 import SEO from '../components/SEO';
 
 const Contact = () => {
+  const location = useLocation();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -77,6 +79,8 @@ const Contact = () => {
         title="Contact Us - Get in Touch with Webkaro"
         description="Have a project in mind? Contact Webkaro today for a free consultation. We're here to help you build your digital future."
         keywords="contact webkaro, web design inquiry, hire web developer, digital agency contact"
+        canonical="/contact"
+        location={location.pathname}
       />
 
       {/* Hero */}
@@ -172,11 +176,10 @@ const Contact = () => {
 
                   {status.message && (
                     <div
-                      className={`flex items-center gap-2 p-4 rounded-lg text-sm ${
-                        status.type === 'success'
-                          ? 'bg-green-50 text-green-700'
-                          : 'bg-red-50 text-red-700'
-                      }`}
+                      className={`flex items-center gap-2 p-4 rounded-lg text-sm ${status.type === 'success'
+                        ? 'bg-green-50 text-green-700'
+                        : 'bg-red-50 text-red-700'
+                        }`}
                     >
                       {status.type === 'success' && <FaCheckCircle />}
                       {status.message}
@@ -209,9 +212,9 @@ const Contact = () => {
                 <ContactCard
                   icon={<FaEnvelope />}
                   title="Email"
-                  value="piyushsingh2706@gmail.com"
+                  value="info@webkaro.in"
                   note="Response within 24 hours"
-                  link="mailto:piyushsingh2706@gmail.com"
+                  link="https://mail.google.com/mail/?view=cm&fs=1&to=info@webkaro.in"
                 />
 
                 <ContactCard

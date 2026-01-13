@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaArrowRight } from "react-icons/fa";
 import { services } from "../data/services";
 import AnimatedSection from "../components/ui/AnimatedSection";
@@ -6,12 +6,16 @@ import Card from "../components/ui/Card";
 import SEO from "../components/SEO";
 
 const Services = () => {
+  const location = useLocation();
+
   return (
     <div className="w-full overflow-x-hidden">
       <SEO
         title="Services - Web Design, Development & Branding"
         description="Explore our range of digital services including custom web development, UI/UX design, branding, and SEO. Tailored solutions for your business growth."
         keywords="web design services, custom web development, branding agency, SEO services, digital marketing"
+        canonical="/services"
+        location={location.pathname}
       />
 
       {/* HERO */}
