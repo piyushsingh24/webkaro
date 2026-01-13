@@ -53,10 +53,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="text-center sm:text-left">
             <Link to="/" className="inline-block mb-4">
-              <img src="/logo.png" alt="Webkaro Logo" className="h-12 w-auto" />
-              <span className="text-xl font-bold ">Web
-                <span className="text-xl font-bold text-blue-600">karo</span>
-              </span>
+              <img src="/logo.png" alt="Webkaro Logo"  className="h-32 w-auto" />
             </Link>
             <p className="text-secondary-300 mb-6 text-sm leading-relaxed">
               Building high-performance web experiences that convert. Your trusted partner for custom web development.

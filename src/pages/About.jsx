@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useLocation } from "react-router-dom";
 import { FaCheckCircle, FaUsers, FaTrophy, FaCalendar } from "react-icons/fa";
 import SectionHeading from "../components/ui/SectionHeading";
 import AnimatedSection from "../components/ui/AnimatedSection";
@@ -6,6 +7,7 @@ import Button from "../components/ui/Button";
 import SEO from "../components/SEO";
 
 const About = () => {
+  const location = useLocation();
   const stats = [
     { icon: FaTrophy, value: "20+", label: "Projects Delivered" },
     { icon: FaUsers, value: "100%", label: "Client Satisfaction" },
@@ -42,6 +44,8 @@ const About = () => {
         title="About Me - Expert Web Developer"
         description="Learn more about the developer behind Webkaro. I help businesses grow through high-quality, scalable web solutions and transparent collaboration."
         keywords="about webkaro, web developer story, digital agency founder, expert web development"
+        canonical="/about"
+        location={location.pathname}
       />
       {/* Hero */}
       <section className=" section-padding bg-gradient-to-br from-amber-400 via-primary-700 to-secondary-900 text-white">

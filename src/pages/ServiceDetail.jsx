@@ -1,4 +1,4 @@
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { FaArrowLeft, FaCheck } from 'react-icons/fa';
 import { getServiceById } from '../data/services';
 import Button from '../components/ui/Button';
@@ -6,6 +6,7 @@ import AnimatedSection from '../components/ui/AnimatedSection';
 import SEO from '../components/SEO';
 
 const ServiceDetail = () => {
+  const location = useLocation();
   const { serviceId } = useParams();
   const service = getServiceById(serviceId);
 
@@ -30,6 +31,24 @@ const ServiceDetail = () => {
         title={service.title}
         description={service.description}
         keywords={service.techStack.join(', ')}
+        canonical={`/services/${serviceId}`}
+        location={location.pathname}
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": service.title,
+          "description": service.description,
+          "provider": {
+            "@type": "Organization",
+            "name": "Webkaro",
+            "url": "https://webkaro.in"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": service.pricingHint.replace(/[^0-9]/g, ''),
+            "priceCurrency": "INR"
+          }
+        }}
       />
       {/* Hero */}
       <section className="section-padding bg-gradient-to-br from-primary-600 to-secondary-800 text-white">

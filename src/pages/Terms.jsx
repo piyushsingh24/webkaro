@@ -1,12 +1,16 @@
+import { useLocation } from 'react-router-dom';
 import SEO from '../components/SEO';
 
 const Terms = () => {
+  const location = useLocation();
   return (
     <div >
       <SEO
         title="Terms & Conditions - Webkaro"
         description="Read our terms and conditions for using our services and website."
         keywords="terms and conditions, legal agreement, webkaro terms"
+        canonical="/terms"
+        location={location.pathname}
       />
       <section className="section-padding bg-white">
         <div className="container-custom max-w-4xl">

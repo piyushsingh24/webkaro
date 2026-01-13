@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { FaCheckCircle, FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { sendQuoteForm } from '../utils/web3forms';
 import Input from '../components/ui/Input';
@@ -8,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import SEO from '../components/SEO';
 
 const GetQuote = () => {
+  const location = useLocation();
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
     projectType: '',
@@ -111,6 +113,8 @@ const GetQuote = () => {
         title="Get a Free Quote - Webkaro"
         description="Request a free quote for your web design or development project. Detailed proposals tailored to your business goals."
         keywords="free web design quote, project estimate, web development proposal, webkaro quote"
+        canonical="/get-quote"
+        location={location.pathname}
       />
       <div className="container-custom py-16">
         <div className="max-w-3xl mx-auto">
@@ -317,7 +321,7 @@ const GetQuote = () => {
                   onClick={handleBack}
                   variant="primary"
                   disabled={currentStep === 1}
-                  className={currentStep === 1 ? 'invisible' : '' }
+                  className={currentStep === 1 ? 'invisible' : ''}
                 >
                   <FaArrowLeft /> Back
                 </Button>
