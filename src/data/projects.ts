@@ -1,0 +1,239 @@
+export interface Project {
+  id: string;
+  title: string;
+  category: string;
+  thumbnail: string;
+  description: string;
+  slug: string;
+  tags: string[];
+  demoUrl?: string;
+  outcomes?: string[];
+}
+
+export interface ProjectDetail extends Project {
+  problem: string;
+  strategy: string;
+  results: string[];
+  metrics: { label: string; value: string }[];
+  screenshots: string[];
+}
+
+export const projectDetails: Record<string, ProjectDetail> = {
+  "ecommerce-platform": {
+    id: "ecommerce-platform",
+    title: "Forever Store",
+    category: "Web Development",
+    thumbnail: "https://images.unsplash.com/photo-1586880244406-556ebe35f282?q=80&w=387&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Highly scalable E-commerce storefront with modern UI and seamless checkout experience.",
+    slug: "ecommerce-platform",
+    tags: ["Next.js", "Tailwind", "Stripe", "MongoDB"],
+    demoUrl: "https://forever-frontend-orcin.vercel.app/",
+    outcomes: ["Lighthouse score 98", "Optimized mobile flow"],
+    problem: "The client needed a high-performance storefront that could handle complex product variations while maintaining sub-second load times.",
+    strategy: "Implemented a Next.js 14 architecture with server-side rendering for SEO and client-side transitions for a snappy feel.",
+    results: [
+      "Sub-second page transitions",
+      "98+ Lighthouse performance score",
+      "Integrated secure payment gateway",
+      "Real-time inventory management"
+    ],
+    metrics: [
+      { label: "Performance", value: "98/100" },
+      { label: "SEO", value: "100/100" }
+    ],
+    screenshots: []
+  },
+  "school-portal": {
+    id: "school-portal",
+    title: "Eco-School Portal",
+    category: "EdTech",
+    thumbnail: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1600&auto=format&fit=crop",
+    description: "Comprehensive school management system for tracking student progress and digital learning.",
+    slug: "school-portal",
+    tags: ["React", "Firebase", "Tailwind", "Node.js"],
+    demoUrl: "https://playful-bublanina-2048bd.netlify.app/",
+    outcomes: ["Centralized management", "Automated grading"],
+    problem: "Educational institutions struggled with fragmented data and manual record-keeping for student attendance and performance.",
+    strategy: "Developed a unified dashboard for teachers, students, and parents with real-time synchronization.",
+    results: [
+      "60% reduction in administrative paperwork",
+      "Instant parent-teacher communication",
+      "Automated attendance tracking",
+      "Interactive digital assignments"
+    ],
+    metrics: [
+      { label: "Efficiency", value: "+60%" },
+      { label: "Users", value: "2k+" }
+    ],
+    screenshots: []
+  },
+  "tour-and-travels": {
+    id: "tour-and-travels",
+    title: "Adventure Travels",
+    category: "Web Development",
+    thumbnail: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1600&auto=format&fit=crop",
+    description: "Dynamic booking engine for custom tour packages and global travel itineraries.",
+    slug: "tour-and-travels",
+    tags: ["React", "Express", "PostgreSQL", "Cloudinary"],
+    demoUrl: "https://hotel-managment-ruddy.vercel.app/",
+    outcomes: ["Real-time booking", "Package customizer"],
+    problem: "Travel agencies needed a way to offer complex, customizable tour packages with instant availability checks.",
+    strategy: "Built a robust filtering and search engine with integrated payment for seamless vacation planning.",
+    results: [
+      "Streamlined booking process",
+      "Integrated secure payment gateway",
+      "Interactive travel itineraries",
+      "Custom package builder for users"
+    ],
+    metrics: [
+      { label: "Bookings", value: "+45%" },
+      { label: "Support", value: "24/7" }
+    ],
+    screenshots: []
+  },
+  "hotel-management": {
+    id: "hotel-management",
+    title: "Grand View Hotels",
+    category: "Web Development",
+    thumbnail: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?q=80&w=1600&auto=format&fit=crop",
+    description: "Premium hotel management system featuring room booking, guest services, and inventory tracking.",
+    slug: "hotel-management",
+    tags: ["Next.js", "Prisma", "MySQL", "AWS"],
+    demoUrl: "https://gregarious-sundae-8e8ae4.netlify.app/",
+    outcomes: ["Automated check-ins", "Inventory alerts"],
+    problem: "Manual hotel operations led to overbooking errors and slow guest service response times.",
+    strategy: "Engineered a centralized management hub with real-time room status updates and automated billing.",
+    results: [
+      "Eliminated overbooking issues",
+      "Reduced check-in time by 70%",
+      "Centralized staff management",
+      "Automated financial reporting"
+    ],
+    metrics: [
+      { label: "Check-in", value: "-70%" },
+      { label: "Efficiency", value: "High" }
+    ],
+    screenshots: []
+  },
+  "interior-design": {
+    id: "interior-design",
+    title: "Modern Interiors",
+    category: "Web Design",
+    thumbnail: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=1600&auto=format&fit=crop",
+    description: "Sophisticated portfolio for premium interior designers showcasing spatial artistry.",
+    slug: "interior-design",
+    tags: ["Framer Motion", "React", "Tailwind", "GSAP"],
+    demoUrl: "https://keen-smakager-907c76.netlify.app/",
+    outcomes: ["Premium aesthetics", "High lead gen"],
+    problem: "The client needed a highly visual, premium destination to showcase high-end interior design projects.",
+    strategy: "Focused on immersive visual storytelling with high-fidelity animations and parallax effects.",
+    results: [
+      "Award-winning design aesthetics",
+      "Significant increase in client inquiries",
+      "Smooth, cinematic transitions",
+      "Mobile-optimized visual gallery"
+    ],
+    metrics: [
+      { label: "Engagement", value: "+120%" },
+      { label: "Leads", value: "+50%" }
+    ],
+    screenshots: []
+  },
+  "3d-portfolio": {
+    id: "3d-portfolio",
+    title: "3D Creative Portfolio",
+    category: "Web Design",
+    thumbnail: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=1600&auto=format&fit=crop",
+    description: "Immersive 3D portfolio featuring interactive experiences and high-fidelity project showcases.",
+    slug: "3d-portfolio",
+    tags: ["Three.js", "React Three Fiber", "GLSL", "GSAP"],
+    demoUrl: "https://www.piyushsingh.dpdns.org",
+    outcomes: ["Interactive 3D", "Viral potential"],
+    problem: "Standard 2D portfolios failed to showcase the depth and interactivity of 3D creative work.",
+    strategy: "Leveraged WebGL and Three.js to create a fully interactive 3D environment for project discovery.",
+    results: [
+      "Highly immersive user experience",
+      "Exceptional social sharing and engagement",
+      "Seamless 3D model integration",
+      "Optimized rendering for mobile WebGL"
+    ],
+    metrics: [
+      { label: "3D Reach", value: "10k+" },
+      { label: "Retention", value: "3x Higher" }
+    ],
+    screenshots: []
+  },
+  "medisync-healthcare": {
+    id: "medisync-healthcare",
+    title: "MediSync",
+    category: "Full Stack",
+    thumbnail: "https://images.unsplash.com/photo-1671108503276-1d3d5ab23a3a?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "Streamlined healthcare accessibility and reduced medicine wastage by 40% through real-time inventory management.",
+    slug: "medisync-healthcare",
+    tags: ["React", "Express", "MongoDB", "Node.js"],
+    demoUrl: "#",
+    outcomes: ["Saved patients 25% on costs", "Optimized for 10k+ concurrent users"],
+    problem: "Healthcare costs are rising, and near-expiry medicines are often wasted while patients struggle to afford them.",
+    strategy: "Built a bridge between medical stores and patients to list discounted near-expiry medicines.",
+    results: [
+      "Significant reduction in medicine wastage",
+      "Increased healthcare affordability",
+      "Real-time inventory sync"
+    ],
+    metrics: [
+      { label: "Wastage", value: "-40%" },
+      { label: "Savings", value: "+25%" }
+    ],
+    screenshots: []
+  },
+  "camcon-mentorship": {
+    id: "camcon-mentorship",
+    title: "CAMCON",
+    category: "EdTech",
+    thumbnail: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1600&auto=format&fit=crop",
+    description: "Built a scalable mentorship ecosystem connecting 1,000+ users with high-fidelity video collaboration tools.",
+    slug: "camcon-mentorship",
+    tags: ["MERN", "Socket.io", "WebRTC"],
+    demoUrl: "https://camcon-frontend.onrender.com/",
+    outcomes: ["500+ successful sessions", "Seamless WebRTC integration"],
+    problem: "College juniors lack access to verified mentors among seniors for career and academic guidance.",
+    strategy: "Built a role-based mentorship platform with secure video calling and chat functionality.",
+    results: [
+      "Verified mentor access",
+      "Seamless video collaboration",
+      "Automated matching system"
+    ],
+    metrics: [
+      { label: "Users", value: "1k+" },
+      { label: "Sessions", value: "500+" }
+    ],
+    screenshots: []
+  },
+  "sports-infra": {
+    id: "sports-infra",
+    title: "Smart Sport Infra",
+    category: "Web Design",
+    thumbnail: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1600&auto=format&fit=crop",
+    description: "Engineered a high-performance visual destination that boosted investor engagement and matched global infrastructure standards.",
+    slug: "sports-infra",
+    tags: ["React", "Tailwind", "Framer Motion"],
+    demoUrl: "https://smartsportinfra.com/",
+    outcomes: ["Lighthouse score 95+", "Mobile-first performance"],
+    problem: "The client needed a digital presence that matched their global standards in sports infrastructure.",
+    strategy: "Premium landing page design with smooth scroll and parallax animations.",
+    results: [
+      "Enhanced brand credibility",
+      "Higher investor engagement",
+      "Mobile-first performance"
+    ],
+    metrics: [
+      { label: "Lighthouse", value: "95+" },
+      { label: "Design", value: "Award-class" }
+    ],
+    screenshots: []
+  }
+};
+
+export const projects: Project[] = Object.values(projectDetails);
+
+export const getProjectBySlug = (slug: string) => projectDetails[slug];

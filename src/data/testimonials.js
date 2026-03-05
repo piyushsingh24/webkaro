@@ -53,7 +53,7 @@ export const testimonials = [
     id: 6,
     name: 'Lisa Anderson',
     role: 'Marketing Director',
-    company: 'Digital Agency',
+    company: 'Digital Studio',
     avatar: '/avatars/avatar-6.jpg',
     rating: 5,
     text: 'The UI/UX redesign increased our conversion rate by 85%. The developer has a great eye for design and understands user psychology. Our clients are impressed with the new look.',

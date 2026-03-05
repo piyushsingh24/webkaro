@@ -2,7 +2,7 @@ export const pricingPlans = [
   {
     id: 'starter',
     name: 'Starter',
-    price: '₹14999',
+    price: '5K to 10K',
     priceSubtext: 'One-time payment',
     description: 'Perfect for small businesses and startups launching their first website.',
     idealFor: 'Small businesses, personal brands, simple landing pages',
@@ -30,7 +30,7 @@ export const pricingPlans = [
   {
     id: 'growth',
     name: 'Growth',
-    price: '₹34450',
+    price: '5K to 10K',
     priceSubtext: 'One-time payment',
     description: 'For growing businesses that need more features and functionality.',
     idealFor: 'Growing businesses, service providers, content-heavy sites',
@@ -59,7 +59,7 @@ export const pricingPlans = [
   {
     id: 'premium',
     name: 'Premium',
-    price: '₹50000',
+    price: '5K to 10K',
     priceSubtext: 'Custom quote',
     description: 'Full-featured web applications with custom functionality and integrations.',
     idealFor: 'SaaS products, e-commerce, complex web applications',
@@ -91,32 +91,32 @@ export const pricingPlans = [
 export const addOns = [
   {
     name: 'Additional Page',
-    price: '₹2000+',
+    price: '5K to 10K',
     description: 'Add extra pages to any plan'
   },
   {
     name: 'E-commerce Setup',
-    price: '₹5999+',
+    price: '5K to 10K',
     description: 'Add shopping cart and payment processing'
   },
   {
     name: 'CMS Integration ( Admin Panel)',
-    price: '₹10000+',
+    price: '5K to 10K',
     description: 'Content management system setup'
   },
   {
     name: 'API Integration',
-    price: '₹3999+',
+    price: '5K to 10K',
     description: 'Per integration (Stripe, Mailchimp, etc.)'
   },
   {
     name: 'Monthly Maintenance',
-    price: '₹2500/mo',
+    price: '5K to 10K',
     description: 'Ongoing updates, backups, and support'
   },
   {
     name: 'SEO Package',
-    price: '₹15,000+',
+    price: '5K to 10K',
     description: 'Advanced SEO optimization and setup'
   }
 ];
