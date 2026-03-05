@@ -1,6 +1,5 @@
-# Digital Agency Website
-
-A premium, modern, and experience-driven digital agency website built with Next.js, React, and Tailwind CSS.
+# Webkaro Studio
+Next.js 15+ Premium Digital Studio Platform
 
 ## 🚀 Getting Started
 
