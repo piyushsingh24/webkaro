@@ -41,4 +41,7 @@ pnpm-debug.log*
 
 # Env
 .env*
-!.env.example
+.env.example
+.env.local
+.env.development
+.env.production
