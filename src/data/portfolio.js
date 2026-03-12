@@ -127,7 +127,7 @@ export const portfolio = [
     category: 'Web Development',
     client: 'Educational Institution',
     year: '2025',
-    LiveLink: 'https://college-portfolio.webkaro.com',
+    LiveLink: 'https://college-portfolio.webkaro.in',
     featured: true,
     thumbnail: '/college-portfolio-thumb.png',
     images: [
@@ -210,7 +210,7 @@ export const portfolio = [
     category: 'Full Stack Development',
     client: 'Healthcare Sector',
     year: '2025',
-    LiveLink: 'https://medisync.webkaro.com',
+    LiveLink: 'https://medisync.webkaro.in',
     featured: true,
     thumbnail: '/medisync-thumb.jpeg',
     images: [

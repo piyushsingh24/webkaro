@@ -14,20 +14,20 @@ const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
 
 export const metadata: Metadata = {
   title: {
-    default: "Webkaro | Premium Web Development Studio in Noida",
+    default: "Webkaro | Premium Web Development Studio in Delhi",
     template: "%s | Webkaro Studio"
   },
-  description: "Webkaro is a premium digital studio in Noida engineering high-performance, scalable websites and web applications using Next.js, React, and MERN stack.",
+  description: "Webkaro is a premium digital studio in Delhi engineering high-performance, scalable websites and web applications using Next.js, React, and MERN stack.",
   keywords: [
-    "Web Development Studio Noida",
-    "Best IT Services Noida",
+    "Web Development Studio Delhi",
+    "Best IT Services Delhi",
     "Next.js Development India",
     "SaaS MVP Development",
     "Software Development Collective",
     "MERN Stack Experts",
     "Custom Web Application Development",
     "Digital Strategic Partner",
-    "Tech Startup Solutions Noida",
+    "Tech Startup Solutions Delhi",
     "Webkaro Engineering"
   ],
   authors: [{ name: "Webkaro Studio Team", url: "https://webkaro.in" }],
@@ -84,10 +84,10 @@ const jsonLd = {
   "description": "Premium web development studio specializing in Next.js and high-performance digital solutions.",
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "Sector 62",
-    "addressLocality": "Noida",
-    "addressRegion": "Uttar Pradesh",
-    "postalCode": "201301",
+    "streetAddress": "Sovia Vihar 3rd Pusta",
+    "addressLocality": "Delhi",
+    "addressRegion": "Delhi",
+    "postalCode": "110094",
     "addressCountry": "IN"
   },
   "contactPoint": {

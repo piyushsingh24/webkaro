@@ -62,7 +62,7 @@ export default function Footer() {
                 { Icon: Instagram, href: "https://instagram.com/webkaro_" },
                 { Icon: Facebook, href: "https://facebook.com/webkaro" },
                 { Icon: MessageCircle, href: "https://wa.me/919310390980" },
-                { Icon: MapPin, href: "https://www.google.com/maps/place/webkaro/@28.7235455,77.2484255,17z/data=!3m1!4b1!4m6!3m5!1s0x202f80d27a767a79:0xbc07ea82df5e5152!8m2!3d28.7235455!4d77.2484255!16s%2Fg%2F11yvy4dvh0?entry=ttu&g_ep=EgoyMDI2MDMwMi4wIKXMDSoASAFQAw%3D%3D" }
+                { Icon: MapPin, href: "https://www.google.com/maps/place/Sovia+Vihar+3rd+Pusta+Delhi,+India" }
               ].map(({ Icon, href }, i) => (
                 <Link key={i} href={href} target="_blank" className="w-10 h-10 rounded-xl bg-primary/5 dark:bg-white/5 border border-border dark:border-white/10 flex items-center justify-center text-foreground/40 dark:text-white/40 hover:text-white hover:bg-primary transition-all duration-300 shadow-sm">
                   <Icon className="w-5 h-5" />

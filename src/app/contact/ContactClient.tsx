@@ -72,8 +72,7 @@ export default function ContactClient() {
                   </div>
                   <div>
                     <h4 className="text-foreground font-bold mb-1">Email Us</h4>
-                    <p className="text-foreground/60 text-sm">hello@webkaro.com</p>
-                    <p className="text-foreground/60 text-sm">support@webkaro.com</p>
+                    <p className="text-foreground/60 text-sm">info@webkaro.in</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-6">
@@ -82,7 +81,7 @@ export default function ContactClient() {
                   </div>
                   <div>
                     <h4 className="text-foreground font-bold mb-1">Call Us</h4>
-                    <p className="text-foreground/60 text-sm">+91 91407 68903</p>
+                    <p className="text-foreground/60 text-sm">+91 93103 90980</p>
                     <p className="text-foreground/60 text-sm">Mon-Fri: 10AM - 7PM</p>
                   </div>
                 </div>
@@ -92,8 +91,7 @@ export default function ContactClient() {
                   </div>
                   <div>
                     <h4 className="text-foreground font-bold mb-1">Our Location</h4>
-                    <p className="text-foreground/60 text-sm">Lucknow, Uttar Pradesh</p>
-                    <p className="text-foreground/60 text-sm">India, 226021</p>
+                    <p className="text-foreground/60 text-sm">Sovia Vihar 3rd Pusta Delhi, India</p>
                   </div>
                 </div>
               </div>
