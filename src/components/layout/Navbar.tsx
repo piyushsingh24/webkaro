@@ -219,196 +219,198 @@ export default function Navbar() {
   /* ---------------- JSX ---------------- */
 
   return (
-    <motion.nav
-      initial={{ y: -80 }}
-      animate={{ y: 0 }}
-      className={cn(
-        "fixed top-0  left-0 right-0 z-[1000] transition-all duration-500",
-        scrolled
-          ? "bg-background/80 backdrop-blur-2xl shadow-premium border-b border-border/50"
-          : "bg-transparent"
-      )}
-    >
-      {/* ---------- TOP BAR ---------- */}
-      <div className="hidden border  lg:block border-b border-border/50 py-2 px-6 lg:px-10 text-xs font-bold uppercase tracking-wider text-foreground/50 dark:text-white/30">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex gap-6 items-center">
-            <div className="flex items-center gap-2">
-              <Calendar className="w-4 h-4 text-primary" />
-              {formatDate(currentTime)}
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-primary" />
-              {formatTime(currentTime)}
-            </div>
-          </div>
-
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <Globe className="w-4 h-4" /> EN
-            </div>
-            <Link href="/contact" className="text-primary font-medium hover:underline transition-all">
-              Support
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* ---------- MAIN BAR ---------- */}
-      <div className="px-6 sm:px-10 lg:px-16 py-4">
-        <div className="max-w-screen mx-auto flex justify-between  items-center">
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <div className="relative w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center group">
-              <Image
-                src="/logo.png"
-                alt="Webkaro Logo"
-                width={80}
-                height={80}
-                className="object-contain transition-transform duration-300 group-hover:rotate-12"
-              />
-            </div>
-            <span className="text-lg sm:text-xl font-bold text-foreground dark:text-white truncate max-w-[120px] xs:max-w-none">
-              WebKaro
-            </span>
-          </Link>
-
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-8 ">
-            {navLinks.map((link) => (
-              <div
-                key={link.name}
-                className="relative"
-                onMouseEnter={() =>
-                  link.hasMega && setActiveMega(link.name)
-                }
-                onMouseLeave={() => setActiveMega(null)}
-              >
-                <Link
-                  href={link.href}
-                  className={cn(
-                    "text-sm font-medium flex items-center gap-1 transition-colors",
-                    pathname === link.href || activeMega === link.name
-                      ? "text-primary"
-                      : "text-foreground/70 dark:text-white/50 hover:text-foreground"
-                  )}
-                >
-                  {link.name}
-                  {link.hasMega && (
-                    <ChevronDown
-                      className={cn(
-                        "w-4 h-4 transition-transform",
-                        activeMega === link.name && "rotate-180"
-                      )}
-                    />
-                  )}
-                </Link>
-
-                {/* Mega Menu */}
-                <AnimatePresence>
-                  {activeMega && (
-                    <motion.div
-                      key={activeMega}
-                      initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                      transition={{ duration: 0.18, ease: "easeOut" }}
-                      className="fixed left-0 top-[80px] w-full z-50 hidden lg:block"
-                      onMouseEnter={() => setActiveMega(activeMega)}
-                      onMouseLeave={() => setActiveMega(null)}
-                    >
-                      {/* outer gutter */}
-                      <div className="mx-auto max-w-7xl px-6">
-                        {/* card */}
-                        <div className="relative overflow-hidden rounded-2xl border border-border/60 dark:border-white/[0.06] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.18)] dark:shadow-[0_20px_60px_-10px_rgba(0,0,0,0.6)] bg-white/95 dark:bg-[#0d0d10]/95 backdrop-blur-2xl">
-
-                          {/* top accent gradient line */}
-                          <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
-
-                          <div className="p-8">
-                            <div className={cn(
-                              "grid gap-10",
-                              megaMenuContent[activeMega]?.length === 2 ? "grid-cols-2" : "grid-cols-3"
-                            )}>
-                              {megaMenuContent[activeMega]?.map((cat: any) => (
-                                <div key={cat.title}>
-
-                                  {/* CATEGORY HEADER */}
-                                  <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border/60 dark:border-white/[0.06]">
-                                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-primary/10 dark:bg-primary/20">
-                                      <span className="block w-1.5 h-1.5 rounded-full bg-primary" />
-                                    </span>
-                                    <h4 className="text-[11px] font-black uppercase tracking-[0.22em] text-primary/80 dark:text-primary/70">
-                                      {cat.title}
-                                    </h4>
-                                  </div>
-
-                                  {/* LINKS */}
-                                  <div className="space-y-0.5">
-                                    {cat.items.map((item: any) => (
-                                      <Link
-                                        key={item.name}
-                                        href={item.href}
-                                        className="group/item flex items-center justify-between rounded-lg px-2.5 py-2 text-sm font-medium text-foreground/65 dark:text-white/50 hover:text-foreground dark:hover:text-white hover:bg-primary/[0.07] dark:hover:bg-white/[0.05] transition-all duration-150"
-                                      >
-                                        <span>{item.name}</span>
-                                        <ArrowRight className="w-3.5 h-3.5 shrink-0 opacity-0 -translate-x-1.5 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-150 text-primary" />
-                                      </Link>
-                                    ))}
-                                  </div>
-
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* footer strip */}
-                          <div className="flex items-center justify-between px-8 py-3.5 border-t border-border/50 dark:border-white/[0.04] bg-gray-50/80 dark:bg-white/[0.02]">
-                            <span className="text-xs text-foreground/40 dark:text-white/25 font-medium">
-                              Explore all {activeMega?.toLowerCase()} →
-                            </span>
-                            <Link
-                              href="/contact"
-                              className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary/80 transition-colors"
-                            >
-                              Talk to an expert
-                              <ArrowRight className="w-3 h-3" />
-                            </Link>
-                          </div>
-
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+    <>
+      <motion.nav
+        initial={{ y: -80 }}
+        animate={{ y: 0 }}
+        className={cn(
+          "fixed top-0  left-0 right-0 z-[1000] transition-all duration-500",
+          scrolled
+            ? "bg-background/80 backdrop-blur-2xl shadow-premium border-b border-border/50"
+            : "bg-transparent"
+        )}
+      >
+        {/* ---------- TOP BAR ---------- */}
+        <div className="hidden border  lg:block border-b border-border/50 py-2 px-6 lg:px-10 text-xs font-bold uppercase tracking-wider text-foreground/50 dark:text-white/30">
+          <div className="max-w-7xl mx-auto flex justify-between items-center">
+            <div className="flex gap-6 items-center">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-primary" />
+                {formatDate(currentTime)}
               </div>
-            ))}
-          </div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-4 h-4 text-primary" />
+                {formatTime(currentTime)}
+              </div>
+            </div>
 
-          {/* CTA Desktop */}
-          <div className="hidden lg:flex items-center gap-4">
-            <ThemeToggle />
-            <Link href="/contact">
-              <MagnetizeButton particleCount={14}>
-                Start Project <ArrowRight className="w-4 h-4" />
-              </MagnetizeButton>
-            </Link>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="flex items-center gap-4 lg:hidden">
-            <ThemeToggle />
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 text-foreground"
-            >
-              {isOpen ? <X size={28} /> : <Menu size={28} />}
-            </button>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-2">
+                <Globe className="w-4 h-4" /> EN
+              </div>
+              <Link href="/contact" className="text-primary font-medium hover:underline transition-all">
+                Support
+              </Link>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* ---------- MOBILE DRAWER ---------- */}
+        {/* ---------- MAIN BAR ---------- */}
+        <div className="px-6 sm:px-10 lg:px-16 py-4">
+          <div className="max-w-screen mx-auto flex justify-between  items-center">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
+              <div className="relative w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center group">
+                <Image
+                  src="/logo.png"
+                  alt="Webkaro Logo"
+                  width={80}
+                  height={80}
+                  className="object-contain transition-transform duration-300 group-hover:rotate-12"
+                />
+              </div>
+              <span className="text-lg sm:text-xl font-bold text-foreground dark:text-white truncate max-w-[120px] xs:max-w-none">
+                WebKaro
+              </span>
+            </Link>
+
+            {/* Desktop Nav */}
+            <div className="hidden lg:flex items-center gap-8 ">
+              {navLinks.map((link) => (
+                <div
+                  key={link.name}
+                  className="relative"
+                  onMouseEnter={() =>
+                    link.hasMega && setActiveMega(link.name)
+                  }
+                  onMouseLeave={() => setActiveMega(null)}
+                >
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "text-sm font-medium flex items-center gap-1 transition-colors",
+                      pathname === link.href || activeMega === link.name
+                        ? "text-primary"
+                        : "text-foreground/70 dark:text-white/50 hover:text-foreground"
+                    )}
+                  >
+                    {link.name}
+                    {link.hasMega && (
+                      <ChevronDown
+                        className={cn(
+                          "w-4 h-4 transition-transform",
+                          activeMega === link.name && "rotate-180"
+                        )}
+                      />
+                    )}
+                  </Link>
+                </div>
+              ))}
+            </div>
+
+            {/* CTA Desktop */}
+            <div className="hidden lg:flex items-center gap-4">
+              <ThemeToggle />
+              <Link href="/contact">
+                <MagnetizeButton particleCount={14}>
+                  Start Project <ArrowRight className="w-4 h-4" />
+                </MagnetizeButton>
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="flex items-center gap-4 lg:hidden">
+              <ThemeToggle />
+              <button
+                onClick={() => setIsOpen(!isOpen)}
+                className="p-2 text-foreground"
+              >
+                {isOpen ? <X size={28} /> : <Menu size={28} />}
+              </button>
+            </div>
+          </div>
+        </div>
+      </motion.nav>
+
+      {/* ---------- MEGA MENU (FIXED OUTSIDE NAV TRANSFORM) ---------- */}
+      <AnimatePresence mode="wait">
+        {activeMega && (
+          <motion.div
+            key={activeMega}
+            initial={{ opacity: 0, y: 10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 8, scale: 0.98 }}
+            transition={{ duration: 0.18, ease: "easeOut" }}
+            className="fixed left-0 top-[112px] lg:top-[128px] w-full z-[1001] hidden lg:block"
+            onMouseEnter={() => setActiveMega(activeMega)}
+            onMouseLeave={() => setActiveMega(null)}
+          >
+            {/* outer gutter */}
+            <div className="mx-auto max-w-7xl px-6">
+              {/* card */}
+              <div className="relative overflow-hidden rounded-2xl border border-border/60 dark:border-white/[0.06] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.18)] dark:shadow-[0_20px_60px_-10px_rgba(0,0,0,0.6)] bg-white/95 dark:bg-[#0d0d10]/95 backdrop-blur-2xl">
+
+                {/* top accent gradient line */}
+                <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
+
+                <div className="p-8">
+                  <div className={cn(
+                    "grid gap-10",
+                    megaMenuContent[activeMega]?.length === 2 ? "grid-cols-2" : "grid-cols-3"
+                  )}>
+                    {megaMenuContent[activeMega]?.map((cat: any) => (
+                      <div key={cat.title}>
+
+                        {/* CATEGORY HEADER */}
+                        <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border/60 dark:border-white/[0.06]">
+                          <span className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-primary/10 dark:bg-primary/20">
+                            <span className="block w-1.5 h-1.5 rounded-full bg-primary" />
+                          </span>
+                          <h4 className="text-[11px] font-black uppercase tracking-[0.22em] text-primary/80 dark:text-primary/70">
+                            {cat.title}
+                          </h4>
+                        </div>
+
+                        {/* LINKS */}
+                        <div className="space-y-0.5">
+                          {cat.items.map((item: any) => (
+                            <Link
+                              key={item.name}
+                              href={item.href}
+                              className="group/item flex items-center justify-between rounded-lg px-2.5 py-2 text-sm font-medium text-foreground/65 dark:text-white/50 hover:text-foreground dark:hover:text-white hover:bg-primary/[0.07] dark:hover:bg-white/[0.05] transition-all duration-150"
+                            >
+                              <span>{item.name}</span>
+                              <ArrowRight className="w-3.5 h-3.5 shrink-0 opacity-0 -translate-x-1.5 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-150 text-primary" />
+                            </Link>
+                          ))}
+                        </div>
+
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* footer strip */}
+                <div className="flex items-center justify-between px-8 py-3.5 border-t border-border/50 dark:border-white/[0.04] bg-gray-50/80 dark:bg-white/[0.02]">
+                  <span className="text-xs text-foreground/40 dark:text-white/25 font-medium">
+                    Explore all {activeMega?.toLowerCase()} →
+                  </span>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary/80 transition-colors"
+                  >
+                    Talk to an expert
+                    <ArrowRight className="w-3 h-3" />
+                  </Link>
+                </div>
+
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* ---------- MOBILE DRAWER (FIXED OUTSIDE NAV TRANSFORM) ---------- */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -417,7 +419,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md z-40"
+              className="fixed inset-0 bg-black/80 backdrop-blur-md z-[1002]"
             />
 
             <motion.div
@@ -425,7 +427,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               data-lenis-prevent
-              className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-background border-l z-50 p-6 overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-background border-l z-[1003] p-6 overflow-y-auto"
             >
               <div className="flex justify-between items-center mb-10">
                 <Link href="/" className="flex items-center gap-3">
@@ -524,6 +526,6 @@ export default function Navbar() {
           </>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   );
 }
