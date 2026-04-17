@@ -127,7 +127,7 @@ export const portfolio = [
     category: 'Web Development',
     client: 'Educational Institution',
     year: '2025',
-    LiveLink: 'https://college-portfolio.webkaro.in',
+    LiveLink: 'https://college-portfolio.webkaro.com',
     featured: true,
     thumbnail: '/college-portfolio-thumb.png',
     images: [
