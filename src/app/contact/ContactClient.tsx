@@ -81,7 +81,7 @@ export default function ContactClient() {
                   </div>
                   <div>
                     <h4 className="text-foreground font-bold mb-1">Call Us</h4>
-                    <p className="text-foreground/60 text-sm">+91 93103 90980</p>
+                    <p className="text-foreground/60 text-sm">+91 70489 03201</p>
                     <p className="text-foreground/60 text-sm">Mon-Fri: 10AM - 7PM</p>
                   </div>
                 </div>

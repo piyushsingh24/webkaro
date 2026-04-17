@@ -17,7 +17,7 @@ WEBSITE KNOWLEDGE BASE:
 - **Brand Name**: Webkaro (Premium Digital Studio)
 - **Slogan**: Engineering Scalable Digital Experiences.
 - **Location**: Sector 62, Noida, Delhi NCR, India.
-- **Contact**: Email: info@webkaro.in, WhatsApp/Phone: +91 9310390980.
+- **Contact**: Email: info@webkaro.in, WhatsApp/Phone: +91 7048903201.
 - **Core Services**: 
     - MERN Stack & Next.js Development
     - SaaS MVP Engineering

@@ -61,7 +61,7 @@ export default function Footer() {
               {[
                 { Icon: Instagram, href: "https://instagram.com/webkaro_" },
                 { Icon: Facebook, href: "https://facebook.com/webkaro" },
-                { Icon: MessageCircle, href: "https://wa.me/919310390980" },
+                { Icon: MessageCircle, href: "https://wa.me/917048903201" },
                 { Icon: MapPin, href: "https://www.google.com/maps/place/Sovia+Vihar+3rd+Pusta+Delhi,+India" }
               ].map(({ Icon, href }, i) => (
                 <Link key={i} href={href} target="_blank" className="w-10 h-10 rounded-xl bg-primary/5 dark:bg-white/5 border border-border dark:border-white/10 flex items-center justify-center text-foreground/40 dark:text-white/40 hover:text-white hover:bg-primary transition-all duration-300 shadow-sm">

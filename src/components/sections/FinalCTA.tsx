@@ -114,11 +114,11 @@ export default function FinalCTA() {
 
             {/* Phone */}
             <a
-              href="tel:+919310390980"
+              href="tel:+917048903201"
               className="flex items-center gap-3 text-[10px] font-black uppercase text-foreground dark:text-white tracking-widest hover:text-primary transition-colors"
             >
               <Phone className="w-4 h-4 text-primary" />
-              +91 93103 90980
+              +91 70489 03201
             </a>
 
             {/* Email */}
