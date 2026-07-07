@@ -1,13 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Outfit } from "next/font/google";
 import "@/styles/globals.css";
-import SmoothScroll from "@/components/layout/SmoothScroll";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import CustomCursor from "@/components/layout/CustomCursor";
-import CookieConsent from "@/components/layout/CookieConsent";
+import ConditionalChrome from "@/components/layout/ConditionalChrome";
 import { cn } from "@/lib/utils";
-import ChatBotToggle from "@/components/layout/ChatBotToggle";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
@@ -73,40 +68,86 @@ export const metadata: Metadata = {
   },
 };
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "@id": "https://webkaro.in/#organization",
-  "name": "Webkaro Studio",
-  "url": "https://webkaro.in",
-  "logo": "https://webkaro.in/logo.png",
-  "image": "https://webkaro.in/og-image.jpg",
-  "description": "Premium web development studio specializing in Next.js and high-performance digital solutions.",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Sovia Vihar 3rd Pusta",
-    "addressLocality": "Delhi",
-    "addressRegion": "Delhi",
-    "postalCode": "110094",
-    "addressCountry": "IN"
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://webkaro.in/#organization",
+    "name": "Webkaro Studio",
+    "url": "https://webkaro.in",
+    "logo": "https://webkaro.in/logo.png",
+    "image": "https://webkaro.in/og-image.jpg",
+    "description": "Premium web development studio specializing in Next.js and high-performance digital solutions.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Sovia Vihar 3rd Pusta",
+      "addressLocality": "Delhi",
+      "addressRegion": "Delhi",
+      "postalCode": "110094",
+      "addressCountry": "IN"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+91-7048903201",
+      "contactType": "sales",
+      "areaServed": "IN",
+      "availableLanguage": ["en", "hi"]
+    },
+    "sameAs": [
+      "https://twitter.com/webkaro_dev",
+      "https://linkedin.com/company/webkaro",
+      "https://instagram.com/webkaro_"
+    ]
   },
-  "contactPoint": {
-    "@type": "ContactPoint",
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://webkaro.in/#website",
+    "url": "https://webkaro.in",
+    "name": "Webkaro Studio",
+    "description": "Premium digital studio engineering high-performance, scalable websites and web applications.",
+    "publisher": {
+      "@id": "https://webkaro.in/#organization"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "@id": "https://webkaro.in/#localbusiness",
+    "name": "Webkaro Studio",
+    "image": "https://webkaro.in/logo.png",
     "telephone": "+91-7048903201",
-    "contactType": "sales",
-    "areaServed": "IN",
-    "availableLanguage": ["en", "hi"]
-  },
-  "sameAs": [
-    "https://twitter.com/webkaro_dev",
-    "https://linkedin.com/company/webkaro",
-    "https://instagram.com/webkaro_"
-  ]
-};
+    "url": "https://webkaro.in",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Sovia Vihar 3rd Pusta",
+      "addressLocality": "Delhi",
+      "addressRegion": "Delhi",
+      "postalCode": "110094",
+      "addressCountry": "IN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 28.7041,
+      "longitude": 77.1025
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "opens": "09:00",
+      "closes": "18:00"
+    }
+  }
+];
 
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { Toaster } from "react-hot-toast";
-import GlobalFloatingButton from "@/components/ui/global-floating-button";
 
 export default function RootLayout({
   children,
@@ -132,17 +173,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <CustomCursor />
-          <Navbar />
-          <SmoothScroll>
-            <main id="main-content" className="relative flex flex-col min-h-screen z-10">
-              {children}
-            </main>
-            <Footer />
-          </SmoothScroll>
-          <CookieConsent />
-          <ChatBotToggle />
-          <GlobalFloatingButton />
+          <ConditionalChrome>
+            {children}
+          </ConditionalChrome>
           <Toaster position="top-right" />
         </ThemeProvider>
       </body>

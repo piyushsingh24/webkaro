@@ -266,6 +266,7 @@ export default function Navbar() {
                   alt="Webkaro Logo"
                   width={80}
                   height={80}
+                  priority
                   className="object-contain transition-transform duration-300 group-hover:rotate-12"
                 />
               </div>
@@ -324,6 +325,8 @@ export default function Navbar() {
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 text-foreground"
+                aria-label={isOpen ? "Close menu" : "Open menu"}
+                aria-expanded={isOpen}
               >
                 {isOpen ? <X size={28} /> : <Menu size={28} />}
               </button>

@@ -4,6 +4,7 @@ import ServicesOverview from "@/components/sections/ServicesOverview";
 import FeaturedProjects from "@/components/sections/FeaturedProjects";
 import ExpertCommunity from "@/components/sections/ExpertCommunity";
 import Testimonials from "@/components/sections/Testimonials";
+import FoundersSection from "@/components/sections/FoundersSection";
 import TrustSection from "@/components/sections/TrustSection";
 import FAQPreview from "@/components/sections/FAQPreview";
 import FinalCTA from "@/components/sections/FinalCTA";
@@ -25,6 +26,7 @@ export default function Home() {
       <ServicesOverview />
       <FeaturedProjects />
       <ExpertCommunity />
+      <FoundersSection />
       <Testimonials />
       <TrustSection />
       <FAQPreview />
