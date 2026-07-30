@@ -6,7 +6,6 @@ import Footer from "./Footer";
 import CustomCursor from "./CustomCursor";
 import CookieConsent from "./CookieConsent";
 import ChatBotToggle from "./ChatBotToggle";
-import SmoothScroll from "./SmoothScroll";
 import GlobalFloatingButton from "@/components/ui/global-floating-button";
 
 /**
@@ -34,15 +33,13 @@ export default function ConditionalChrome({
     <>
       <CustomCursor />
       <Navbar />
-      <SmoothScroll>
-        <main
-          id="main-content"
-          className="relative flex flex-col min-h-screen z-10"
-        >
-          {children}
-        </main>
-        <Footer />
-      </SmoothScroll>
+      <main
+        id="main-content"
+        className="relative flex flex-col min-h-screen z-10"
+      >
+        {children}
+      </main>
+      <Footer />
       <CookieConsent />
       <ChatBotToggle />
       <GlobalFloatingButton />

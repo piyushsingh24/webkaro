@@ -61,13 +61,9 @@ function MagnetizeButton({
     <Button
       className={cn(
         "min-w-40 relative touch-none overflow-hidden",
-        "bg-violet-600 dark:bg-violet-700",
-        "hover:bg-violet-700 dark:hover:bg-violet-600",
-        "text-white",
-        "border border-violet-500 dark:border-violet-600",
-        "transition-all duration-300",
         className
       )}
+      style={{ backgroundColor: '#6E8E59' }}
       onMouseEnter={handleInteractionStart}
       onMouseLeave={handleInteractionEnd}
       onTouchStart={handleInteractionStart}
@@ -82,14 +78,13 @@ function MagnetizeButton({
           animate={particlesControl}
           className={cn(
             "absolute w-1.5 h-1.5 rounded-full pointer-events-none",
-            "bg-violet-300 dark:bg-violet-200",
+            "bg-white/80",
             "transition-opacity duration-300",
             isAttracting ? "opacity-100" : "opacity-40"
           )}
         />
       ))}
       <span className="relative w-full flex items-center justify-center gap-2">
-        
         {children}
       </span>
     </Button>

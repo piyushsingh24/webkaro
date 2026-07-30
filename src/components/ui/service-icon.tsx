@@ -16,9 +16,10 @@ const IconMap: Record<string, LucideIcon> = {
 interface ServiceIconProps {
   name: string;
   className?: string;
+  style?: React.CSSProperties;
 }
 
-export function ServiceIcon({ name, className }: ServiceIconProps) {
+export function ServiceIcon({ name, className, style }: ServiceIconProps) {
   const Icon = IconMap[name] || Globe;
-  return <Icon className={className} />;
+  return <Icon className={className} style={style} />;
 }

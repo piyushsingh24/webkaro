@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Playfair_Display } from "next/font/google";
 import "@/styles/globals.css";
 import ConditionalChrome from "@/components/layout/ConditionalChrome";
 import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" });
+const playfair = Playfair_Display({ 
+  subsets: ["latin"], 
+  variable: "--font-display",
+  weight: ["400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: {
@@ -159,8 +163,8 @@ export default function RootLayout({
       <body
         className={cn(
           inter.variable,
-          outfit.variable,
-          "min-h-screen bg-background text-foreground font-sans antialiased transition-colors duration-300 overflow-x-hidden"
+          playfair.variable,
+          "min-h-screen bg-background text-foreground font-sans antialiased overflow-x-hidden"
         )}
       >
         <script

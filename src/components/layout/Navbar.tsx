@@ -223,41 +223,52 @@ export default function Navbar() {
       <motion.nav
         initial={{ y: -80 }}
         animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
         className={cn(
-          "fixed top-0  left-0 right-0 z-[1000] transition-all duration-500",
+          "fixed top-0 left-0 right-0 z-[1000] transition-all duration-500",
           scrolled
-            ? "bg-background/80 backdrop-blur-2xl shadow-premium border-b border-border/50"
+            ? "border-b"
             : "bg-transparent"
         )}
+        style={{ 
+          backgroundColor: scrolled ? 'rgba(250, 248, 245, 0.9)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(12px)' : 'none',
+          borderColor: scrolled ? 'rgba(0,0,0,0.06)' : 'transparent'
+        }}
       >
-        {/* ---------- TOP BAR ---------- */}
-        <div className="hidden border  lg:block border-b border-border/50 py-2 px-6 lg:px-10 text-xs font-bold uppercase tracking-wider text-foreground/50 dark:text-white/30">
+        {/* TOP BAR */}
+        <div className="hidden lg:block border-b py-2.5 px-6 lg:px-10 text-[11px] font-semibold uppercase tracking-wider transition-colors duration-500"
+          style={{ 
+            borderColor: 'rgba(0,0,0,0.06)',
+            color: '#888888'
+          }}
+        >
           <div className="max-w-7xl mx-auto flex justify-between items-center">
             <div className="flex gap-6 items-center">
               <div className="flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-primary" />
-                {formatDate(currentTime)}
+                <Calendar className="w-3.5 h-3.5" style={{ color: '#6E8E59' }} />
+                <span>{formatDate(currentTime)}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-primary" />
-                {formatTime(currentTime)}
+                <Clock className="w-3.5 h-3.5" style={{ color: '#6E8E59' }} />
+                <span>{formatTime(currentTime)}</span>
               </div>
             </div>
 
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2">
-                <Globe className="w-4 h-4" /> EN
+                <Globe className="w-3.5 h-3.5" /> EN
               </div>
-              <Link href="/contact" className="text-primary font-medium hover:underline transition-all">
+              <Link href="/contact" className="transition-colors duration-300 hover:text-[#6E8E59]" style={{ color: '#656565' }}>
                 Support
               </Link>
             </div>
           </div>
         </div>
 
-        {/* ---------- MAIN BAR ---------- */}
+        {/* MAIN BAR */}
         <div className="px-6 sm:px-10 lg:px-16 py-4">
-          <div className="max-w-screen mx-auto flex justify-between  items-center">
+          <div className="max-w-screen mx-auto flex justify-between items-center">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
               <div className="relative w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center group">
@@ -270,13 +281,13 @@ export default function Navbar() {
                   className="object-contain transition-transform duration-300 group-hover:rotate-12"
                 />
               </div>
-              <span className="text-lg sm:text-xl font-bold text-foreground dark:text-white truncate max-w-[120px] xs:max-w-none">
+              <span className="text-lg sm:text-xl font-bold truncate max-w-[120px] xs:max-w-none" style={{ color: '#1B1B1B' }}>
                 WebKaro
               </span>
             </Link>
 
             {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-8 ">
+            <div className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
                 <div
                   key={link.name}
@@ -289,19 +300,21 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     className={cn(
-                      "text-sm font-medium flex items-center gap-1 transition-colors",
+                      "text-sm font-medium flex items-center gap-1 transition-colors duration-300",
                       pathname === link.href || activeMega === link.name
-                        ? "text-primary"
-                        : "text-foreground/70 dark:text-white/50 hover:text-foreground"
+                        ? ""
+                        : "hover:opacity-70"
                     )}
+                    style={{ color: '#2563EB' }}
                   >
                     {link.name}
                     {link.hasMega && (
                       <ChevronDown
                         className={cn(
-                          "w-4 h-4 transition-transform",
-                          activeMega === link.name && "rotate-180"
+                          "w-4 h-4 transition-transform duration-300",
+                          activeMega === link.name ? "rotate-180" : ""
                         )}
+                        style={{ color: '#888888' }}
                       />
                     )}
                   </Link>
@@ -313,7 +326,7 @@ export default function Navbar() {
             <div className="hidden lg:flex items-center gap-4">
               <ThemeToggle />
               <Link href="/contact">
-                <MagnetizeButton particleCount={14}>
+                <MagnetizeButton particleCount={10}>
                   Start Project <ArrowRight className="w-4 h-4" />
                 </MagnetizeButton>
               </Link>
@@ -324,7 +337,8 @@ export default function Navbar() {
               <ThemeToggle />
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2 text-foreground"
+                className="p-2 transition-colors duration-300"
+                style={{ color: '#1B1B1B' }}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
                 aria-expanded={isOpen}
               >
@@ -335,7 +349,7 @@ export default function Navbar() {
         </div>
       </motion.nav>
 
-      {/* ---------- MEGA MENU (FIXED OUTSIDE NAV TRANSFORM) ---------- */}
+      {/* ---------- MEGA MENU ---------- */}
       <AnimatePresence mode="wait">
         {activeMega && (
           <motion.div
@@ -343,18 +357,18 @@ export default function Navbar() {
             initial={{ opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
-            transition={{ duration: 0.18, ease: "easeOut" }}
-            className="fixed left-0 top-[112px] lg:top-[128px] w-full z-[1001] hidden lg:block"
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="fixed left-0 top-[100px] lg:top-[108px] w-full z-[1001] hidden lg:block"
             onMouseEnter={() => setActiveMega(activeMega)}
             onMouseLeave={() => setActiveMega(null)}
           >
-            {/* outer gutter */}
             <div className="mx-auto max-w-7xl px-6">
-              {/* card */}
-              <div className="relative overflow-hidden rounded-2xl border border-border/60 dark:border-white/[0.06] shadow-[0_20px_60px_-10px_rgba(0,0,0,0.18)] dark:shadow-[0_20px_60px_-10px_rgba(0,0,0,0.6)] bg-white/95 dark:bg-[#0d0d10]/95 backdrop-blur-2xl">
-
-                {/* top accent gradient line */}
-                <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
+              <div className="relative overflow-hidden rounded-2xl border" style={{ 
+                backgroundColor: '#FFFFFF',
+                borderColor: 'rgba(0,0,0,0.06)',
+                boxShadow: '0 8px 24px -8px rgba(0,0,0,0.06), 0 16px 48px -16px rgba(0,0,0,0.08)'
+              }}>
+                <div className="h-[2px] w-full" style={{ backgroundColor: '#2563EB' }} />
 
                 <div className="p-8">
                   <div className={cn(
@@ -363,57 +377,53 @@ export default function Navbar() {
                   )}>
                     {megaMenuContent[activeMega]?.map((cat: any) => (
                       <div key={cat.title}>
-
-                        {/* CATEGORY HEADER */}
-                        <div className="flex items-center gap-2 mb-4 pb-3 border-b border-border/60 dark:border-white/[0.06]">
-                          <span className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-primary/10 dark:bg-primary/20">
-                            <span className="block w-1.5 h-1.5 rounded-full bg-primary" />
+                        <div className="flex items-center gap-2 mb-5 pb-3 border-b" style={{ borderColor: 'rgba(0,0,0,0.06)' }}>
+                          <span className="inline-flex items-center justify-center w-5 h-5 rounded-md" style={{ backgroundColor: '#F4F7F1' }}>
+                            <span className="block w-1.5 h-1.5 rounded-full" style={{ backgroundColor: '#6E8E59' }} />
                           </span>
-                          <h4 className="text-[11px] font-black uppercase tracking-[0.22em] text-primary/80 dark:text-primary/70">
+                          <h4 className="text-[11px] font-bold uppercase tracking-[0.22em]" style={{ color: '#2563EB' }}>
                             {cat.title}
                           </h4>
                         </div>
 
-                        {/* LINKS */}
                         <div className="space-y-0.5">
                           {cat.items.map((item: any) => (
                             <Link
                               key={item.name}
                               href={item.href}
-                              className="group/item flex items-center justify-between rounded-lg px-2.5 py-2 text-sm font-medium text-foreground/65 dark:text-white/50 hover:text-foreground dark:hover:text-white hover:bg-primary/[0.07] dark:hover:bg-white/[0.05] transition-all duration-150"
+                              className="group/item flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-150"
+                              style={{ color: '#656565' }}
                             >
-                              <span>{item.name}</span>
-                              <ArrowRight className="w-3.5 h-3.5 shrink-0 opacity-0 -translate-x-1.5 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-150 text-primary" />
+                              <span className="group-hover/item:text-[#1B1B1B] transition-colors duration-150">{item.name}</span>
+                              <ArrowRight className="w-3.5 h-3.5 shrink-0 opacity-0 -translate-x-1.5 group-hover/item:opacity-100 group-hover/item:translate-x-0 transition-all duration-150" style={{ color: '#6E8E59' }} />
                             </Link>
                           ))}
                         </div>
-
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* footer strip */}
-                <div className="flex items-center justify-between px-8 py-3.5 border-t border-border/50 dark:border-white/[0.04] bg-gray-50/80 dark:bg-white/[0.02]">
-                  <span className="text-xs text-foreground/40 dark:text-white/25 font-medium">
+                <div className="flex items-center justify-between px-8 py-3.5 border-t" style={{ borderColor: 'rgba(0,0,0,0.06)', backgroundColor: '#FAF8F5' }}>
+                  <span className="text-xs font-medium" style={{ color: '#888888' }}>
                     Explore all {activeMega?.toLowerCase()} →
                   </span>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary/80 transition-colors"
+                   className="inline-flex items-center gap-1.5 text-xs font-bold transition-colors duration-300 hover:opacity-70"
+                  style={{ color: '#2563EB' }}
                   >
                     Talk to an expert
                     <ArrowRight className="w-3 h-3" />
                   </Link>
                 </div>
-
               </div>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ---------- MOBILE DRAWER (FIXED OUTSIDE NAV TRANSFORM) ---------- */}
+      {/* ---------- MOBILE DRAWER ---------- */}
       <AnimatePresence>
         {isOpen && (
           <>
@@ -422,7 +432,7 @@ export default function Navbar() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md z-[1002]"
+              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[1002]"
             />
 
             <motion.div
@@ -430,11 +440,12 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               data-lenis-prevent
-              className="fixed top-0 right-0 bottom-0 w-full max-w-md bg-background border-l z-[1003] p-6 overflow-y-auto"
+              className="fixed top-0 right-0 bottom-0 w-full max-w-md z-[1003] p-6 overflow-y-auto"
+              style={{ backgroundColor: '#FAF8F5' }}
             >
               <div className="flex justify-between items-center mb-10">
                 <Link href="/" className="flex items-center gap-3">
-                  <div className="relative w-24 h-24  flex items-center justify-center">
+                  <div className="relative w-24 h-24 flex items-center justify-center">
                     <Image
                       src="/logo.png"
                       alt="Webkaro Logo"
@@ -443,9 +454,9 @@ export default function Navbar() {
                       className="object-contain"
                     />
                   </div>
-                  <span className="text-lg font-black font-outfit uppercase">WebKaro</span>
+                  <span className="text-lg font-bold" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>WebKaro</span>
                 </Link>
-                <button onClick={() => setIsOpen(false)} className="p-2 text-foreground">
+                <button onClick={() => setIsOpen(false)} className="p-2" style={{ color: '#1B1B1B' }}>
                   <X size={30} />
                 </button>
               </div>
@@ -457,7 +468,8 @@ export default function Navbar() {
                       <Link
                         href={link.href}
                         onClick={() => setIsOpen(false)}
-                        className="text-xl font-semibold text-foreground hover:text-primary transition-colors flex-1"
+                        className="text-xl font-medium transition-colors duration-300 flex-1"
+                        style={{ color: '#1B1B1B' }}
                       >
                         {link.name}
                       </Link>
@@ -468,7 +480,8 @@ export default function Navbar() {
                               activeMega === link.name ? null : link.name
                             )
                           }
-                          className="p-3 -mr-3 text-foreground/50 hover:text-primary transition-colors"
+                          className="p-3 -mr-3 transition-colors duration-300"
+                          style={{ color: '#888888' }}
                           aria-label={`Toggle ${link.name} sub-menu`}
                         >
                           <ChevronDown
@@ -490,10 +503,10 @@ export default function Navbar() {
                           transition={{ duration: 0.3, ease: "easeInOut" }}
                           className="overflow-hidden"
                         >
-                          <div className="mt-4 pl-4 space-y-6 border-l border-border/50 ml-1">
+                          <div className="mt-4 pl-4 space-y-6 border-l" style={{ borderColor: 'rgba(0,0,0,0.06)' }}>
                             {megaMenuContent[link.name].map((cat: any) => (
                               <div key={cat.title}>
-                                <p className="text-[10px] font-black uppercase tracking-widest text-primary/70 mb-3">
+                                <p className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: '#2563EB' }}>
                                   {cat.title}
                                 </p>
                                 <div className="space-y-3">
@@ -502,7 +515,8 @@ export default function Navbar() {
                                       key={item.name}
                                       href={item.href}
                                       onClick={() => setIsOpen(false)}
-                                      className="block text-sm font-medium text-foreground/70 hover:text-primary transition-colors"
+                                      className="block text-sm font-medium transition-colors duration-300"
+                                      style={{ color: '#656565' }}
                                     >
                                       {item.name}
                                     </Link>

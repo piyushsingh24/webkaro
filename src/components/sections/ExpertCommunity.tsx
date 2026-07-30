@@ -1,90 +1,78 @@
 "use client";
 
-import { Users, ShieldCheck, Zap, Globe } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
-const features = [
+const benefits = [
   {
-    icon: Users,
-    title: "Collaborative Collective",
-    description: "Our community of vetted developers and designers work together to bring diverse perspectives to every project.",
+    title: "Fast Delivery",
+    description: "We respect your timeline. Most MVPs ship in weeks, not quarters, without sacrificing code quality or architecture.",
   },
   {
-    icon: ShieldCheck,
-    title: "Vetted Expertise",
-    description: "Every member of our collective undergoes a rigorous vetting process to ensure top-tier development standards.",
+    title: "Senior Developers",
+    description: "Every project is led by experienced engineers who&apos;ve scaled products to millions of users. No juniors, no hand-holding.",
   },
   {
-    icon: Zap,
-    title: "High Performance",
-    description: "We don't just build websites; we engineer high-performance digital machines designed for speed and scale.",
+    title: "Business First",
+    description: "We don&apos;t just write code. We study your market, your users, and your revenue goals before touching a keyboard.",
   },
   {
-    icon: Globe,
-    title: "Global Standards",
-    description: "Following modern architecture patterns and global best practices for scalable, maintainable products.",
+    title: "Scalable Architecture",
+    description: "Built to grow. Our systems handle 10 users and 10 million with the same reliability and performance.",
+  },
+  {
+    title: "SEO Ready",
+    description: "Technical SEO isn&apos;t an afterthought. It&apos;s baked into every page, every component, every deployment.",
+  },
+  {
+    title: "Long Term Support",
+    description: "We don&apos;t disappear after launch. Ongoing optimization, feature evolution, and genuine partnership.",
   },
 ];
 
 export default function ExpertCommunity() {
   return (
-    <section className="section-padding relative overflow-hidden bg-background">
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-[1000px] h-[500px] bg-primary/5 blur-[120px] rounded-full opacity-60 dark:opacity-80" />
-      </div>
+    <section className="relative overflow-hidden" style={{ backgroundColor: '#FAF8F5' }}>
+      <div className="content-container py-20 md:py-32 lg:py-40">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+          {/* Left: Heading */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.7 }}
+            className="lg:sticky lg:top-32"
+          >
+            <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: '#2563EB' }}>
+              Why Webkaro
+            </p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight mb-6" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+              We don&apos;t just build websites. We build businesses.
+            </h2>
+            <p className="text-base md:text-lg leading-relaxed" style={{ color: '#656565' }}>
+              An engineering collective that treats your product like our own. Senior talent, production-grade rigor, and a process designed for outcomes.
+            </p>
+          </motion.div>
 
-      <div className="max-w-7xl mx-auto relative z-10">
-        <div className="text-center mb-16 md:mb-24 px-4 max-w-3xl mx-auto space-y-6">
-          <h2 className="h2 uppercase leading-[1.25] text-foreground">
-            Powered By <span className="text-foreground dark:text-white">Expert</span> <span className="text-gradient">Collective.</span>
-          </h2>
-
-          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-            Webkaro is more than just a development studio. We are a community-driven collective of high-performance developers, designers, and strategists collaborating to deliver exceptional digital products.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-24 lg:gap-32 items-center">
-          <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 md:gap-x-12 md:gap-y-10">
-              {features.map((feature, index) => (
-                <div key={index} className="space-y-4 flex flex-col items-center text-center">
-                  <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
-                    <feature.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <h4 className="text-foreground dark:text-white font-black uppercase text-[10px] tracking-[0.2em] font-outfit">{feature.title}</h4>
-                  <p className="text-muted-foreground text-[13px] leading-relaxed max-w-[240px] mx-auto">
-                    {feature.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="relative mt-12 lg:mt-0">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-primary/5 blur-[100px] rounded-full" />
-            <div className="grid grid-cols-2 gap-4 md:gap-6 relative">
-              <div className="space-y-4 md:space-y-6">
-                <div className="bg-card dark:transparent dark:glass p-6 md:p-8 rounded-[2rem] md:rounded-3xl h-40 md:h-48 flex flex-col justify-end animate-float border border-border dark:border-white/5 shadow-premium dark:shadow-xl">
-                  <p className="text-2xl md:text-3xl font-black text-foreground dark:text-white">50+</p>
-                  <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-muted-foreground">Experts</p>
-                </div>
-                <div className="bg-card dark:transparent dark:glass p-6 md:p-8 rounded-[2rem] md:rounded-3xl h-56 md:h-64 flex flex-col justify-end border border-border dark:border-white/5 shadow-premium dark:shadow-xl">
-                  <p className="text-2xl md:text-3xl font-black text-foreground dark:text-white">100%</p>
-                  <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-muted-foreground">Growth</p>
-                </div>
-              </div>
-              <div className="space-y-4 md:space-y-6 pt-6 md:pt-8">
-                <div className="bg-card dark:transparent dark:glass p-6 md:p-8 rounded-[2rem] md:rounded-3xl h-56 md:h-64 flex flex-col justify-end border border-border dark:border-white/5 shadow-premium dark:shadow-xl">
-                  <p className="text-2xl md:text-3xl font-black text-foreground dark:text-white">Global</p>
-                  <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-muted-foreground">Reach</p>
-                </div>
-                <div className="bg-card dark:transparent dark:glass p-6 md:p-8 rounded-[2rem] md:rounded-3xl h-40 md:h-48 flex flex-col justify-end animate-float border border-border dark:border-white/5 shadow-premium dark:shadow-xl" style={{ animationDelay: "1s" }}>
-                  <p className="text-2xl md:text-3xl font-black text-foreground dark:text-white">24/7</p>
-                  <p className="text-[10px] md:text-xs font-bold uppercase tracking-widest text-muted-foreground">Sync</p>
-                </div>
-              </div>
-            </div>
+          {/* Right: Benefits */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px" style={{ backgroundColor: 'rgba(0,0,0,0.06)' }}>
+            {benefits.map((benefit, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.5, delay: i * 0.08 }}
+                className="p-8 md:p-10"
+                style={{ backgroundColor: '#FAF8F5' }}
+              >
+                <h4 className="text-base font-semibold mb-3" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+                  {benefit.title}
+                </h4>
+                <p className="text-sm leading-relaxed" style={{ color: '#888888' }}>
+                  {benefit.description}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>

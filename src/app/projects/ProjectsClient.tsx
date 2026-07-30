@@ -6,8 +6,6 @@ import { ArrowRight, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import FinalCTA from "@/components/sections/FinalCTA";
-import Testimonials from "@/components/sections/Testimonials";
 
 interface Project {
   id: string;
@@ -31,128 +29,121 @@ export default function ProjectsClient({ projects }: { projects: Project[] }) {
     : projects.filter(p => p.category === activeCategory);
 
   return (
-    <div className="pt-44 pb-24">
+    <div className="relative" style={{ backgroundColor: '#FAF8F5' }}>
       {/* Header */}
-      <section className="px-6 mb-24 text-center">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-primary text-sm font-bold uppercase tracking-[0.3em] mb-4">
-            OUR PORTFOLIO – Proven Results Globally
+      <section className="content-container pt-32 md:pt-40 lg:pt-48 pb-16 md:pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-6" style={{ color: '#2563EB' }}>
+            Selected Work
           </p>
-          <h1 className="text-6xl md:text-8xl font-black text-foreground dark:text-white mb-8 font-outfit tracking-tight">
-            Proven Results <br />
-            <span className="text-gradient font-italic">Globally.</span>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-6" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+            Case Studies
           </h1>
-          <p className="text-foreground/60 dark:text-white/50 text-xl md:text-2xl max-w-2xl mx-auto mb-16 font-medium leading-relaxed">
-            High-converting web applications and scalable platforms for startups and growing businesses.
+          <p className="text-sm md:text-base leading-relaxed max-w-2xl mx-auto" style={{ color: '#656565' }}>
+            A curated selection of our recent work. Each project is a study in constraint, craft, and measurable outcomes.
           </p>
+        </motion.div>
 
-          {/* Logo Strip / Trust Signals */}
-          <div className="flex flex-wrap items-center justify-center gap-12 opacity-30 grayscale mb-20 pointer-events-none">
-            <div className="flex items-center gap-2 font-black text-2xl">⚡ FAST</div>
-            <div className="flex items-center gap-2 font-black text-2xl">🛡️ SECURE</div>
-            <div className="flex items-center gap-2 font-black text-2xl">📈 SCALABLE</div>
-            <div className="flex items-center gap-2 font-black text-2xl">✨ PREMIUM</div>
-          </div>
-
-          {/* Filters */}
-          <div className="flex flex-wrap items-center justify-center gap-[24px] mt-12 bg-primary/5 p-2 rounded-full w-fit mx-auto border border-border px-8">
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={cn(
-                  "py-3 rounded-full text-sm font-black transition-all relative group h-full flex items-center",
-                  activeCategory === cat
-                    ? "text-primary"
-                    : "text-foreground/40 hover:text-primary"
-                )}
-                aria-pressed={activeCategory === cat}
-              >
-                {cat}
-                {activeCategory === cat && (
-                  <motion.div
-                    layoutId="activeFilter"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary rounded-full shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)]"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
+        {/* Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="flex flex-wrap items-center justify-center gap-2 mt-12"
+        >
+          {categories.map(cat => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={cn(
+                "px-5 py-2.5 rounded-full text-xs font-semibold transition-all duration-300",
+                activeCategory === cat
+                  ? "text-white"
+                  : "border hover:border-[#2563EB]"
+              )}
+              style={activeCategory === cat ? { backgroundColor: '#2563EB' } : { borderColor: 'rgba(0,0,0,0.06)', color: '#656565' }}
+            >
+              {cat}
+            </button>
+          ))}
+        </motion.div>
       </section>
 
-      {/* Grid */}
-      <section className="px-8 mb-32">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-[24px]">
-          {filteredProjects.map((project) => (
-            <div
+      {/* Projects Grid */}
+      <section className="content-container pb-20 md:pb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          {filteredProjects.map((project, index) => (
+            <motion.div
               key={project.id}
-              className="group relative bg-card rounded-[2rem] border border-border overflow-hidden hover:border-primary/40 transition-all duration-700 shadow-premium flex flex-col"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, delay: index * 0.08 }}
+              className="group relative rounded-2xl overflow-hidden border bg-white transition-all duration-300 hover:shadow-soft"
+              style={{ borderColor: 'rgba(0,0,0,0.06)' }}
             >
-              <div className="aspect-[16/10] overflow-hidden relative">
+              <div className="aspect-[4/3] relative overflow-hidden">
                 <Image
                   src={project.thumbnail}
-                  alt={`Screenshot of ${project.title} project showcase`}
+                  alt={`${project.title} case study`}
                   fill
-                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-
-                {/* Outcomes Floating Tag */}
-                <div className="absolute top-6 right-6 flex flex-col gap-2">
-                  {project.outcomes?.map((outcome, i) => (
-                    <div key={i} className="px-3 py-1.5 bg-background/80 backdrop-blur-md border border-border rounded-lg text-[9px] font-black uppercase tracking-widest text-primary shadow-xl">
-                      {outcome}
-                    </div>
-                  ))}
-                </div>
               </div>
 
-              <div className="p-6 md:p-8 flex flex-col flex-grow">
-                <h3 className="text-3xl font-black text-foreground mb-[8px] font-outfit leading-tight group-hover:text-primary transition-colors">
+              <div className="p-6 md:p-8">
+                <p className="text-[10px] uppercase tracking-widest font-semibold mb-3" style={{ color: '#2563EB' }}>
+                  {project.category}
+                </p>
+                <h3 className="text-lg md:text-xl font-semibold mb-3 tracking-tight" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
                   {project.title}
                 </h3>
-                <p className="text-foreground/60 text-base leading-relaxed mb-[16px]">
+                <p className="text-xs leading-relaxed mb-5 line-clamp-2" style={{ color: '#888888' }}>
                   {project.description}
                 </p>
 
-                {/* Tech Stack Chips */}
-                <div className="flex flex-wrap gap-2 mb-[24px]">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1 bg-primary/5 border border-primary/10 rounded-md text-[9px] uppercase tracking-wider text-primary/70 font-bold">
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tags.slice(0, 3).map(tag => (
+                    <span
+                      key={tag}
+                      className="px-2.5 py-1 rounded-full text-[10px] uppercase tracking-widest font-semibold"
+                      style={{ backgroundColor: '#F6F3EE', color: '#656565' }}
+                    >
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <div className="mt-auto flex items-center gap-8">
+                <div className="flex items-center gap-6">
                   <Link
                     href={`/projects/${project.slug}`}
-                    aria-label={`View case study for ${project.title}`}
-                    className="group/btn px-8 py-3.5 bg-primary text-white rounded-xl font-black text-xs transition-all hover:shadow-lg hover:shadow-primary/20 flex items-center justify-center gap-2 border border-primary/20"
+                    className="inline-flex items-center gap-2 text-xs font-semibold transition-all duration-300 hover:gap-3"
+                    style={{ color: '#2563EB' }}
                   >
-                    View Case Study <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                    View Case Study <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
-                  <Link
-                    href={project.demoUrl || "#"}
-                    target="_blank"
-                    aria-label={`Live preview of ${project.title}`}
-                    className="flex items-center gap-2 text-foreground/40 font-black text-xs hover:text-primary transition-colors group/link underline-offset-4 hover:underline"
-                  >
-                    Live Preview <ExternalLink className="w-3.5 h-3.5" />
-                  </Link>
+                  {project.demoUrl && (
+                    <Link
+                      href={project.demoUrl}
+                      target="_blank"
+                      className="inline-flex items-center gap-2 text-xs font-semibold transition-colors duration-300 hover:text-[#2563EB]"
+                      style={{ color: '#888888' }}
+                    >
+                      Live Preview <ExternalLink className="w-3.5 h-3.5" />
+                    </Link>
+                  )}
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
-
-      {/* Testimonials Block */}
-      <Testimonials />
-
-      <FinalCTA />
     </div>
   );
 }

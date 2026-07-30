@@ -2,92 +2,120 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { projects } from "@/data/projects";
-import { cn } from "@/lib/utils";
 
 export default function FeaturedProjects() {
+  const featured = projects.slice(0, 3);
+
   return (
-    <section className="section-padding bg-background overflow-hidden relative">
-      <div className="max-w-7xl mx-auto">
-        {/* Center Header */}
-        <div className="text-center mb-16 md:mb-24 px-4 max-w-3xl mx-auto space-y-6">
-          <h2 className="h2 uppercase leading-[1.25] text-foreground">
-            Featured <span className="text-foreground dark:text-white">Case</span> <span className="text-gradient">Studies.</span>
-          </h2>
-          <p className="text-muted-foreground text-base md:text-xl leading-relaxed">
-            Explore how we've helped startups and established companies build scalable digital solutions that drive results.
-          </p>
-        </div>
+    <section className="relative overflow-hidden" style={{ backgroundColor: '#FAF8F5' }}>
+      <div className="content-container py-20 md:py-32 lg:py-40">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16 md:mb-24"
+        >
+          <div>
+                <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: '#2563EB' }}>
+                  Selected Work
+                </p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+              Case Studies
+            </h2>
+          </div>
+          <div className="lg:pt-2">
+            <p className="text-base md:text-lg leading-relaxed" style={{ color: '#656565' }}>
+              A curated selection of our recent work. Each project is a study in constraint, craft, and measurable outcomes.
+            </p>
+          </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 lg:gap-24">
-          {projects.slice(0, 4).map((project, index) => (
-            <div
+        {/* Projects */}
+        <div className="space-y-16 md:space-y-24">
+          {featured.map((project, index) => (
+            <motion.div
               key={project.id}
-              className="group relative overflow-hidden rounded-[3rem] bg-card border border-border hover:border-primary/50 transition-all duration-700 hover:-translate-y-2 hover:shadow-premium dark:hover:shadow-glow shine-effect shadow-sm"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-60px" }}
+              transition={{ duration: 0.7, delay: index * 0.1 }}
+              className="group grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
             >
-              {/* Image Container */}
-              <div className="aspect-[16/10] overflow-hidden relative">
-                <Image
-                  src={project.thumbnail}
-                  alt={`${project.title} - ${project.category} solutions by Webkaro`}
-                  fill
-                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                {/* Overlay with Meta */}
-                <div className="absolute top-6 right-6 md:top-8 md:right-8 flex flex-wrap justify-end gap-2 max-w-[200px]">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1 bg-background/80 dark:bg-black/40 backdrop-blur-md border border-border dark:border-white/10 rounded-full text-[9px] uppercase tracking-widest text-foreground/80 dark:text-white/80 font-bold">
-                      {tag}
-                    </span>
-                  ))}
+              {/* Image */}
+              <div className={`relative overflow-hidden rounded-2xl ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                <div className="aspect-[4/3] relative">
+                  <Image
+                    src={project.thumbnail}
+                    alt={`${project.title} case study`}
+                    fill
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                  />
                 </div>
               </div>
 
               {/* Content */}
-              <div className="p-8 md:p-12">
-                <p className="text-primary text-[10px] md:text-xs font-bold uppercase tracking-[0.2em] mb-4">
+              <div className={`${index % 2 === 1 ? 'lg:order-1' : ''}`}>
+                <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: '#6E8E59' }}>
                   {project.category}
                 </p>
-                <h3 className="text-2xl font-black mb-4 uppercase tracking-tighter text-foreground group-hover:text-primary transition-colors font-outfit leading-none">
+                <h3 className="text-2xl md:text-3xl font-semibold mb-4 tracking-tight" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
                   {project.title}
                 </h3>
-                <p className="text-muted-foreground text-sm leading-relaxed mb-8 max-w-lg h-12 overflow-hidden line-clamp-2">
+                <p className="text-sm leading-relaxed mb-6" style={{ color: '#656565' }}>
                   {project.description}
                 </p>
 
-                <div className="flex flex-wrap items-center gap-8">
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="learn-more-link text-primary font-black text-[10px] tracking-widest uppercase hover:gap-3 transition-all"
-                  >
-                    View Details <ArrowRight className="w-4 h-4" />
-                  </Link>
-                  <Link
-                    href={project.demoUrl || "#"}
-                    target="_blank"
-                    className="flex items-center gap-2 text-foreground/40 dark:text-white/20 font-black text-[10px] uppercase tracking-widest hover:text-primary dark:hover:text-white transition-colors"
-                  >
-                    Live Demo <ExternalLink className="w-3.5 h-3.5" />
-                  </Link>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {project.tags.map(tag => (
+                    <span 
+                      key={tag} 
+                      className="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-semibold"
+                      style={{ 
+                        backgroundColor: '#F6F3EE',
+                        color: '#656565'
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
                 </div>
+
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 hover:gap-3"
+                  style={{ color: '#2563EB' }}
+                >
+                  View Project
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
-        {/* Centered CTA Button */}
-        <div className="text-center mt-16 md:mt-24">
+        {/* View All */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="mt-16 md:mt-24 text-center"
+        >
           <Link
-            href="/projects"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-primary text-white text-sm font-semibold hover:scale-[1.03] transition-all duration-300 shadow-lg shadow-primary/20"
-          >
-            View All Projects <ArrowRight className="w-4 h-4" />
+              href="/projects"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-white font-medium transition-all duration-300 hover:translate-y-[-1px]"
+              style={{ backgroundColor: '#2563EB' }}
+            >
+            View All Projects
+            <ArrowRight className="w-4 h-4" />
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

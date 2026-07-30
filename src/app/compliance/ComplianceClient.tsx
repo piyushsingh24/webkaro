@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ShieldCheck, CheckCircle, Lock, Globe, FileText, Scale } from "lucide-react";
+import { ShieldCheck, Lock, CheckCircle, Globe } from "lucide-react";
 
 const standards = [
   {
@@ -26,101 +26,56 @@ const standards = [
 
 export default function ComplianceClient() {
   return (
-    <>
+    <div className="relative" style={{ backgroundColor: '#FAF8F5' }}>
       {/* Hero */}
-      <section className="px-6 mb-32 text-center">
-        <div className="max-w-7xl mx-auto">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-primary text-sm font-bold uppercase tracking-[0.3em] mb-4"
-          >
-            TRUST & INTEGRITY
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-5xl md:text-8xl font-black text-foreground mb-8 font-outfit"
-          >
-            Compliance & <br />
-            <span className="text-gradient">Governance.</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-foreground/80 dark:text-foreground/70 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed font-outfit"
-          >
-            Webkaro integrates rigorous compliance standards into every line of code.
-            We ensure your digital products meet global regulatory requirements.
-          </motion.p>
-        </div>
+      <section className="content-container pt-32 md:pt-40 lg:pt-48 pb-16 md:pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-6" style={{ color: '#2563EB' }}>
+            Trust & Integrity
+          </p>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-6" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+            Compliance & Governance
+          </h1>
+          <p className="text-sm md:text-base leading-relaxed max-w-2xl mx-auto" style={{ color: '#656565' }}>
+            Webkaro integrates rigorous compliance standards into every line of code. We ensure your digital products meet global regulatory requirements.
+          </p>
+        </motion.div>
       </section>
 
       {/* Standards Grid */}
-      <section className="px-6 mb-32">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
-          {standards.map((s, i) => (
+      <section className="content-container pb-20 md:pb-32">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          {standards.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="glass p-12 rounded-[3.5rem] border-border dark:border-white/10 space-y-8 shadow-premium"
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="p-6 md:p-8 rounded-2xl border bg-white transition-all duration-300 hover:shadow-soft"
+              style={{ borderColor: 'rgba(0,0,0,0.06)' }}
             >
-              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center">
-                <s.icon className="w-8 h-8 text-primary" />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5" style={{ backgroundColor: '#F4F7F1' }}>
+                <item.icon className="w-5 h-5" style={{ color: '#2563EB' }} />
               </div>
-              <div className="space-y-4">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-2xl font-bold font-outfit text-foreground">{s.title}</h3>
-                </div>
-                <p className="inline-block px-3 py-1 bg-primary/5 dark:bg-white/5 rounded-full text-[10px] uppercase font-bold text-primary tracking-widest border border-primary/20">
-                  {s.status}
-                </p>
-                <p className="text-foreground/80 dark:text-foreground/60 text-sm leading-relaxed">{s.description}</p>
-              </div>
+              <h3 className="text-sm font-semibold mb-1" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+                {item.title}
+              </h3>
+              <p className="text-[10px] uppercase tracking-widest font-semibold mb-3" style={{ color: '#2563EB' }}>
+                {item.status}
+              </p>
+              <p className="text-xs leading-relaxed" style={{ color: '#888888' }}>
+                {item.description}
+              </p>
             </motion.div>
           ))}
         </div>
       </section>
-
-      {/* Governance Framework */}
-      <section className="px-6 mb-32">
-        <div className="max-w-5xl mx-auto glass p-12 md:p-24 rounded-[4rem] border-border dark:border-white/5 bg-gradient-to-br from-background/50 to-transparent shadow-premium">
-          <h2 className="text-3xl md:text-4xl font-black mb-12 font-outfit text-center text-foreground">Governance Framework</h2>
-          <div className="space-y-12">
-            <div className="flex gap-8 items-start">
-              <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center shrink-0 shadow- glow">
-                <FileText className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h4 className="text-xl font-bold mb-2 text-foreground">Ethics & Integrity</h4>
-                <p className="text-foreground/80 dark:text-foreground/60">Our code of conduct ensures all collective members operate with the highest professional ethics and financial transparency.</p>
-              </div>
-            </div>
-            <div className="flex gap-8 items-start">
-              <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center shrink-0 shadow-glow">
-                <Scale className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h4 className="text-xl font-bold mb-2 text-foreground">Contractual Rigor</h4>
-                <p className="text-foreground/80 dark:text-foreground/60">We use clear, iron-clad service level agreements (SLAs) to protect both the client and the collective, ensuring deliverables are always met.</p>
-              </div>
-            </div>
-            <div className="flex gap-8 items-start">
-              <div className="w-12 h-12 rounded-full bg-primary/15 flex items-center justify-center shrink-0 shadow-glow">
-                <Globe className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h4 className="text-xl font-bold mb-2 text-foreground">Regional Compliance</h4>
-                <p className="text-foreground/80 dark:text-foreground/60">From Indian IT laws to US data privacy regulations, we adapt our engineering to match the legal landscape of your target market.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+    </div>
   );
 }

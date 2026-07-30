@@ -2,234 +2,110 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Megaphone, Code2, Palette, Users } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { Linkedin, Github } from "lucide-react";
 
 const founders = [
   {
     name: "Ankit Sharma",
     role: "Head of Marketing",
-    department: "Marketing",
-    image: "/founder-marketing.png",
-    icon: Megaphone,
     bio: "Driving brand growth through data-driven strategies and creative campaigns that deliver measurable results.",
-    accent: "from-violet-500 to-fuchsia-500",
-    accentShadow: "rgba(139, 92, 246, 0.3)",
-    iconBg: "bg-violet-500/10",
-    iconColor: "text-violet-400",
+    image: "/founder-marketing.png",
+    linkedin: "https://linkedin.com",
+    github: "https://github.com",
   },
   {
     name: "Piyush Singh",
     role: "Senior Developer",
-    department: "IT Solutions",
-    image: "/founder-developer.png",
-    icon: Code2,
     bio: "Architecting scalable solutions with modern tech stacks and leading engineering excellence across projects.",
-    accent: "from-blue-500 to-cyan-500",
-    accentShadow: "rgba(59, 130, 246, 0.3)",
-    iconBg: "bg-blue-500/10",
-    iconColor: "text-blue-400",
+    image: "/founder-developer.png",
+    linkedin: "https://linkedin.com",
+    github: "https://github.com",
   },
   {
     name: "Saksham Dubey",
     role: "Creative Designer",
-    department: "Design",
-    image: "/founder-designer.png",
-    icon: Palette,
     bio: "Crafting pixel-perfect interfaces and immersive brand experiences that captivate and convert users.",
-    accent: "from-rose-500 to-orange-500",
-    accentShadow: "rgba(244, 63, 94, 0.3)",
-    iconBg: "bg-rose-500/10",
-    iconColor: "text-rose-400",
+    image: "/founder-designer.png",
+    linkedin: "https://linkedin.com",
+    github: "https://github.com",
   },
   {
     name: "Priyanka Kumari",
     role: "HR Manager",
-    department: "Human Resources",
-    image: "/founder-hr.png",
-    icon: Users,
     bio: "Building a world-class team culture and nurturing talent that drives innovation and collaboration.",
-    accent: "from-emerald-500 to-teal-500",
-    accentShadow: "rgba(16, 185, 129, 0.3)",
-    iconBg: "bg-emerald-500/10",
-    iconColor: "text-emerald-400",
+    image: "/founder-hr.png",
+    linkedin: "https://linkedin.com",
+    github: "https://github.com",
   },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-    },
-  },
-};
-
-const cardVariants = {
-  hidden: { opacity: 0, y: 50, scale: 0.95 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.6,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
-};
-
 export default function FoundersSection() {
   return (
-    <section className="section-padding relative overflow-hidden bg-background">
-      {/* Background Effects */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-primary/5 blur-[150px] rounded-full opacity-40" />
-        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-blue-500/5 blur-[130px] rounded-full opacity-30" />
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10 px-6 md:px-12 lg:px-16">
-        {/* Section Header */}
+    <section className="relative overflow-hidden" style={{ backgroundColor: '#FAF8F5' }}>
+      <div className="content-container py-20 md:py-32 lg:py-40">
         <motion.div
-          className="text-center mb-16 md:mb-24 max-w-3xl mx-auto space-y-6"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.7 }}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-20 md:mb-28"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-primary">
-              The Team
-            </span>
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: '#2563EB' }}>
+              Leadership
+            </p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+              The team behind<br />the work.
+            </h2>
           </div>
-
-          <h2 className="h2 uppercase leading-[1.25] text-foreground">
-            Meet The{" "}
-            <span className="text-gradient">Founders.</span>
-          </h2>
-
-          <p className="text-muted-foreground text-base md:text-lg leading-relaxed">
-            The visionaries behind Webkaro — a team of passionate experts
-            dedicated to delivering extraordinary digital experiences.
-          </p>
+          <div className="lg:pt-2">
+            <p className="text-base md:text-lg leading-relaxed" style={{ color: '#656565' }}>
+              Four people, one shared obsession: building digital products that outlast trends. We&apos;re generalists with deep specializations, and we bring that rare combination to every engagement.
+            </p>
+          </div>
         </motion.div>
 
-        {/* Founders Grid */}
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-        >
-          {founders.map((founder, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+          {founders.map((founder, i) => (
             <motion.div
-              key={index}
-              variants={cardVariants}
-              className="group relative"
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-40px" }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="group"
             >
-              <div
-                className={cn(
-                  "relative flex flex-col items-center text-center",
-                  "p-8 pb-10 rounded-3xl",
-                  "bg-card border border-border",
-                  "hover:border-primary/30",
-                  "transition-all duration-500",
-                  "hover:-translate-y-3",
-                  "overflow-hidden"
-                )}
-                style={{
-                  boxShadow: `0 0 0 rgba(0,0,0,0)`,
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.boxShadow = `0 30px 80px -20px ${founder.accentShadow}`;
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.boxShadow = `0 0 0 rgba(0,0,0,0)`;
-                }}
-              >
-                {/* Gradient glow on hover */}
-                <div
-                  className={cn(
-                    "absolute -top-20 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full blur-[80px] opacity-0 group-hover:opacity-40 transition-opacity duration-700",
-                    `bg-gradient-to-br ${founder.accent}`
-                  )}
+              <div className="relative aspect-[3/4] mb-6 rounded-2xl overflow-hidden" style={{ backgroundColor: '#F6F3EE' }}>
+                <Image
+                  src={founder.image}
+                  alt={founder.name}
+                  fill
+                  className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                 />
-
-                {/* Profile Image */}
-                <div className="relative mb-6">
-                  <div
-                    className={cn(
-                      "w-28 h-28 rounded-full overflow-hidden ring-2 ring-border group-hover:ring-primary/40 transition-all duration-500",
-                      "relative z-10"
-                    )}
-                  >
-                    <Image
-                      src={founder.image}
-                      alt={`${founder.name} - ${founder.role} at Webkaro`}
-                      width={112}
-                      height={112}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                  </div>
-                  {/* Floating icon badge */}
-                  <div
-                    className={cn(
-                      "absolute -bottom-2 -right-2 z-20 w-10 h-10 rounded-xl flex items-center justify-center",
-                      "bg-card border border-border",
-                      "group-hover:border-primary/30 group-hover:scale-110 transition-all duration-500",
-                      "shadow-lg"
-                    )}
-                  >
-                    <founder.icon
-                      className={cn(
-                        "w-4.5 h-4.5 transition-colors duration-500",
-                        founder.iconColor
-                      )}
-                    />
-                  </div>
-                </div>
-
-                {/* Info */}
-                <div className="space-y-3 relative z-10">
-                  <div>
-                    <h3 className="text-lg font-bold text-foreground mb-1 font-display">
-                      {founder.name}
-                    </h3>
-                    <p
-                      className={cn(
-                        "text-[11px] font-black uppercase tracking-[0.2em]",
-                        founder.iconColor
-                      )}
-                    >
-                      {founder.role}
-                    </p>
-                  </div>
-
-                  <div className="w-8 h-px bg-border mx-auto" />
-
-                  <p className="text-muted-foreground text-[13px] leading-relaxed max-w-[220px] mx-auto">
-                    {founder.bio}
-                  </p>
-
-                  {/* Department tag */}
-                  <div className="pt-2">
-                    <span
-                      className={cn(
-                        "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-[0.15em]",
-                        founder.iconBg,
-                        founder.iconColor
-                      )}
-                    >
-                      <span className="w-1 h-1 rounded-full bg-current" />
-                      {founder.department}
-                    </span>
-                  </div>
+              </div>
+              <div>
+                <h4 className="text-lg font-semibold mb-1" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+                  {founder.name}
+                </h4>
+                <p className="text-xs uppercase tracking-widest font-semibold mb-3" style={{ color: '#6E8E59' }}>
+                  {founder.role}
+                </p>
+                <p className="text-sm leading-relaxed mb-4" style={{ color: '#888888' }}>
+                  {founder.bio}
+                </p>
+                <div className="flex gap-3">
+                  <a href={founder.linkedin} className="w-8 h-8 rounded-lg flex items-center justify-center border transition-colors duration-300 hover:border-[#6E8E59]" style={{ borderColor: 'rgba(0,0,0,0.06)' }} aria-label={`${founder.name} LinkedIn`}>
+                    <Linkedin className="w-4 h-4" style={{ color: '#888888' }} />
+                  </a>
+                  <a href={founder.github} className="w-8 h-8 rounded-lg flex items-center justify-center border transition-colors duration-300 hover:border-[#6E8E59]" style={{ borderColor: 'rgba(0,0,0,0.06)' }} aria-label={`${founder.name} GitHub`}>
+                    <Github className="w-4 h-4" style={{ color: '#888888' }} />
+                  </a>
                 </div>
               </div>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

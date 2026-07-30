@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import Hero from "@/components/sections/Hero";
 import ServicesOverview from "@/components/sections/ServicesOverview";
 import FeaturedProjects from "@/components/sections/FeaturedProjects";
+import Process from "@/components/sections/Process";
 import ExpertCommunity from "@/components/sections/ExpertCommunity";
-import Testimonials from "@/components/sections/Testimonials";
+import Statistics from "@/components/sections/Statistics";
 import FoundersSection from "@/components/sections/FoundersSection";
-import TrustSection from "@/components/sections/TrustSection";
+import Testimonials from "@/components/sections/Testimonials";
+import TechnologyStack from "@/components/sections/TechnologyStack";
 import FAQPreview from "@/components/sections/FAQPreview";
 import FinalCTA from "@/components/sections/FinalCTA";
 
@@ -25,10 +27,12 @@ export default function Home() {
       <Hero />
       <ServicesOverview />
       <FeaturedProjects />
+      <Process />
       <ExpertCommunity />
+      <Statistics />
       <FoundersSection />
       <Testimonials />
-      <TrustSection />
+      <TechnologyStack />
       <FAQPreview />
       <FinalCTA />
     </>

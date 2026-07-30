@@ -28,82 +28,53 @@ const features = [
 
 export default function SecurityClient() {
   return (
-    <>
+    <div className="relative" style={{ backgroundColor: '#FAF8F5' }}>
       {/* Hero */}
-      <section className="px-6 mb-32 text-center">
-        <div className="max-w-7xl mx-auto">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-primary text-sm font-bold uppercase tracking-[0.3em] mb-4"
-          >
-            FORTRESS ENGINEERING
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-5xl md:text-8xl font-black text-foreground mb-8 font-outfit"
-          >
-            Security First, <br />
-            <span className="text-gradient">Always.</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-foreground/80 dark:text-foreground/70 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed font-outfit"
-          >
-            At Webkaro, security isn't an afterthought—it's woven into our architectural
-            DNA. We build digital fortresses that protect your business and your users.
-          </motion.p>
-        </div>
+      <section className="content-container pt-32 md:pt-40 lg:pt-48 pb-16 md:pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-6" style={{ color: '#2563EB' }}>
+            Fortress Engineering
+          </p>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-6" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+            Security First, Always
+          </h1>
+          <p className="text-sm md:text-base leading-relaxed max-w-2xl mx-auto" style={{ color: '#656565' }}>
+            At Webkaro, security isn&apos;t an afterthought—it&apos;s woven into our architectural DNA. We build digital fortresses that protect your business and your users.
+          </p>
+        </motion.div>
       </section>
 
-      {/* Security Features Grid */}
-      <section className="px-6 mb-32">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12">
-          {features.map((f, i) => (
+      {/* Features */}
+      <section className="content-container pb-20 md:pb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          {features.map((feature, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="glass p-12 rounded-[3.5rem] border-border dark:border-white/5 space-y-6 group hover:border-primary/20 transition-all font-outfit shadow-premium"
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="p-6 md:p-8 rounded-2xl border bg-white transition-all duration-300 hover:shadow-soft"
+              style={{ borderColor: 'rgba(0,0,0,0.06)' }}
             >
-              <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
-                <f.icon className="w-8 h-8 text-primary" />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5" style={{ backgroundColor: '#F4F7F1' }}>
+                <feature.icon className="w-5 h-5" style={{ color: '#2563EB' }} />
               </div>
-              <h3 className="text-2xl font-bold text-foreground">{f.title}</h3>
-              <p className="text-foreground/80 dark:text-foreground/60 text-lg leading-relaxed">{f.description}</p>
+              <h3 className="text-sm font-semibold mb-2" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+                {feature.title}
+              </h3>
+              <p className="text-xs leading-relaxed" style={{ color: '#888888' }}>
+                {feature.description}
+              </p>
             </motion.div>
           ))}
         </div>
       </section>
-
-      {/* Security Operations */}
-      <section className="px-6 mb-32">
-        <div className="max-w-5xl mx-auto text-center space-y-16 font-outfit">
-          <h2 className="text-3xl md:text-5xl font-black text-foreground">Our Security Lifecycle</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-            <div className="space-y-4">
-              <div className="w-10 h-10 bg-primary/5 dark:bg-white/5 rounded-full flex items-center justify-center font-black text-primary border border-border dark:border-white/10">1</div>
-              <h4 className="text-xl font-bold text-foreground">Code Audits</h4>
-              <p className="text-foreground/60 dark:text-foreground/40 text-sm">Automated and manual peer reviews for every pull request to identify potential injection or logic flaws.</p>
-            </div>
-            <div className="space-y-4">
-              <div className="w-10 h-10 bg-primary/5 dark:bg-white/5 rounded-full flex items-center justify-center font-black text-primary border border-border dark:border-white/10">2</div>
-              <h4 className="text-xl font-bold text-foreground">Penetration Testing</h4>
-              <p className="text-foreground/60 dark:text-foreground/40 text-sm">Regular ethical hacking simulations to stress-test our production environments and endpoints.</p>
-            </div>
-            <div className="space-y-4">
-              <div className="w-10 h-10 bg-primary/5 dark:bg-white/5 rounded-full flex items-center justify-center font-black text-primary border border-border dark:border-white/10">3</div>
-              <h4 className="text-xl font-bold text-foreground">Incident Response</h4>
-              <p className="text-foreground/60 dark:text-foreground/40 text-sm">A dedicated team ready to respond to any security anomaly within minutes, 24/7/365.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
+    </div>
   );
 }

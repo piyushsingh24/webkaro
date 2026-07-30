@@ -46,114 +46,108 @@ const perks = [
 
 export default function CareersClient() {
   return (
-    <div className="pt-44 pb-24 text-foreground">
+    <div className="relative" style={{ backgroundColor: '#FAF8F5' }}>
       {/* Hero */}
-      <section className="px-6 mb-32 text-center">
-        <div className="max-w-7xl mx-auto">
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-primary text-sm font-bold uppercase tracking-[0.3em] mb-4"
-          >
-            JOIN OUR COLLECTIVE
-          </motion.p>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.05 }}
-            className="text-4xl sm:text-6xl md:text-8xl font-black text-foreground mb-8 font-outfit"
-          >
-            Engineered for <br />
-            <span className="text-gradient">Freedom.</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-foreground/60 text-lg md:text-2xl max-w-3xl mx-auto leading-relaxed"
-          >
-            We're not a traditional studio. We're a meritocratic collective
-            of high-performance builders who value autonomy, quality, and profit.
-          </motion.p>
-        </div>
+      <section className="content-container pt-32 md:pt-40 lg:pt-48 pb-16 md:pb-24">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="max-w-4xl mx-auto text-center"
+        >
+          <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-6" style={{ color: '#2563EB' }}>
+            Join Our Collective
+          </p>
+          <h1 className="text-3xl md:text-5xl lg:text-6xl font-semibold tracking-tight mb-6" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+            Engineered for Freedom
+          </h1>
+          <p className="text-sm md:text-base leading-relaxed max-w-2xl mx-auto" style={{ color: '#656565' }}>
+            We&apos;re not a traditional studio. We&apos;re a meritocratic collective of high-performance builders who value autonomy, quality, and profit.
+          </p>
+        </motion.div>
       </section>
 
-      {/* Perks Grid */}
-      <section className="px-6 mb-32">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+      {/* Perks */}
+      <section className="content-container pb-16 md:pb-24">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
           {perks.map((perk, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className="glass p-10 rounded-[3rem] border-border dark:border-white/5 space-y-6"
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+              className="p-6 md:p-8 rounded-2xl border bg-white transition-all duration-300 hover:shadow-soft"
+              style={{ borderColor: 'rgba(0,0,0,0.06)' }}
             >
-              <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center">
-                <perk.icon className="w-6 h-6 text-primary" />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-5" style={{ backgroundColor: '#F4F7F1' }}>
+                <perk.icon className="w-5 h-5" style={{ color: '#2563EB' }} />
               </div>
-              <h3 className="text-xl font-bold font-outfit text-foreground">{perk.title}</h3>
-              <p className="text-foreground/60 text-sm leading-relaxed">{perk.description}</p>
+              <h3 className="text-sm font-semibold mb-2" style={{ color: '#1B1B1B' }}>{perk.title}</h3>
+              <p className="text-xs leading-relaxed" style={{ color: '#888888' }}>{perk.description}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* Open Positions */}
-      <section className="px-6 mb-32" id="open-positions">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-16 text-center lg:text-left">
-            <h2 className="text-3xl md:text-5xl font-black text-foreground mb-4 font-outfit">Open Opportunities</h2>
-            <p className="text-foreground/50">Current high-priority roles in our collective ecosystem.</p>
+      <section className="content-container pb-20 md:pb-32" id="open-positions">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12 md:mb-16">
+            <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: '#2563EB' }}>
+              Opportunities
+            </p>
+            <h2 className="text-2xl md:text-4xl font-semibold tracking-tight" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+              Open Roles
+            </h2>
+            <p className="text-xs md:text-sm mt-3" style={{ color: '#888888' }}>
+              Current high-priority roles in our collective ecosystem.
+            </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-3">
             {jobs.map((job, i) => (
               <motion.div
                 key={i}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="group p-8 rounded-[2rem] border border-border dark:border-white/5 bg-primary/[0.02] hover:border-primary/40 hover:bg-primary/[0.04] transition-all cursor-pointer flex flex-col md:flex-row md:items-center justify-between gap-6"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.4, delay: i * 0.08 }}
+                className="p-6 md:p-8 rounded-2xl border bg-white flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300 hover:shadow-soft"
+                style={{ borderColor: 'rgba(0,0,0,0.06)' }}
               >
                 <div>
                   <div className="flex items-center gap-3 mb-2">
-                    <span className="px-3 py-1 bg-primary/5 dark:bg-white/5 rounded-full text-[10px] uppercase font-bold text-primary tracking-widest">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] uppercase font-semibold tracking-widest" style={{ backgroundColor: '#F4F7F1', color: '#2563EB' }}>
                       {job.category}
                     </span>
-                    <span className="text-foreground/40 text-xs font-medium font-outfit">
+                    <span className="text-[10px] uppercase tracking-widest font-semibold" style={{ color: '#888888' }}>
                       {job.type}
                     </span>
                   </div>
-                  <h4 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
-                    {job.title}
-                  </h4>
+                  <h4 className="text-sm font-semibold" style={{ color: '#1B1B1B' }}>{job.title}</h4>
                 </div>
-                <div className="flex items-center gap-8">
-                  <div className="text-right hidden md:block">
-                    <p className="text-xs text-foreground/40 uppercase tracking-widest font-bold">Compensation</p>
-                    <p className="text-foreground font-bold">{job.compensation}</p>
-                  </div>
-                  <div className="w-12 h-12 rounded-full border border-border flex items-center justify-center group-hover:bg-primary group-hover:border-primary transition-all">
-                    <ArrowRight className="w-5 h-5 text-foreground group-hover:text-white" />
-                  </div>
+                <div className="flex items-center gap-6 md:gap-8">
+                  <p className="text-[10px] uppercase tracking-widest font-semibold hidden md:block" style={{ color: '#888888' }}>
+                    {job.compensation}
+                  </p>
+                  <Link href="/contact" className="inline-flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-300 hover:border-[#2563EB]" style={{ borderColor: 'rgba(0,0,0,0.06)' }}>
+                    <ArrowRight className="w-4 h-4" style={{ color: '#2563EB' }} />
+                  </Link>
                 </div>
               </motion.div>
             ))}
           </div>
 
-          <div className="mt-16 p-12 glass rounded-[3rem] border-border text-center bg-gradient-to-br from-primary/5 to-transparent">
-            <h3 className="text-2xl font-bold mb-4 font-outfit text-foreground">Don't see your role?</h3>
-            <p className="text-foreground/60 mb-8 max-w-lg mx-auto">
-              We're always looking for world-class developers, designers, and growth experts.
-              Send us your portfolio and we'll reach out when a match opens.
+          <div className="mt-12 p-8 md:p-12 rounded-2xl border text-center" style={{ backgroundColor: '#FFFFFF', borderColor: 'rgba(0,0,0,0.06)' }}>
+            <h3 className="text-lg font-semibold mb-3" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
+              Don&apos;t see your role?
+            </h3>
+            <p className="text-xs leading-relaxed max-w-md mx-auto mb-6" style={{ color: '#888888' }}>
+              We&apos;re always looking for world-class developers, designers, and growth experts. Send us your portfolio and we&apos;ll reach out when a match opens.
             </p>
-            <Link
-              href="mailto:careers@webkaro.tech"
-              className="text-primary font-black uppercase tracking-widest text-sm hover:underline"
-            >
-              General Application →
+            <Link href="mailto:careers@webkaro.tech" className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest transition-colors duration-300" style={{ color: '#2563EB' }}>
+              General Application <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
         </div>
