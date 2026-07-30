@@ -29,7 +29,7 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
             className="max-w-xl"
           >
-            <h1 className="text-foreground mb-8 tracking-tight">
+            <h1 className="mb-8 tracking-tight" style={{ color: '#1B1B1B', fontFamily: 'var(--font-display)' }}>
               Digital Experiences<br />
               That Drive<br />
               <span className="italic" style={{ color: '#6E8E59' }}>Real Growth.</span>

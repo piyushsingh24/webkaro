@@ -13,7 +13,6 @@ import {
   Clock,
   Globe,
 } from "lucide-react";
-import ThemeToggle from "@/components/layout/ThemeToggle";
 import { MagnetizeButton } from "@/components/ui/magnetize-button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -324,7 +323,6 @@ export default function Navbar() {
 
             {/* CTA Desktop */}
             <div className="hidden lg:flex items-center gap-4">
-              <ThemeToggle />
               <Link href="/contact">
                 <MagnetizeButton particleCount={10}>
                   Start Project <ArrowRight className="w-4 h-4" />
@@ -334,7 +332,6 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <div className="flex items-center gap-4 lg:hidden">
-              <ThemeToggle />
               <button
                 onClick={() => setIsOpen(!isOpen)}
                 className="p-2 transition-colors duration-300"
