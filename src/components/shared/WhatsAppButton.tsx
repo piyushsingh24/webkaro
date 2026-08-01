@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
 
 export default function WhatsAppButton() {
-  const whatsappNumber = "+917048903201"; // Updated number
+  const whatsappNumber = "8851151976"; // WhatsApp number
   const message = "Hi Webkaro! I'm interested in starting a Next.js project and would like to discuss some details.";
 
   return (

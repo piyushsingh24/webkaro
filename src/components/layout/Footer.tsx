@@ -74,8 +74,8 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             {[
               { Icon: Instagram, href: "https://instagram.com/webkaro_" },
-              { Icon: Facebook, href: "https://facebook.com/webkaro" },
-              { Icon: MessageCircle, href: "https://wa.me/917048903201" },
+              { Icon: Facebook, href: "https://www.facebook.com/webkaroin?rdid=vfxCLBpCfatrQE44&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1DffZdE9FX%23" },
+              { Icon: MessageCircle, href: "https://wa.me/8851151976" },
               { Icon: Linkedin, href: "https://linkedin.com/company/webkaro" },
               { Icon: Github, href: "https://github.com/webkaro" },
             ].map(({ Icon, href }, i) => (

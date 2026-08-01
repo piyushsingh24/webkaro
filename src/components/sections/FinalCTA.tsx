@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Phone, Mail, Globe, MapPin, Send, ArrowRight, CheckCircle2 } from "lucide-react";
+import { Phone, Mail, Globe, MapPin, Send, ArrowRight, CheckCircle2, Facebook } from "lucide-react";
 import toast from "react-hot-toast";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useTheme } from "next-themes";
@@ -28,6 +28,7 @@ export default function FinalCTA() {
     { icon: Mail, label: "info@webkaro.in", href: "mailto:info@webkaro.in" },
     { icon: Globe, label: "webkaro.in", href: "https://webkaro.in" },
     { icon: MapPin, label: "Delhi, India", href: "https://maps.app.goo.gl/M3aJuqSq4LnDk8YFA" },
+    { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/webkaroin?rdid=vfxCLBpCfatrQE44&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1DffZdE9FX%23" },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
