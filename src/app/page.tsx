@@ -13,15 +13,27 @@ import FinalCTA from "@/components/sections/FinalCTA";
 
 export const metadata: Metadata = {
   title: "Strategic MERN Stack & Next.js Development Partner | Webkaro",
-  description: "Webkaro is a premium digital studio specializing in high-performance MERN stack and Next.js applications. Build scalable startups with our expert engineering team.",
-  keywords: ["MERN stack developer", "Next.js development studio", "custom web applications Noida", "premium digital experiences", "startup engineering team"],
+
+  description:
+    "Webkaro is a premium digital studio specializing in high-performance MERN stack and Next.js applications. Build scalable startups with our expert engineering team.",
+
+  keywords: [
+    "MERN stack developer",
+    "Next.js development studio",
+    "custom web applications Noida",
+    "premium digital experiences",
+    "startup engineering team",
+  ],
+
   verification: {
-    google: "google88fe35d87abc7293",
+    google: "a02zrNgd7cZycONHIRJnFCcigBIAx5jMcimO9wqvHQ8",
   },
+
   openGraph: {
     title: "Best MERN Stack & Next.js Development Partner | Webkaro",
-    description: "Engineering scalable digital experiences for the modern web with Next.js and MERN stack.",
-  }
+    description:
+      "Engineering scalable digital experiences for the modern web with Next.js and MERN stack.",
+  },
 };
 
 export default function Home() {
