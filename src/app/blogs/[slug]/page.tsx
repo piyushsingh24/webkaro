@@ -48,13 +48,13 @@ export default async function BlogDetail({ params }: { params: Promise<{ slug: s
       "name": blog.author
     },
     "datePublished": blog.date,
-    "image": "https://webkaro.in/og-image.jpg",
+    "image": "https://www.webkaro.in/og-image.jpg",
     "publisher": {
       "@type": "Organization",
       "name": "Webkaro",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://webkaro.in/logo.png"
+        "url": "https://www.webkaro.in/logo.png"
       }
     }
   };

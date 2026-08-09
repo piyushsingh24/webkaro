@@ -29,10 +29,10 @@ export const metadata: Metadata = {
     "Tech Startup Solutions Delhi",
     "Webkaro Engineering"
   ],
-  authors: [{ name: "Webkaro Studio Team", url: "https://webkaro.in" }],
+  authors: [{ name: "Webkaro Studio Team", url: "https://www.webkaro.in" }],
   creator: "Webkaro Studio",
   publisher: "Webkaro Studio",
-  metadataBase: new URL("https://webkaro.in"),
+  metadataBase: new URL("https://www.webkaro.in"),
   alternates: {
     canonical: "/",
   },
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Webkaro | Engineering Digital Excellence",
     description: "We build high-performance digital experiences for the modern web.",
-    url: "https://webkaro.in",
+    url: "https://www.webkaro.in",
     siteName: "Webkaro Studio",
     images: [
       {
@@ -76,11 +76,11 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://webkaro.in/#organization",
+    "@id": "https://www.webkaro.in/#organization",
     "name": "Webkaro Studio",
-    "url": "https://webkaro.in",
-    "logo": "https://webkaro.in/logo.png",
-    "image": "https://webkaro.in/og-image.jpg",
+    "url": "https://www.webkaro.in",
+    "logo": "https://www.webkaro.in/logo.png",
+    "image": "https://www.webkaro.in/og-image.jpg",
     "description": "Premium web development studio specializing in Next.js and high-performance digital solutions.",
     "address": {
       "@type": "PostalAddress",
@@ -106,22 +106,22 @@ const jsonLd = [
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "@id": "https://webkaro.in/#website",
-    "url": "https://webkaro.in",
+    "@id": "https://www.webkaro.in/#website",
+    "url": "https://www.webkaro.in",
     "name": "Webkaro Studio",
     "description": "Premium digital studio engineering high-performance, scalable websites and web applications.",
     "publisher": {
-      "@id": "https://webkaro.in/#organization"
+      "@id": "https://www.webkaro.in/#organization"
     }
   },
   {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    "@id": "https://webkaro.in/#localbusiness",
+    "@id": "https://www.webkaro.in/#localbusiness",
     "name": "Webkaro Studio",
-    "image": "https://webkaro.in/logo.png",
+    "image": "https://www.webkaro.in/logo.png",
     "telephone": "+91-7048903201",
-    "url": "https://webkaro.in",
+    "url": "https://www.webkaro.in",
     "address": {
       "@type": "PostalAddress",
       "streetAddress": "Sovia Vihar 3rd Pusta",

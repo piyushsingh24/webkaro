@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const siteUrl = "https://webkaro.in";
+export const siteUrl = "https://www.webkaro.in";
 
 export function createMetadata(
   path: string,

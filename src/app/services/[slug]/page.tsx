@@ -33,7 +33,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: `https://webkaro.in/services/${slug}`,
+      url: `https://www.webkaro.in/services/${slug}`,
       siteName: "Webkaro Studio",
       images: [{ url: "/logo.png", alt: "Webkaro Studio" }],
       locale: "en_IN",

@@ -3,7 +3,7 @@ import { blogs } from '@/data/blogs';
 import { services } from '@/data/services';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://webkaro.in';
+  const baseUrl = 'https://www.webkaro.in';
 
   // Core pages
   const corePages = [
