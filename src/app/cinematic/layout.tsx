@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "WebKaro — Cinematic Experience | Design-First Engineering Collective",
   description:
     "An immersive scroll-driven narrative by WebKaro, Delhi's design-first MERN & Next.js engineering collective. Crafting digital products that convert.",
+  alternates: {
+    canonical: "/cinematic",
+  },
 };
 
 export default function CinematicLayout({

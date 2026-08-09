@@ -3,7 +3,7 @@ import ContactClient from "./ContactClient";
 
 export const metadata: Metadata = {
   title: "Contact Webkaro | Start Your Project",
-  description: "Get in touch with Webkaro's engineering collective. Let's discuss your next high-performance web application or SaaS MVP.",
+  description: "Ready to build? Contact our Delhi web design agency. Free consultation for your next website or SaaS MVP.",
   keywords: ["Contact Webkaro", "Hire Next.js Developers", "Start Project", "Web Development Inquiry"],
   openGraph: {
     title: "Contact Webkaro | Start Your Digital Transformation",

@@ -7,6 +7,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${title} Expertise | Webkaro`,
     description: `Deep technical expertise in ${title}. Our verified collective of specialists delivers high-performance solutions tailored for scale.`,
+    alternates: {
+      canonical: `/expertise/${slug}`,
+    },
   };
 }
 

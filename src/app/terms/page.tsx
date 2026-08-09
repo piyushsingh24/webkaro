@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     title: "Terms of Service | Webkaro",
     description: "Legal agreement and service terms for Webkaro.",
     type: "website",
-  }
+  },
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsPage() {

@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     title: "Privacy Policy | Webkaro",
     description: "Transparency and data protection at Webkaro.",
     type: "website",
-  }
+  },
+  alternates: {
+    canonical: "/privacy-policy",
+  },
 };
 
 export default function PrivacyPolicyPage() {

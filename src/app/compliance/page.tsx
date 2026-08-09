@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     title: "Compliance & Governance | Webkaro",
     description: "Global standards and regulatory excellence at Webkaro.",
     type: "website",
-  }
+  },
+  alternates: {
+    canonical: "/compliance",
+  },
 };
 
 export default function CompliancePage() {

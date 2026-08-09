@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     title: "Security & Infrastructure | Webkaro",
     description: "Fortress engineering and Zero-Trust infrastructure at Webkaro.",
     type: "website",
-  }
+  },
+  alternates: {
+    canonical: "/security",
+  },
 };
 
 export default function SecurityPage() {

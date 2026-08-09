@@ -12,17 +12,16 @@ import FAQPreview from "@/components/sections/FAQPreview";
 import FinalCTA from "@/components/sections/FinalCTA";
 
 export const metadata: Metadata = {
-  title: "Strategic MERN Stack & Next.js Development Partner | Webkaro",
-
-  description:
-    "Webkaro is a premium digital studio specializing in high-performance MERN stack and Next.js applications. Build scalable startups with our expert engineering team.",
-
+  title: "Web Design Agency in Delhi | Webkaro",
+  description: "Custom web design & development in Delhi. We build fast, conversion-focused websites for startups & businesses.",
   keywords: [
     "MERN stack developer",
     "Next.js development studio",
     "custom web applications Noida",
     "premium digital experiences",
     "startup engineering team",
+    "web design agency Delhi",
+    "website development Delhi",
   ],
 
   verification: {
@@ -33,6 +32,9 @@ export const metadata: Metadata = {
     title: "Best MERN Stack & Next.js Development Partner | Webkaro",
     description:
       "Engineering scalable digital experiences for the modern web with Next.js and MERN stack.",
+  },
+  alternates: {
+    canonical: "/",
   },
 };
 

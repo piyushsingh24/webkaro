@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     title: "About Webkaro | Engineering Digital Excellence",
     description: "Discover our story, vision, and the collective of experts behind Webkaro.",
     images: ["/logo.png"],
-  }
+  },
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {

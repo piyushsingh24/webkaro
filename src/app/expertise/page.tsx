@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     title: "Technical Excellence & Product Engineering | Webkaro Expertise",
     description: "Architectures built for scale. Discover our capabilities in React, Next.js, Node.js, AWS, and AI integration.",
     type: "website",
-  }
+  },
+  alternates: {
+    canonical: "/expertise",
+  },
 };
 
 export default function ExpertisePage() {

@@ -1,3 +1,26 @@
+export interface TechStackItem {
+  name: string;
+  description: string;
+}
+
+export interface ProcessStep {
+  step: string;
+  title: string;
+  description: string;
+}
+
+export interface CaseStudy {
+  project: string;
+  challenge: string;
+  solution: string;
+  results: string;
+}
+
+export interface FAQ {
+  question: string;
+  answer: string;
+}
+
 export interface Service {
   id: string;
   title: string;
@@ -12,6 +35,13 @@ export interface Service {
   color: string;
   glow: string;
   category: "Website Design" | "Custom Software" | "Growth";
+  seoTitle?: string;
+  seoDescription?: string;
+  techStackDetails?: TechStackItem[];
+  processSteps?: ProcessStep[];
+  caseStudy?: CaseStudy;
+  faqs?: FAQ[];
+  whyChoosePoints?: string[];
 }
 
 export const services: Service[] = [
@@ -130,7 +160,9 @@ export const services: Service[] = [
     ],
     color: "from-stone-200/60 to-stone-100/60",
     glow: "bg-stone-200/40",
-    category: "Website Design"
+    category: "Website Design",
+    seoTitle: "Website Redesign Company in India | Webkaro",
+    seoDescription: "Modernize your legacy website. We redesign existing sites for speed, UX, and conversions. 301-safe migration included."
   },
   {
     id: "ecommerce-website-design",
@@ -254,7 +286,6 @@ export const services: Service[] = [
     id: "mern-development",
     title: "MVP Engines",
     shortDescription: "Modern, end-to-end JavaScript applications for fast market entry.",
-    description: "The gold standard for modern startups and interactive apps.",
     icon: "Rocket",
     price: "5K to 10K",
     pricingHint: "5K to 10K",
@@ -277,7 +308,94 @@ export const services: Service[] = [
     ],
     color: "from-stone-200/60 to-stone-100/60",
     glow: "bg-stone-200/40",
-    category: "Custom Software"
+    category: "Custom Software",
+    seoTitle: "MERN Stack Development Company India | Webkaro",
+    seoDescription: "Full-stack MERN development company in India. MongoDB, Express, React, Node.js. Scalable apps, fast MVP delivery.",
+    description: "The MERN stack — MongoDB, Express.js, React, and Node.js — is the gold standard for modern startups and interactive applications. We build end-to-end JavaScript applications that scale from MVP to millions of users.",
+    whyChoosePoints: [
+      "Full JavaScript consistency from database to UI — reduces context switching and bugs",
+      "Massive npm ecosystem with 1M+ reusable packages — faster delivery",
+      "Real-time capabilities built-in (Socket.io, WebSockets) for chat, collaboration, live dashboards",
+      "Single-language hiring — easier to scale your team with JavaScript developers",
+      "Battle-tested by Netflix, Uber, PayPal, and Airbnb in production",
+    ],
+    techStackDetails: [
+      {
+        name: "MongoDB",
+        description: "NoSQL document database that scales horizontally. Schema flexibility lets you iterate quickly without expensive migrations. Includes Atlas cloud hosting, replica sets, and sharding for production workloads.",
+      },
+      {
+        name: "Express.js",
+        description: "Minimalist Node.js web framework for building REST APIs and server-side rendering. Middleware ecosystem for auth, rate-limiting, logging, and input validation. Powers the backend API layer with JWT and session support.",
+      },
+      {
+        name: "React",
+        description: "Component-based frontend library with virtual DOM. Hooks for state management (useState, useEffect, useContext). State management via Redux Toolkit, Zustand, or React Query. Component libraries: Tailwind CSS, Framer Motion, Radix UI.",
+      },
+      {
+        name: "Node.js",
+        description: "Server-side JavaScript runtime built on V8. Event-driven, non-blocking I/O for high concurrency. Used for API servers, real-time WebSocket servers, and backend microservices. Deployed on Vercel, AWS, or Render.",
+      },
+      {
+        name: "Additional Tools",
+        description: "TypeScript for type safety across the stack. GraphQL for flexible API queries. Socket.io for real-time bidirectional communication. Redis for caching and pub/sub. Docker for containerized deployment. Jest for testing.",
+      },
+    ],
+    processSteps: [
+      {
+        step: "Week 1–2",
+        title: "Requirements & Architecture",
+        description: "Define project scope, database schema, API endpoints, and system architecture. Choose third-party integrations. Set up version control and CI/CD pipeline.",
+      },
+      {
+        step: "Week 3–6",
+        title: "Frontend Development",
+        description: "Build React components, implement state management, integrate UI/UX designs. Set up routing, authentication flow, and responsive layouts.",
+      },
+      {
+        step: "Week 7–10",
+        title: "Backend Development",
+        description: "Design MongoDB schemas, build Express REST/GraphQL APIs, implement authentication & authorization. Add real-time features with Socket.io.",
+      },
+      {
+        step: "Week 11–12",
+        title: "Testing & Deployment",
+        description: "Write unit/integration tests, perform load testing, optimize performance. Deploy to Vercel/AWS/Render with CI/CD automation.",
+      },
+      {
+        step: "Week 13+",
+        title: "Post-Launch Support",
+        description: "Monitor performance, fix bugs, gather feedback, and iterate. Ongoing maintenance and scaling support.",
+      },
+    ],
+    caseStudy: {
+      project: "EdTech Analytics Dashboard",
+      challenge: "A Delhi-based edtech startup needed a real-time analytics dashboard to track 10,000+ student activities across multiple schools, with sub-second query response times.",
+      solution: "Built a MERN application with MongoDB aggregation pipelines for analytics, Redis caching for hot queries, Socket.io for live updates, and React with Chart.js for visualizations. Deployed on AWS with auto-scaling.",
+      results: "Achieved 40ms average API response time, supported 10K concurrent users, reduced query latency by 70%, and enabled real-time insights for 500+ educators.",
+    },
+    faqs: [
+      {
+        question: "What is a MERN stack development company in India?",
+        answer: "A MERN stack development company in India specializes in building full-stack web applications using MongoDB (database), Express.js (backend framework), React (frontend library), and Node.js (server runtime). We're based in Delhi and serve startups and enterprises across India and globally.",
+      },
+      {
+        question: "What can a MERN stack web development company in India build for me?",
+        answer: "MERN stack companies can build real-time dashboards, SaaS applications, e-commerce platforms, social media apps, marketplaces, chat applications, booking systems, and enterprise admin panels — anything requiring a dynamic, data-driven frontend and a scalable backend.",
+      },
+      {
+        question: "How much does MERN stack development cost in India?",
+        answer: "A basic MVP on the MERN stack costs between ₹12–25 lakhs in India. Complex applications with real-time features, advanced authentication, and third-party integrations range from ₹25–60 lakhs. Enterprise-grade platforms can cost ₹60+ lakhs.",
+      },
+      {
+        question: "How long does it take to build a MERN stack application?",
+        answer: "A simple MVP takes 8–12 weeks on the MERN stack. A full-featured application with real-time capabilities takes 4–6 months. Complex enterprise platforms may take 6–12 months from concept to launch.",
+      },
+      {
+        question: "Why choose a MERN stack development company in India over hiring freelancers?",
+        answer: "An established MERN company provides full project accountability, dedicated team support, code quality standards, deployment assistance, security audits, and ongoing maintenance. Freelancers often lack scalability, documentation, and long-term support.",
+      },
+    ],
   },
   {
     id: "fullstack-development",

@@ -10,7 +10,10 @@ export const metadata: Metadata = {
     title: "Webkaro Portfolio | Engineering Digital Excellence",
     description: "Driven by results, engineered for scale. View our latest projects.",
     images: ["/logo.png"],
-  }
+  },
+  alternates: {
+    canonical: "/projects",
+  },
 };
 
 export default function ProjectsPage() {

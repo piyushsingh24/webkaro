@@ -21,12 +21,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       authors: [blog.author],
       images: ["/og-image.jpg"], // Fallback or use blog.image if exists
     },
-    twitter: {
-      card: "summary_large_image",
-      title: blog.title,
-      description: blog.excerpt,
-    }
-  };
+     twitter: {
+       card: "summary_large_image",
+       title: blog.title,
+       description: blog.excerpt,
+     },
+     alternates: {
+       canonical: `/blogs/${slug}`,
+     },
+   };
 }
 
 export default async function BlogDetail({ params }: { params: Promise<{ slug: string }> }) {

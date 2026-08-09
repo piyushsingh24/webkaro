@@ -20,6 +20,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/privacy-policy',
     '/terms',
     '/compliance',
+    '/faq',
+    '/location/delhi-wazirabad',
+    '/location/delhi-wazirabad',
+    '/cinematic',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     title: "Webkaro Products | Engineering Digital Excellence",
     description: "Bespoke internal tools and SaaS products built for scale.",
     images: ["/logo.png"],
-  }
+  },
+  alternates: {
+    canonical: "/products",
+  },
 };
 
 export default function ProductsPage() {

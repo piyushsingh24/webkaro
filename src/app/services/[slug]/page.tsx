@@ -20,9 +20,31 @@ export async function generateMetadata({
   const { slug } = await params;
   const service = getServiceById(slug);
   if (!service) return { title: "Service Not Found" };
+
+  const title = service.seoTitle || `${service.title} | WebKaro`;
+  const description = service.seoDescription || service.shortDescription;
+
   return {
-    title: `${service.title} | WebKaro`,
-    description: service.shortDescription,
+    title,
+    description,
+    alternates: {
+      canonical: `/services/${slug}`,
+    },
+    openGraph: {
+      title,
+      description,
+      url: `https://webkaro.in/services/${slug}`,
+      siteName: "Webkaro Studio",
+      images: [{ url: "/logo.png", alt: "Webkaro Studio" }],
+      locale: "en_IN",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/logo.png"],
+    },
   };
 }
 
@@ -140,6 +162,156 @@ export default async function ServiceDetailPage({
           </div>
         </div>
       </section>
+
+      {/* ---- Why Choose This Stack ---- */}
+      {service.whyChoosePoints && (
+        <section className="px-6 mb-20 md:mb-28">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-black text-foreground font-outfit mb-12 text-center">
+              Why Choose {service.title.split(" ")[0]}?
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {service.whyChoosePoints.map((point, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-4 p-6 rounded-2xl border border-border bg-card dark:bg-white/[0.01]"
+                >
+                  <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="text-primary font-bold text-xs">{i + 1}</span>
+                  </div>
+                  <p className="text-foreground/75 font-medium text-sm leading-relaxed">
+                    {point}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ---- Tech Stack Details ---- */}
+      {service.techStackDetails && (
+        <section className="px-6 mb-20 md:mb-28">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-black text-foreground font-outfit mb-4">
+              Technology Stack
+            </h2>
+            <p className="text-foreground/60 text-lg mb-12 max-w-3xl">
+              We use battle-tested technologies to build scalable, maintainable applications.
+            </p>
+            <div className="space-y-6">
+              {service.techStackDetails.map((tech, i) => (
+                <div
+                  key={i}
+                  className="border border-border rounded-2xl p-6 bg-card dark:bg-white/[0.01]"
+                >
+                  <h3 className="text-xl font-bold text-foreground font-outfit mb-3">
+                    {tech.name}
+                  </h3>
+                  <p className="text-foreground/65 text-sm leading-relaxed">
+                    {tech.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ---- Process & Timeline ---- */}
+      {service.processSteps && (
+        <section className="px-6 mb-20 md:mb-28">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-black text-foreground font-outfit mb-12">
+              Our Development Process
+            </h2>
+            <div className="space-y-6">
+              {service.processSteps.map((step, i) => (
+                <div
+                  key={i}
+                  className="flex gap-6 p-6 rounded-2xl border border-border bg-card dark:bg-white/[0.01]"
+                >
+                  <div className="w-16 h-16 shrink-0 rounded-xl bg-primary/10 flex items-center justify-center border border-primary/20">
+                    <span className="text-primary font-black text-xs">{step.step}</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-black text-foreground font-outfit mb-1">
+                      {step.title}
+                    </h3>
+                    <p className="text-foreground/65 text-sm leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ---- Case Study ---- */}
+      {service.caseStudy && (
+        <section className="px-6 mb-20 md:mb-28">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-black text-foreground font-outfit mb-8">
+              Case Study: {service.caseStudy.project}
+            </h2>
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg font-bold text-foreground font-outfit mb-2">The Challenge</h3>
+                <p className="text-foreground/65 leading-relaxed">
+                  {service.caseStudy.challenge}
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-foreground font-outfit mb-2">Our Solution</h3>
+                <p className="text-foreground/65 leading-relaxed">
+                  {service.caseStudy.solution}
+                </p>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-foreground font-outfit mb-2">The Results</h3>
+                <p className="text-foreground/65 leading-relaxed">
+                  {service.caseStudy.results}
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ---- FAQ ---- */}
+      {service.faqs && (
+        <section className="px-6 mb-20 md:mb-28">
+          <div className="max-w-5xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-black text-foreground font-outfit mb-12 text-center">
+              Frequently Asked Questions
+            </h2>
+            <div className="space-y-4">
+              {service.faqs.map((faq, i) => (
+                <details
+                  key={i}
+                  className="group border border-border rounded-2xl p-6 bg-card dark:bg-white/[0.01] open:bg-primary/5 open:border-primary/20 transition-all"
+                >
+                  <summary className="flex items-center gap-4 cursor-pointer list-none">
+                    <span className="text-primary font-black text-xs w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                      Q
+                    </span>
+                    <span className="text-lg font-bold text-foreground font-outfit group-open:text-primary transition-colors">
+                      {faq.question}
+                    </span>
+                  </summary>
+                  <div className="mt-4 pl-10">
+                    <p className="text-foreground/65 leading-relaxed text-sm">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ---- Why choose us banner ---- */}
       <section className="px-6 mb-20 md:mb-28">

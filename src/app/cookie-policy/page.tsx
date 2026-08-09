@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     title: "Cookie Policy | Webkaro",
     description: "How we use cookies to enhance your digital experience.",
     type: "website",
-  }
+  },
+  alternates: {
+    canonical: "/cookie-policy",
+  },
 };
 
 export default function CookiePolicyPage() {

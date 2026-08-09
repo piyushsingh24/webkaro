@@ -9,7 +9,10 @@ export const metadata: Metadata = {
     title: "Webkaro Community | Engineering Digital Excellence",
     description: "Building tools and sharing knowledge to move the web forward.",
     images: ["/logo.png"],
-  }
+  },
+  alternates: {
+    canonical: "/community",
+  },
 };
 
 export default function CommunityPage() {

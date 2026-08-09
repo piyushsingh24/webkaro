@@ -11,7 +11,10 @@ export const metadata: Metadata = {
     title: "Engineering & Growth Insights | Webkaro Blog",
     description: "Deep dives into modern tech stacks, architectural patterns, and product growth strategies.",
     type: "website",
-  }
+  },
+  alternates: {
+    canonical: "/blogs",
+  },
 };
 
 export default function BlogsPage() {

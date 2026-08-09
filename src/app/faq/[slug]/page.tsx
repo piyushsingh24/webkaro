@@ -25,6 +25,9 @@ export async function generateMetadata({ params }: PageProps) {
   return {
     title: `${faq.question} | Webkaro FAQ`,
     description: faq.answer,
+    alternates: {
+      canonical: `/faq/${slug}`,
+    },
   };
 }
 

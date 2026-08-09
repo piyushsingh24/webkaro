@@ -10,7 +10,10 @@ export const metadata: Metadata = {
     title: "Web Engineering & Design Services | Webkaro",
     description: "From Next.js development to Cloud Migration, we help brands scale with premium digital engineering.",
     type: "website",
-  }
+  },
+  alternates: {
+    canonical: "/services",
+  },
 };
 
 export default function ServicesPage() {
