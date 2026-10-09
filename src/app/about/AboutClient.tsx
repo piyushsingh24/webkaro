@@ -8,7 +8,7 @@ const values = [
   {
     icon: Users,
     title: "Community First",
-    description: "We believe in the power of collaboration over individual competition. Our collective thrives on shared knowledge.",
+    description: "We  believe in the power of collaboration over individual competition. Our collective thrives on shared knowledge.",
   },
   {
     icon: Shield,
