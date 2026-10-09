@@ -1,45 +1,46 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { services, serviceCategories } from "@/data/services";
+import { services as staticServices, serviceCategories as staticCategories, type Service } from "@/data/services";
 import { ServiceIcon } from "@/components/ui/service-icon";
+import { Reveal, RevealGroup } from "@/components/motion/Reveal";
 
-export default function ServicesOverview() {
-  const categories = serviceCategories.map(cat => ({
+export type ServiceCategoryItem = { name: string; description: string };
+
+export default function ServicesOverview({
+  services,
+  categories,
+}: {
+  services?: Service[];
+  categories?: ServiceCategoryItem[];
+}) {
+  const allServices = services ?? staticServices;
+  const allCategories = categories ?? staticCategories;
+  const blocks = allCategories.map(cat => ({
     ...cat,
-    services: services.filter(s => s.category === cat.name)
+    services: allServices.filter(s => s.category === cat.name)
   }));
 
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: '#F6F3EE' }}>
       <div className="content-container py-20 md:py-32 lg:py-40">
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16 md:mb-24"
-        >
+        <Reveal className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16 md:mb-24">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight" style={{ fontFamily: 'var(--font-display)', color: '#1B1B1B' }}>
             A collective of craftsmen, engineers, and strategists.
           </h2>
           <p className="text-base md:text-lg leading-relaxed lg:pt-2" style={{ color: '#656565' }}>
             From the first line of code to the final deployment, we build digital products that perform. Not just beautiful — effective.
           </p>
-        </motion.div>
+        </Reveal>
 
         {/* Category Blocks */}
         <div className="space-y-8 md:space-y-12">
-          {categories.map((category, catIndex) => (
-            <motion.div
+          {blocks.map((category, catIndex) => (
+            <Reveal
               key={category.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: catIndex * 0.1 }}
+              delay={catIndex * 0.05}
               className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start"
             >
               {/* Category Header */}
@@ -56,13 +57,17 @@ export default function ServicesOverview() {
               </div>
 
               {/* Services List */}
-              <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-                {category.services.map((service, i) => (
+              <RevealGroup
+                className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4"
+                stagger={0.08}
+              >
+                {category.services.map((service) => (
                   <Link
                     key={service.id}
+                    data-reveal-item
                     href={`/services/${service.id}`}
-                    className="group flex items-start gap-4 p-5 md:p-6 rounded-2xl border transition-all duration-300 hover:shadow-soft"
-                    style={{ 
+                    className="service-card-lift group flex items-start gap-4 p-5 md:p-6 rounded-2xl border hover:shadow-soft"
+                    style={{
                       backgroundColor: '#FFFFFF',
                       borderColor: 'rgba(0,0,0,0.06)'
                     }}
@@ -81,29 +86,25 @@ export default function ServicesOverview() {
                     <ArrowRight className="w-4 h-4 shrink-0 mt-1 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" style={{ color: '#6E8E59' }} />
                   </Link>
                 ))}
-              </div>
-            </motion.div>
+              </RevealGroup>
+            </Reveal>
           ))}
         </div>
 
         {/* Bottom CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        <Reveal
           className="mt-16 md:mt-24 pt-12 border-t text-center"
           style={{ borderColor: 'rgba(0,0,0,0.06)' }}
         >
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-300 hover:gap-3"
+            className="btn-arrow inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-300 hover:gap-3"
             style={{ color: '#2563EB' }}
           >
             Explore all services
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="btn-arrow-icon w-4 h-4" />
           </Link>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

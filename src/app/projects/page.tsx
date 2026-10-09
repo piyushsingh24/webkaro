@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ProjectsClient from "./ProjectsClient";
-import { projects } from "@/data/projects";
+import { listPublishedProjects } from "@/lib/cms/projects";
 
 export const metadata: Metadata = {
   title: "Our Portfolio | Webkaro Case Studies",
@@ -16,6 +16,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  // Published projects from the CMS (static fallback when DB is unconfigured).
+  const projects = await listPublishedProjects();
   return <ProjectsClient projects={projects} />;
 }

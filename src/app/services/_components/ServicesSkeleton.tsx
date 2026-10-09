@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 
-export default function Loading() {
+/** Loading skeleton for the services index (in-page Suspense fallback). */
+export default function ServicesSkeleton() {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-7xl mx-auto pt-44">

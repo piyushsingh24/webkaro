@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Reveal, RevealGroup } from "@/components/motion/Reveal";
 
 const benefits = [
   {
@@ -35,13 +35,7 @@ export default function ExpertCommunity() {
       <div className="content-container py-20 md:py-32 lg:py-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-start">
           {/* Left: Heading */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7 }}
-            className="lg:sticky lg:top-32"
-          >
+          <Reveal className="lg:sticky lg:top-32">
             <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: '#2563EB' }}>
               Why Webkaro
             </p>
@@ -51,17 +45,19 @@ export default function ExpertCommunity() {
             <p className="text-base md:text-lg leading-relaxed" style={{ color: '#656565' }}>
               An engineering collective that treats your product like our own. Senior talent, production-grade rigor, and a process designed for outcomes.
             </p>
-          </motion.div>
+          </Reveal>
 
           {/* Right: Benefits */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-px" style={{ backgroundColor: 'rgba(0,0,0,0.06)' }}>
+          <RevealGroup
+            className="grid grid-cols-1 sm:grid-cols-2 gap-px"
+            style={{ backgroundColor: 'rgba(0,0,0,0.06)' }}
+            stagger={0.08}
+            y={16}
+          >
             {benefits.map((benefit, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
+                data-reveal-item
                 className="p-8 md:p-10"
                 style={{ backgroundColor: '#FAF8F5' }}
               >
@@ -71,9 +67,9 @@ export default function ExpertCommunity() {
                 <p className="text-sm leading-relaxed" style={{ color: '#888888' }}>
                   {benefit.description}
                 </p>
-              </motion.div>
+              </div>
             ))}
-          </div>
+          </RevealGroup>
         </div>
       </div>
     </section>

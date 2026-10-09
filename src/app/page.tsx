@@ -10,6 +10,13 @@ import Testimonials from "@/components/sections/Testimonials";
 import TechnologyStack from "@/components/sections/TechnologyStack";
 import FAQPreview from "@/components/sections/FAQPreview";
 import FinalCTA from "@/components/sections/FinalCTA";
+import { getSiteSettings, asSlugList, getHomepageSections } from "@/lib/cms/settings";
+import { listPublishedServices, listServiceCategories } from "@/lib/cms/services";
+import { listPublishedProjects } from "@/lib/cms/projects";
+import {
+  listFeaturedTestimonials,
+  listPublishedFaqs,
+} from "@/lib/cms/content";
 
 export const metadata: Metadata = {
   title: "Web Design Agency in Delhi | Webkaro",
@@ -38,20 +45,87 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  return (
-    <>
-      <Hero />
-      <ServicesOverview />
-      <FeaturedProjects />
-      <Process />
-      <ExpertCommunity />
-      <Statistics />
-      <FoundersSection />
-      <Testimonials />
-      <TechnologyStack />
-      <FAQPreview />
-      <FinalCTA />
-    </>
+/** Order a full list by an admin slug/id selection (selection order kept). */
+function applySelection<T>(all: T[], selection: string[], keyOf: (t: T) => string): T[] {
+  if (selection.length === 0) return all;
+  const byKey = new Map(all.map((t) => [keyOf(t), t]));
+  const picked = selection
+    .map((k) => byKey.get(k))
+    .filter((t): t is T => Boolean(t));
+  return picked.length > 0 ? picked : all;
+}
+
+export default async function Home() {
+  const [settings, sections, services, categories, projects, testimonials, faqs] =
+    await Promise.all([
+      getSiteSettings(),
+      getHomepageSections(),
+      listPublishedServices(),
+      listServiceCategories(),
+      listPublishedProjects(),
+      listFeaturedTestimonials(8),
+      listPublishedFaqs(),
+    ]);
+
+  const homeServices = applySelection(
+    services,
+    asSlugList(settings.featured_services),
+    (s) => s.id
   );
+  const homeProjects = applySelection(
+    projects,
+    asSlugList(settings.featured_projects),
+    (p) => p.slug
+  ).slice(0, 3);
+  const homeTestimonials = applySelection(
+    testimonials,
+    asSlugList(settings.featured_testimonials),
+    (t) => t.id
+  );
+  const homeFaqs = applySelection(
+    faqs,
+    asSlugList(settings.faq_selection),
+    (f) => f.slug
+  );
+
+  const blocks: Record<string, React.ReactNode> = {
+    hero: (
+      <Hero
+        content={{
+          headline: settings.hero_headline,
+          description: settings.hero_description,
+          primaryCta: {
+            text: settings.hero_primary_cta_text,
+            url: settings.hero_primary_cta_url,
+          },
+          secondaryCta: {
+            text: settings.hero_secondary_cta_text,
+            url: settings.hero_secondary_cta_url,
+          },
+        }}
+      />
+    ),
+    services: <ServicesOverview services={homeServices} categories={categories} />,
+    projects: <FeaturedProjects projects={homeProjects} />,
+    process: <Process />,
+    why: <ExpertCommunity />,
+    statistics: <Statistics />,
+    founders: <FoundersSection />,
+    testimonials: <Testimonials testimonials={homeTestimonials} />,
+    tech: <TechnologyStack />,
+    faq: <FAQPreview faqs={homeFaqs} />,
+    cta: (
+      <FinalCTA
+        source="homepage-quote"
+        contact={{ email: settings.contact_email, phone: settings.contact_phone }}
+      />
+    ),
+  };
+
+  const visible = sections
+    .slice()
+    .sort((a, b) => a.sortOrder - b.sortOrder)
+    .filter((s) => s.isVisible && blocks[s.key]);
+
+  return <>{visible.map((s) => <div key={s.key}>{blocks[s.key]}</div>)}</>;
 }

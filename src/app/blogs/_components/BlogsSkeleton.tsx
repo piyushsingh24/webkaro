@@ -2,7 +2,8 @@
 
 import { motion } from "framer-motion";
 
-export default function Loading() {
+/** Loading skeleton for the blog index (in-page Suspense fallback). */
+export default function BlogsSkeleton() {
   return (
     <div className="min-h-screen bg-background pt-44 pb-24 px-6">
       <div className="max-w-7xl mx-auto">

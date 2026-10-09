@@ -11,6 +11,20 @@ interface FloatingButtonsProps {
 const FloatingButtons = ({ onChatToggle }: FloatingButtonsProps) => {
   const [isContactOpen, setIsContactOpen] = useState(false);
 
+  const trackWhatsApp = () => {
+    // Clicks are NOT leads — beacon only logs attribution server-side.
+    try {
+      void fetch("/api/metrics/whatsapp-click", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ page: window.location.pathname }),
+        keepalive: true,
+      });
+    } catch {
+      /* analytics must never break navigation */
+    }
+  };
+
   const socialLinks = [
     {
       id: "whatsapp",
@@ -48,6 +62,7 @@ const FloatingButtons = ({ onChatToggle }: FloatingButtonsProps) => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={link.id === "whatsapp" ? trackWhatsApp : undefined}
                   initial={{ opacity: 0, scale: 0, x: -20 }}
                   animate={{ opacity: 1, scale: 1, x: 0 }}
                   exit={{ opacity: 0, scale: 0, x: -20 }}

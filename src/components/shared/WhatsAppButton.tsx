@@ -7,11 +7,26 @@ export default function WhatsAppButton() {
   const whatsappNumber = "8851151976"; // WhatsApp number
   const message = "Hi Webkaro! I'm interested in starting a Next.js project and would like to discuss some details.";
 
+  // Clicks are NOT leads — this beacon only logs attribution server-side.
+  const trackClick = () => {
+    try {
+      void fetch("/api/metrics/whatsapp-click", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ page: window.location.pathname }),
+        keepalive: true,
+      });
+    } catch {
+      /* analytics must never break navigation */
+    }
+  };
+
   return (
     <motion.a
       href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={trackClick}
       initial={{ scale: 0, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       whileHover={{ scale: 1.1 }}

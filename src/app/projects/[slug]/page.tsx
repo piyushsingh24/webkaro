@@ -1,17 +1,55 @@
-"use client";
-
-import { use } from "react";
-import { getProjectBySlug } from "@/data/projects";
+import { notFound, redirect } from "next/navigation";
 import { ArrowLeft, ExternalLink, ShieldCheck, Zap, Target, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import FinalCTA from "@/components/sections/FinalCTA";
+import type { Metadata } from "next";
+import {
+  getPublishedProject,
+  listPublishedProjectSlugs,
+} from "@/lib/cms/projects";
+import { getRedirectTarget } from "@/lib/cms/settings";
 
-export default function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = use(params);
-  const project = getProjectBySlug(slug);
+export async function generateStaticParams() {
+  const slugs = await listPublishedProjectSlugs();
+  return slugs.map((slug) => ({ slug }));
+}
 
-  if (!project) return <div>Project not found</div>;
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const project = await getPublishedProject(slug);
+  if (!project) return { title: "Project Not Found" };
+  const title = `${project.title} | Webkaro Case Study`;
+  const description = project.description;
+  return {
+    title,
+    description,
+    alternates: { canonical: `/projects/${slug}` },
+    openGraph: {
+      title,
+      description,
+      url: `https://www.webkaro.in/projects/${slug}`,
+      siteName: "Webkaro Studio",
+      images: [{ url: "/logo.png", alt: "Webkaro Studio" }],
+      locale: "en_IN",
+      type: "article",
+    },
+    twitter: { card: "summary_large_image", title, description, images: ["/logo.png"] },
+  };
+}
+
+export default async function ProjectDetail({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const project = await getPublishedProject(slug);
+  if (!project) {
+    const target = await getRedirectTarget(`/projects/${slug}`);
+    if (target) redirect(target);
+    notFound();
+  }
 
   return (
     <div className="pt-32 pb-24">
@@ -139,7 +177,7 @@ export default function ProjectDetail({ params }: { params: Promise<{ slug: stri
         </div>
       </section>
 
-      <FinalCTA />
+      <FinalCTA source="project-detail" />
     </div>
   );
 }

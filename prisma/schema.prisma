@@ -1,0 +1,360 @@
+// Prisma 6 schema — Webkaro CMS (Phases 1 + 2).
+// MySQL provider. Connection comes from DATABASE_URL (see .env.example).
+// Workflow: `prisma migrate dev` (local, additive only) /
+//           `prisma migrate deploy` (production). Never reset production.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// ------------------------------------------------------------------
+// Phase 1 — admin authentication (unchanged)
+// ------------------------------------------------------------------
+
+enum Role {
+  ADMIN
+  EDITOR
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String?
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         Role     @default(ADMIN)
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  assignedLeads    Lead[]         @relation("LeadAssignee")
+  leadActivities   LeadActivity[] @relation("ActivityActor")
+
+  @@map("users")
+}
+
+// ------------------------------------------------------------------
+// Phase 2 — CMS. Publication states shared by all content models.
+// ------------------------------------------------------------------
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+// ------------------------- Services -------------------------
+
+model ServiceCategory {
+  id          String    @id @default(cuid())
+  name        String    @unique @db.VarChar(100)
+  slug        String    @unique @db.VarChar(120)
+  description String?   @db.Text
+  sortOrder   Int       @default(0) @map("sort_order")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+  services    Service[]
+
+  @@map("service_categories")
+}
+
+model Service {
+  id               String          @id @default(cuid())
+  slug             String          @unique @db.VarChar(150)
+  title            String          @db.VarChar(200)
+  shortDescription String          @db.Text @map("short_description")
+  description      String          @db.Text
+  icon             String          @default("Laptop") @db.VarChar(60)
+  price            String?         @db.VarChar(100)
+  pricingHint      String?         @db.VarChar(200) @map("pricing_hint")
+  timeline         String?         @db.VarChar(100)
+  features         Json            @default("[]")
+  deliverables     Json            @default("[]")
+  technologies     Json            @default("[]")
+  benefits         Json            @default("[]")
+  techStack        Json            @default("[]")
+  processSteps     Json            @default("[]")
+  caseStudy        Json?
+  featuredImage    String?         @db.VarChar(500) @map("featured_image")
+  imageAlt         String?         @db.VarChar(250) @map("image_alt")
+  seoTitle         String?         @db.VarChar(200) @map("seo_title")
+  seoDescription   String?         @db.Text @map("seo_description")
+  ogImage          String?         @db.VarChar(500) @map("og_image")
+  status           ContentStatus   @default(DRAFT)
+  sortOrder        Int             @default(0) @map("sort_order")
+  publishedAt      DateTime?       @map("published_at")
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @updatedAt @map("updated_at")
+  categoryId       String          @map("category_id")
+  category         ServiceCategory @relation(fields: [categoryId], references: [id])
+  faqs             Faq[]
+
+  @@index([status, sortOrder])
+  @@index([categoryId])
+  @@map("services")
+}
+
+// ------------------------- Projects -------------------------
+
+model Project {
+  id             String        @id @default(cuid())
+  slug           String        @unique @db.VarChar(150)
+  title          String        @db.VarChar(200)
+  category       String        @db.VarChar(100)
+  clientName     String?       @db.VarChar(200) @map("client_name")
+  industry       String?       @db.VarChar(150)
+  summary        String        @db.Text
+  problem        String?       @db.Text
+  strategy       String?       @db.Text
+  results        Json          @default("[]")
+  metrics        Json          @default("[]")
+  outcomes       Json          @default("[]")
+  thumbnail      String?       @db.VarChar(500)
+  imageAlt       String?       @db.VarChar(250) @map("image_alt")
+  screenshots    Json          @default("[]")
+  tags           Json          @default("[]")
+  demoUrl        String?       @db.VarChar(500) @map("demo_url")
+  featured       Boolean       @default(false)
+  status         ContentStatus @default(DRAFT)
+  sortOrder      Int           @default(0) @map("sort_order")
+  publishedAt    DateTime?     @map("published_at")
+  seoTitle       String?       @db.VarChar(200) @map("seo_title")
+  seoDescription String?       @db.Text @map("seo_description")
+  ogImage        String?       @db.VarChar(500) @map("og_image")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+
+  @@index([status, sortOrder])
+  @@index([featured, status])
+  @@map("projects")
+}
+
+// ------------------------- Blog -------------------------
+
+model BlogCategory {
+  id          String     @id @default(cuid())
+  name        String     @unique @db.VarChar(100)
+  slug        String     @unique @db.VarChar(120)
+  description String?    @db.Text
+  // Optional link to an existing static hub route, e.g. "frontend"
+  // for /blogs/frontend. Null = listing-only category.
+  hubSlug     String?    @unique @db.VarChar(120) @map("hub_slug")
+  sortOrder   Int        @default(0) @map("sort_order")
+  createdAt   DateTime   @default(now()) @map("created_at")
+  updatedAt   DateTime   @updatedAt @map("updated_at")
+  posts       BlogPost[]
+
+  @@map("blog_categories")
+}
+
+model BlogTag {
+  id        String        @id @default(cuid())
+  name      String        @unique @db.VarChar(80)
+  slug      String        @unique @db.VarChar(100)
+  createdAt DateTime      @default(now()) @map("created_at")
+  posts     BlogPostTag[]
+
+  @@map("blog_tags")
+}
+
+model Author {
+  id        String     @id @default(cuid())
+  name      String     @db.VarChar(150)
+  role      String?    @db.VarChar(150)
+  avatar    String?    @db.VarChar(500)
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  posts     BlogPost[]
+
+  @@map("authors")
+}
+
+model BlogPost {
+  id             String        @id @default(cuid())
+  slug           String        @unique @db.VarChar(180)
+  title          String        @db.VarChar(250)
+  excerpt        String        @db.Text
+  content        String        @db.LongText
+  coverImage     String?       @db.VarChar(500) @map("cover_image")
+  imageAlt       String?       @db.VarChar(250) @map("image_alt")
+  status         ContentStatus @default(DRAFT)
+  publishedAt    DateTime?     @map("published_at")
+  readingMinutes Int?          @map("reading_minutes")
+  seoTitle       String?       @db.VarChar(200) @map("seo_title")
+  seoDescription String?       @db.Text @map("seo_description")
+  canonicalUrl   String?       @db.VarChar(500) @map("canonical_url")
+  ogImage        String?       @db.VarChar(500) @map("og_image")
+  createdAt      DateTime      @default(now()) @map("created_at")
+  updatedAt      DateTime      @updatedAt @map("updated_at")
+  categoryId     String?       @map("category_id")
+  category       BlogCategory? @relation(fields: [categoryId], references: [id])
+  authorId       String?       @map("author_id")
+  author         Author?       @relation(fields: [authorId], references: [id])
+  tags           BlogPostTag[]
+
+  @@index([status, publishedAt])
+  @@index([categoryId])
+  @@map("blog_posts")
+}
+
+model BlogPostTag {
+  postId String @map("post_id")
+  post   BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tagId  String @map("tag_id")
+  tag    BlogTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@map("blog_post_tags")
+}
+
+// ------------------------- Testimonials -------------------------
+
+model Testimonial {
+  id         String        @id @default(cuid())
+  clientName String        @db.VarChar(150) @map("client_name")
+  company    String?       @db.VarChar(200)
+  role       String?       @db.VarChar(150)
+  content    String        @db.Text
+  avatar     String?       @db.VarChar(500)
+  rating     Int?          // 1-5 when given
+  featured   Boolean       @default(false)
+  verified   Boolean       @default(false)
+  status     ContentStatus @default(DRAFT)
+  sortOrder  Int           @default(0) @map("sort_order")
+  createdAt  DateTime      @default(now()) @map("created_at")
+  updatedAt  DateTime      @updatedAt @map("updated_at")
+
+  @@index([status, sortOrder])
+  @@index([featured, status])
+  @@map("testimonials")
+}
+
+// ------------------------- FAQs -------------------------
+
+model Faq {
+  id         String        @id @default(cuid())
+  slug       String        @unique @db.VarChar(180)
+  question   String        @db.VarChar(300)
+  answer     String        @db.Text
+  details    String?       @db.LongText
+  category   String?       @db.VarChar(100)
+  status     ContentStatus @default(DRAFT)
+  sortOrder  Int           @default(0) @map("sort_order")
+  createdAt  DateTime      @default(now()) @map("created_at")
+  updatedAt  DateTime      @updatedAt @map("updated_at")
+  serviceId  String?       @map("service_id")
+  service    Service?      @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+
+  @@index([status, sortOrder])
+  @@index([serviceId])
+  @@map("faqs")
+}
+
+// ------------------------- Site settings & homepage -------------------------
+
+model SiteSetting {
+  key       String   @id @db.VarChar(120)
+  value     String   @db.LongText
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("site_settings")
+}
+
+model HomepageSection {
+  key       String   @id @db.VarChar(60)
+  isVisible Boolean  @default(true) @map("is_visible")
+  sortOrder Int      @default(0) @map("sort_order")
+
+  @@map("homepage_sections")
+}
+
+// ------------------------- Redirects (slug changes) -------------------------
+
+model Redirect {
+  id        String   @id @default(cuid())
+  fromPath  String   @unique @db.VarChar(500) @map("from_path")
+  toPath    String   @db.VarChar(500) @map("to_path")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("redirects")
+}
+
+// ------------------------------------------------------------------
+// Phase 3 — Lead Management CRM
+// ------------------------------------------------------------------
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  QUALIFIED
+  PROPOSAL_SENT
+  WON
+  LOST
+}
+
+enum ContactMethod {
+  EMAIL
+  PHONE
+  WHATSAPP
+}
+
+enum LeadActivityType {
+  CREATED
+  STATUS_CHANGE
+  NOTE
+  FOLLOW_UP
+  ASSIGNMENT
+}
+
+model Lead {
+  id                   String        @id @default(cuid())
+  name                 String        @db.VarChar(150)
+  email                String?       @db.VarChar(254)
+  phone                String?       @db.VarChar(30)
+  companyName          String?       @db.VarChar(200) @map("company_name")
+  serviceInterest      String?       @db.VarChar(150) @map("service_interest")
+  projectDescription   String?       @db.Text @map("project_description")
+  budgetRange          String?       @db.VarChar(100) @map("budget_range")
+  preferredContactMethod ContactMethod @default(EMAIL) @map("preferred_contact_method")
+  status               LeadStatus    @default(NEW)
+  source               String?       @db.VarChar(100)
+  landingPage          String?       @db.VarChar(500) @map("landing_page")
+  referrer             String?       @db.VarChar(500)
+  utmSource            String?       @db.VarChar(150) @map("utm_source")
+  utmMedium            String?       @db.VarChar(150) @map("utm_medium")
+  utmCampaign          String?       @db.VarChar(150) @map("utm_campaign")
+  followUpAt           DateTime?     @map("follow_up_at")
+  createdAt            DateTime      @default(now()) @map("created_at")
+  updatedAt            DateTime      @updatedAt @map("updated_at")
+  assignedToId         String?       @map("assigned_to_id")
+  assignedTo           User?         @relation("LeadAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+  activities           LeadActivity[]
+
+  @@index([status, createdAt])
+  @@index([email])
+  @@index([assignedToId])
+  @@map("leads")
+}
+
+model LeadActivity {
+  id         String           @id @default(cuid())
+  leadId     String           @map("lead_id")
+  lead       Lead             @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  type       LeadActivityType
+  fromStatus LeadStatus?      @map("from_status")
+  toStatus   LeadStatus?      @map("to_status")
+  note       String?          @db.Text
+  followUpAt DateTime?        @map("follow_up_at")
+  // Null actor = system/visitor event (creation, public submission).
+  actorId    String?          @map("actor_id")
+  actor      User?            @relation("ActivityActor", fields: [actorId], references: [id], onDelete: SetNull)
+  meta       Json?
+  createdAt  DateTime         @default(now()) @map("created_at")
+
+  @@index([leadId, createdAt])
+  @@map("lead_activities")
+}

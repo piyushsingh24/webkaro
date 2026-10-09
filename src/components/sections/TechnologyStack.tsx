@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import {
   FaReact,
   FaAws,
@@ -25,6 +24,7 @@ import {
   SiTailwindcss,
   SiVercel,
 } from "react-icons/si";
+import { Reveal, RevealGroup } from "@/components/motion/Reveal";
 
 const technologies = [
   { name: "React", icon: FaReact, color: "#61DAFB" },
@@ -45,32 +45,25 @@ export default function TechnologyStack() {
   return (
     <section className="relative overflow-hidden border-y" style={{ backgroundColor: '#FAF8F5', borderColor: 'rgba(0,0,0,0.06)' }}>
       <div className="content-container py-16 md:py-24">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-10 md:mb-14"
-        >
+        <Reveal className="text-center mb-10 md:mb-14">
           <p className="text-xs uppercase tracking-[0.2em] font-semibold" style={{ color: '#888888' }}>
             Technologies we work with
           </p>
-        </motion.div>
+        </Reveal>
 
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        <RevealGroup
           className="flex flex-wrap justify-center gap-3 md:gap-4"
+          stagger={0.05}
+          y={14}
         >
-          {technologies.map((tech, i) => {
+          {technologies.map((tech) => {
             const Icon = tech.icon;
             return (
               <span
                 key={tech.name}
+                data-reveal-item
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold border transition-all duration-300 hover:-translate-y-[1px]"
-                style={{ 
+                style={{
                   borderColor: 'rgba(0,0,0,0.06)',
                   color: '#656565',
                   backgroundColor: '#FFFFFF'
@@ -81,7 +74,7 @@ export default function TechnologyStack() {
               </span>
             );
           })}
-        </motion.div>
+        </RevealGroup>
       </div>
     </section>
   );

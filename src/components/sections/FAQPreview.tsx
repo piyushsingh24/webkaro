@@ -5,21 +5,17 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { faqs } from "@/data/faq";
+import { faqs as staticFaqs, type FAQ } from "@/data/faq";
+import { Reveal, RevealGroup } from "@/components/motion/Reveal";
 
-export default function FAQPreview() {
+export default function FAQPreview({ faqs }: { faqs?: FAQ[] }) {
+  const list = faqs && faqs.length > 0 ? faqs : staticFaqs;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: '#FAF8F5' }}>
       <div className="content-container py-20 md:py-32 lg:py-40">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16 md:mb-24"
-        >
+        <Reveal className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16 md:mb-24">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: '#6E8E59' }}>
               FAQ
@@ -33,14 +29,15 @@ export default function FAQPreview() {
               Everything you need to know about working with our engineering collective.
             </p>
           </div>
-        </motion.div>
+        </Reveal>
 
-        <div className="max-w-3xl space-y-3">
-          {faqs.slice(0, 5).map((faq, index) => {
+        <RevealGroup className="max-w-3xl space-y-3" stagger={0.07} y={16}>
+          {list.slice(0, 5).map((faq, index) => {
             const isOpen = openIndex === index;
             return (
               <div
                 key={faq.id}
+                data-reveal-item
                 className="border-b transition-colors duration-300"
                 style={{ borderColor: 'rgba(0,0,0,0.06)' }}
               >
@@ -91,18 +88,18 @@ export default function FAQPreview() {
               </div>
             );
           })}
-        </div>
+        </RevealGroup>
 
-        <div className="mt-12 md:mt-16 text-center">
+        <Reveal className="mt-12 md:mt-16 text-center">
           <Link
             href="/contact"
-            className="inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-300"
+            className="btn-arrow inline-flex items-center gap-2 text-sm font-semibold transition-colors duration-300"
             style={{ color: '#2563EB' }}
           >
             Still have questions? Talk to an expert
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="btn-arrow-icon w-4 h-4" />
           </Link>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

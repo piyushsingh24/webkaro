@@ -1,9 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  gsap,
+  ensureGsapRegistered,
+  prefersReducedMotion,
+} from "@/lib/gsap";
 import {
   Menu,
   X,
@@ -166,6 +171,55 @@ export default function Navbar() {
 
   const pathname = usePathname();
   const lenis = useLenis();
+  const navRef = useRef<HTMLElement | null>(null);
+
+  /* GSAP entrance: top strip fade, navbar rise, staggered logo/links/CTA.
+     Mega-menu + mobile drawer keep their existing framer-motion transitions. */
+  useLayoutEffect(() => {
+    const nav = navRef.current;
+    if (!nav || typeof window === "undefined") return;
+    ensureGsapRegistered();
+    if (prefersReducedMotion()) return;
+
+    const ctx = gsap.context(() => {
+      const q = gsap.utils.selector(nav);
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.fromTo(
+        q("[data-nav-top]"),
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5 },
+        0
+      );
+      tl.fromTo(
+        nav,
+        { y: -16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6 },
+        0.05
+      );
+      tl.fromTo(
+        q("[data-nav-logo]"),
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.5 },
+        0.15
+      );
+      tl.fromTo(
+        q("[data-nav-link]"),
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.45, stagger: 0.07 },
+        0.25
+      );
+      tl.fromTo(
+        q("[data-nav-cta]"),
+        { opacity: 0, y: -10 },
+        { opacity: 1, y: 0, duration: 0.5 },
+        0.45
+      );
+    }, nav);
+
+    return () => {
+      ctx.revert();
+    };
+  }, []);
 
   /* ---------------- EFFECTS ---------------- */
 
@@ -220,9 +274,8 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        initial={{ y: -80 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+        ref={navRef}
+        initial={false}
         className={cn(
           "fixed top-0 left-0 right-0 z-[1000] transition-all duration-500",
           scrolled
@@ -236,7 +289,7 @@ export default function Navbar() {
         }}
       >
         {/* TOP BAR */}
-        <div className="hidden lg:block border-b py-2.5 px-6 lg:px-10 text-[11px] font-semibold uppercase tracking-wider transition-colors duration-500"
+        <div data-nav-top className="hidden lg:block border-b py-2.5 px-6 lg:px-10 text-[11px] font-semibold uppercase tracking-wider transition-colors duration-500"
           style={{ 
             borderColor: 'rgba(0,0,0,0.06)',
             color: '#888888'
@@ -269,7 +322,7 @@ export default function Navbar() {
         <div className="px-6 sm:px-10 lg:px-16 py-4">
           <div className="max-w-screen mx-auto flex justify-between items-center">
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <Link data-nav-logo href="/" className="flex items-center gap-2 sm:gap-3 shrink-0">
               <div className="relative w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center group">
                 <Image
                   src="/logo.png"
@@ -290,6 +343,7 @@ export default function Navbar() {
               {navLinks.map((link) => (
                 <div
                   key={link.name}
+                  data-nav-link
                   className="relative"
                   onMouseEnter={() =>
                     link.hasMega && setActiveMega(link.name)
@@ -299,7 +353,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     className={cn(
-                      "text-sm font-medium flex items-center gap-1 transition-colors duration-300",
+                      "nav-link-underline text-sm font-medium flex items-center gap-1 transition-colors duration-300",
                       pathname === link.href || activeMega === link.name
                         ? ""
                         : "hover:opacity-70"
@@ -322,7 +376,7 @@ export default function Navbar() {
             </div>
 
             {/* CTA Desktop */}
-            <div className="hidden lg:flex items-center gap-4">
+            <div data-nav-cta className="hidden lg:flex items-center gap-4">
               <Link href="/contact">
                 <MagnetizeButton particleCount={10}>
                   Start Project <ArrowRight className="w-4 h-4" />

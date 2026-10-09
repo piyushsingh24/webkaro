@@ -1,20 +1,31 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { Phone, Mail, Globe, MapPin, Send, ArrowRight, CheckCircle2, Facebook } from "lucide-react";
 import toast from "react-hot-toast";
-import ReCAPTCHA from "react-google-recaptcha";
-import { useTheme } from "next-themes";
 import { MagnetizeButton } from "@/components/ui/magnetize-button";
+import { Reveal } from "@/components/motion/Reveal";
+import TurnstileWidget from "@/components/forms/TurnstileWidget";
+import { collectAttribution } from "@/lib/attribution";
+import type { LEAD_SOURCES } from "@/lib/schemas/leads";
 
-export default function FinalCTA() {
+export default function FinalCTA({
+  contact,
+  source = "other",
+}: {
+  contact?: { email?: string; phone?: string };
+  source?: (typeof LEAD_SOURCES)[number];
+} = {}) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  // null = not yet known whether Turnstile is configured.
+  const [captchaConfigured, setCaptchaConfigured] = useState<boolean | null>(null);
+  const [captchaReset, setCaptchaReset] = useState(0);
   const [submitted, setSubmitted] = useState(false);
-  const { theme } = useTheme();
+  // Spam time-trap: bots submit instantly, humans take seconds.
+  const mountedAt = useRef<number>(Date.now());
 
   const benefits = [
     "Free consultation with senior engineers",
@@ -23,9 +34,11 @@ export default function FinalCTA() {
     "Transparent pricing & timeline",
   ];
 
+  const email = contact?.email || "info@webkaro.in";
+  const phone = contact?.phone || "+91 70489 03201";
   const contactInfo = [
-    { icon: Phone, label: "+91 70489 03201", href: "tel:+917048903201" },
-    { icon: Mail, label: "info@webkaro.in", href: "mailto:info@webkaro.in" },
+    { icon: Phone, label: phone, href: `tel:${phone.replace(/\s+/g, "")}` },
+    { icon: Mail, label: email, href: `mailto:${email}` },
     { icon: Globe, label: "webkaro.in", href: "https://www.webkaro.in" },
     { icon: MapPin, label: "Delhi, India", href: "https://maps.app.goo.gl/M3aJuqSq4LnDk8YFA" },
     { icon: Facebook, label: "Facebook", href: "https://www.facebook.com/webkaroin?rdid=vfxCLBpCfatrQE44&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1DffZdE9FX%23" },
@@ -43,38 +56,49 @@ export default function FinalCTA() {
       toast.error("Please enter a valid 10-digit Indian mobile number", { duration: 4000, position: 'top-right' });
       return;
     }
-    if (!recaptchaToken) {
-      toast.error("Please complete the reCAPTCHA", { duration: 4000, position: 'top-right' });
+    if (captchaConfigured === true && !turnstileToken) {
+      toast.error("Please complete the captcha verification", { duration: 4000, position: 'top-right' });
       return;
     }
 
     setIsSubmitting(true);
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      // Primary pipeline: CRM lead (server optionally forwards to Web3Forms
+      // behind WEB3FORMS_FORWARD_ENABLED — no duplicate notifications).
+      const response = await fetch("/api/leads", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...formData,
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
-          subject: "New Consultation Request from Webkaro",
-          from_name: "Webkaro Studio",
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.replace(/\D/g, "").slice(-10),
+          projectDescription: `Quote request from ${formData.name.trim()}`,
+          source,
+          turnstileToken: turnstileToken ?? undefined,
+          website: "",
+          filledAt: mountedAt.current,
+          ...collectAttribution(),
         }),
       });
 
-      const result = await response.json();
-      if (result.success) {
+      const result = (await response.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+      };
+      if (response.ok && result.ok) {
         toast.success("Thank you! We'll contact you within 24 hours.", {
           duration: 5000, position: 'top-right',
               style: { backgroundColor: '#2563EB', color: '#fff' }
         });
         setSubmitted(true);
         setFormData({ name: "", email: "", phone: "" });
-        setRecaptchaToken(null);
+        setTurnstileToken(null);
+        setCaptchaReset((n) => n + 1);
       } else {
-        throw new Error(result.message || "Something went wrong");
+        throw new Error(result.error || "Something went wrong");
       }
     } catch (error) {
-      toast.error("Something went wrong. Please try again.", { duration: 4000, position: 'top-right' });
+      toast.error(error instanceof Error ? error.message : "Something went wrong. Please try again.", { duration: 4000, position: 'top-right' });
     } finally {
       setIsSubmitting(false);
     }
@@ -103,11 +127,7 @@ export default function FinalCTA() {
       <div className="content-container py-20 md:py-32 lg:py-40">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
           {/* Left: Info */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.7 }}
+          <Reveal
             className="lg:sticky lg:top-32"
           >
             <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: '#2563EB' }}>
@@ -144,14 +164,11 @@ export default function FinalCTA() {
                 </Link>
               ))}
             </div>
-          </motion.div>
+          </Reveal>
 
           {/* Right: Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.7, delay: 0.15 }}
+          <Reveal
+            delay={0.15}
           >
             <form onSubmit={handleSubmit} className="p-8 md:p-10 rounded-3xl border" style={{ 
               backgroundColor: '#FFFFFF',
@@ -217,10 +234,10 @@ export default function FinalCTA() {
                   />
                 </div>
                 <div className="flex justify-center pt-2">
-                  <ReCAPTCHA
-                    sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-                    onChange={(token: string | null) => setRecaptchaToken(token)}
-                    theme={theme === "dark" ? "dark" : "light"}
+                  <TurnstileWidget
+                    onVerify={(token) => setTurnstileToken(token)}
+                    onConfigured={(ok) => setCaptchaConfigured(ok)}
+                    resetSignal={captchaReset}
                   />
                 </div>
                 <MagnetizeButton
@@ -246,7 +263,7 @@ export default function FinalCTA() {
                 </p>
               </div>
             </form>
-          </motion.div>
+          </Reveal>
         </div>
       </div>
     </section>

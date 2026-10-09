@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Image from "next/image";
 import { Linkedin, Github } from "lucide-react";
+import { Reveal, RevealGroup } from "@/components/motion/Reveal";
 
 const founders = [
   {
@@ -43,13 +43,7 @@ export default function FoundersSection() {
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: '#FAF8F5' }}>
       <div className="content-container py-20 md:py-32 lg:py-40">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-20 md:mb-28"
-        >
+        <Reveal className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 mb-20 md:mb-28">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: '#2563EB' }}>
               Leadership
@@ -63,19 +57,19 @@ export default function FoundersSection() {
               Four people, one shared obsession: building digital products that outlast trends. We&apos;re generalists with deep specializations, and we bring that rare combination to every engagement.
             </p>
           </div>
-        </motion.div>
+        </Reveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10">
+        <RevealGroup
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10"
+          stagger={0.1}
+        >
           {founders.map((founder, i) => (
-            <motion.div
+            <div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+              data-reveal-item
               className="group"
             >
-              <div className="relative aspect-[3/4] mb-6 rounded-2xl overflow-hidden" style={{ backgroundColor: '#F6F3EE' }}>
+              <div className="portfolio-zoom relative aspect-[3/4] mb-6 rounded-2xl overflow-hidden" style={{ backgroundColor: '#F6F3EE' }}>
                 <Image
                   src={founder.image}
                   alt={founder.name}
@@ -95,17 +89,17 @@ export default function FoundersSection() {
                   {founder.bio}
                 </p>
                 <div className="flex gap-3">
-                  <a href={founder.linkedin} className="w-8 h-8 rounded-lg flex items-center justify-center border transition-colors duration-300 hover:border-[#6E8E59]" style={{ borderColor: 'rgba(0,0,0,0.06)' }} aria-label={`${founder.name} LinkedIn`}>
+                  <a href={founder.linkedin} className="icon-nudge w-8 h-8 rounded-lg flex items-center justify-center border hover:border-[#6E8E59]" style={{ borderColor: 'rgba(0,0,0,0.06)' }} aria-label={`${founder.name} LinkedIn`}>
                     <Linkedin className="w-4 h-4" style={{ color: '#888888' }} />
                   </a>
-                  <a href={founder.github} className="w-8 h-8 rounded-lg flex items-center justify-center border transition-colors duration-300 hover:border-[#6E8E59]" style={{ borderColor: 'rgba(0,0,0,0.06)' }} aria-label={`${founder.name} GitHub`}>
+                  <a href={founder.github} className="icon-nudge w-8 h-8 rounded-lg flex items-center justify-center border hover:border-[#6E8E59]" style={{ borderColor: 'rgba(0,0,0,0.06)' }} aria-label={`${founder.name} GitHub`}>
                     <Github className="w-4 h-4" style={{ color: '#888888' }} />
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </RevealGroup>
       </div>
     </section>
   );

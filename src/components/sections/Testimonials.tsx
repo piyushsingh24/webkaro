@@ -2,37 +2,32 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { Star, ChevronLeft, ChevronRight, Quote } from "lucide-react";
-import { testimonials } from "@/data/testimonials";
+import { testimonials as staticTestimonials, type Testimonial as TestimonialType } from "@/data/testimonials";
+import { Reveal } from "@/components/motion/Reveal";
 
-export default function Testimonials() {
+export default function Testimonials({ testimonials }: { testimonials?: TestimonialType[] }) {
+  const list = testimonials && testimonials.length > 0 ? testimonials : staticTestimonials;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+      setActiveIndex((prev) => (prev + 1) % list.length);
     }, 6000);
     return () => clearInterval(interval);
-  }, [isPaused, testimonials.length]);
+  }, [isPaused, list.length]);
 
-  const prev = () => setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-  const next = () => setActiveIndex((prev) => (prev + 1) % testimonials.length);
+  const prev = () => setActiveIndex((prev) => (prev - 1 + list.length) % list.length);
+  const next = () => setActiveIndex((prev) => (prev + 1) % list.length);
 
-  const t = testimonials[activeIndex];
+  const t = list[activeIndex];
 
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: '#F6F3EE' }}>
       <div className="content-container py-20 md:py-32 lg:py-40">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7 }}
-          className="max-w-3xl mx-auto text-center"
-        >
+        <Reveal className="max-w-3xl mx-auto text-center">
           <div className="flex justify-center gap-1 mb-8">
             {[...Array(5)].map((_, i) => (
               <Star key={i} className="w-5 h-5 fill-current" style={{ color: '#2563EB' }} />
@@ -65,7 +60,7 @@ export default function Testimonials() {
           <div className="flex items-center justify-center gap-4">
             <button
               onClick={prev}
-              className="w-10 h-10 rounded-full flex items-center justify-center border transition-colors duration-300 hover:border-[#6E8E59]"
+              className="icon-nudge w-10 h-10 rounded-full flex items-center justify-center border hover:border-[#6E8E59]"
               style={{ borderColor: 'rgba(0,0,0,0.06)', color: '#1B1B1B' }}
               aria-label="Previous testimonial"
             >
@@ -73,14 +68,14 @@ export default function Testimonials() {
             </button>
             <button
               onClick={next}
-              className="w-10 h-10 rounded-full flex items-center justify-center border transition-colors duration-300 hover:border-[#6E8E59]"
+              className="icon-nudge w-10 h-10 rounded-full flex items-center justify-center border hover:border-[#6E8E59]"
               style={{ borderColor: 'rgba(0,0,0,0.06)', color: '#1B1B1B' }}
               aria-label="Next testimonial"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
           </div>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

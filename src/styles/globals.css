@@ -201,6 +201,136 @@ button:focus-visible {
   animation: fadeInUp 0.8s ease-out forwards;
 }
 
+/* ------------------------------------------------------------------ */
+/* Premium GSAP motion system (WebKaro)                                */
+/*                                                                     */
+/* - Initial hidden states are set via GSAP only (never CSS), so       */
+/*   content stays visible without JS and for reduced-motion users.     */
+/* - This file holds clipping containers + hover micro-interactions.    */
+/* ------------------------------------------------------------------ */
+
+/* Headline line-by-line editorial reveal: each line sits in a clipping
+   mask; GSAP translates the inner line from 110% -> 0. */
+.gsap-line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em; /* keeps descenders (g, y) from clipping */
+  margin-bottom: -0.08em;
+}
+
+.gsap-line-inner {
+  display: block;
+  will-change: transform, opacity;
+}
+
+/* Floating decorative elements (hero) */
+.gsap-deco-dot,
+.gsap-deco-ring {
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Dashboard entrance + idle float wrappers */
+.gsap-dashboard,
+.gsap-float-card {
+  will-change: transform, opacity;
+}
+
+/* Chart bars scale from the baseline */
+.gsap-chart-bar {
+  transform-origin: bottom center;
+  will-change: transform;
+}
+
+/* --- Premium hover interactions (subtle, template-free) --- */
+
+/* Nav links: thin underline reveal */
+.nav-link-underline {
+  position: relative;
+}
+
+.nav-link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  opacity: 0.7;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link-underline:hover::after,
+.nav-link-underline:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Buttons: arrow nudges forward on hover (pair with .btn-arrow markup) */
+.btn-arrow .btn-arrow-icon {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-arrow:hover .btn-arrow-icon,
+.btn-arrow:focus-visible .btn-arrow-icon {
+  transform: translateX(3px);
+}
+
+/* Service cards: gentle lift */
+.service-card-lift {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.service-card-lift:hover {
+  transform: translateY(-3px);
+}
+
+/* Portfolio images: slow, gentle zoom (works with existing markup) */
+.portfolio-zoom img {
+  transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portfolio-zoom:hover img {
+  transform: scale(1.04);
+}
+
+/* Interactive icon buttons: tiny directional nudge */
+.icon-nudge {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.3s ease;
+}
+
+.icon-nudge:hover {
+  transform: translateY(-1px);
+}
+
+/* --- Reduced motion: kill decorative loops, keep content visible --- */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-float,
+  .animate-pulse-subtle {
+    animation: none;
+  }
+
+  .gsap-line-mask {
+    overflow: visible;
+  }
+
+  .btn-arrow:hover .btn-arrow-icon,
+  .btn-arrow:focus-visible .btn-arrow-icon,
+  .service-card-lift:hover,
+  .portfolio-zoom:hover img,
+  .icon-nudge:hover {
+    transform: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 @keyframes float {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }

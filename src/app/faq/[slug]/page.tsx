@@ -1,8 +1,10 @@
-import { faqs } from "@/data/faq";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, ChevronRight, MessageCircle, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { listPublishedFaqs, getPublishedFaq, listPublishedFaqSlugs } from "@/lib/cms/content";
+import { getRedirectTarget } from "@/lib/cms/settings";
+import Markdown from "@/components/ui/markdown";
 
 interface PageProps {
   params: Promise<{
@@ -11,14 +13,13 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
-  return faqs.map((faq) => ({
-    slug: faq.slug,
-  }));
+  const slugs = await listPublishedFaqSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: PageProps) {
   const { slug } = await params;
-  const faq = faqs.find((f) => f.slug === slug);
+  const faq = await getPublishedFaq(slug);
 
   if (!faq) return { title: "FAQ Not Found" };
 
@@ -33,14 +34,17 @@ export async function generateMetadata({ params }: PageProps) {
 
 export default async function FAQDetailPage({ params }: PageProps) {
   const { slug } = await params;
-  const faq = faqs.find((f) => f.slug === slug);
+  const faq = await getPublishedFaq(slug);
 
   if (!faq) {
+    const target = await getRedirectTarget(`/faq/${slug}`);
+    if (target) redirect(target);
     notFound();
   }
 
   // Find other FAQs for the sidebar/bottom
-  const otherFaqs = faqs.filter((f) => f.slug !== slug).slice(0, 3);
+  const all = await listPublishedFaqs();
+  const otherFaqs = all.filter((f) => f.slug !== slug).slice(0, 3);
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-20">
@@ -76,10 +80,12 @@ export default async function FAQDetailPage({ params }: PageProps) {
                 <p className="text-lg md:text-xl text-foreground font-medium mb-8 leading-relaxed opacity-90">
                   {faq.answer}
                 </p>
-                <div className="h-px w-full bg-border/50 my-8" />
-                <div className="text-muted-foreground leading-relaxed text-base md:text-lg space-y-6 whitespace-pre-line font-outfit">
-                  {faq.details}
-                </div>
+                {faq.details ? (
+                  <>
+                    <div className="h-px w-full bg-border/50 my-8" />
+                    <Markdown content={faq.details} />
+                  </>
+                ) : null}
               </div>
             </div>
 

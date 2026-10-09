@@ -1,36 +1,78 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Mail, Phone, MapPin, Send, CheckCircle2, ArrowRight } from "lucide-react";
+import { collectAttribution } from "@/lib/attribution";
+import TurnstileWidget from "@/components/forms/TurnstileWidget";
+
+const PROJECT_TYPE_LABELS: Record<string, string> = {
+  "web-dev": "Web Development",
+  saas: "SaaS MVP",
+  "ui-ux": "UI/UX Design",
+  integration: "API Integration",
+};
 
 export default function ContactClient() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [captchaConfigured, setCaptchaConfigured] = useState<boolean | null>(null);
+  const [captchaReset, setCaptchaReset] = useState(0);
+  // Spam time-trap: bots submit instantly, humans take seconds.
+  const mountedAt = useRef<number>(Date.now());
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
     const formData = new FormData(e.currentTarget);
-    const object = Object.fromEntries(formData);
-    const json = JSON.stringify(object);
+    const name = String(formData.get("name") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const phone = String(formData.get("phone") ?? "").trim();
+    const projectType = String(formData.get("project_type") ?? "web-dev");
+    const message = String(formData.get("message") ?? "").trim();
+
+    if (captchaConfigured === true && !turnstileToken) {
+      setError("Please complete the captcha verification.");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
+      // Primary pipeline: CRM lead (server optionally forwards to Web3Forms
+      // behind WEB3FORMS_FORWARD_ENABLED — no duplicate notifications).
+      const response = await fetch("/api/leads", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: json
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone: phone || undefined,
+          serviceInterest: PROJECT_TYPE_LABELS[projectType] ?? projectType,
+          projectDescription: message,
+          source: "contact-page",
+          turnstileToken: turnstileToken ?? undefined,
+          website: String(formData.get("website") ?? ""),
+          filledAt: mountedAt.current,
+          ...collectAttribution(),
+        }),
       });
-      const result = await response.json();
-      if (result.success) {
+      const result = (await response.json().catch(() => ({}))) as {
+        ok?: boolean;
+        error?: string;
+      };
+      if (response.ok && result.ok) {
         setIsSuccess(true);
+        setTurnstileToken(null);
+        setCaptchaReset((n) => n + 1);
       } else {
-        throw new Error(result.message || "Something went wrong");
+        throw new Error(result.error || "Something went wrong");
       }
-    } catch (error) {
-      console.error(error);
-      alert("Failed to send message. Please try again later.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to send message. Please try again later.");
     } finally {
       setIsSubmitting(false);
     }
@@ -123,17 +165,23 @@ export default function ContactClient() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="p-8 md:p-10 rounded-3xl border space-y-6" style={{ backgroundColor: '#FFFFFF', borderColor: 'rgba(0,0,0,0.06)' }}>
-                <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY} />
+                {/* Honeypot: invisible to humans, bots fill it in. */}
+                <input type="text" name="website" autoComplete="off" tabIndex={-1} aria-hidden="true" className="hidden" />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
                     <label className="block text-[10px] uppercase tracking-widest font-semibold mb-2" style={{ color: '#888888' }}>Full Name</label>
-                    <input required name="name" type="text" placeholder="John Doe" className="w-full h-12 px-5 rounded-2xl border text-sm transition-all duration-300 focus:outline-none" style={{ backgroundColor: '#FAF8F5', borderColor: 'rgba(0,0,0,0.06)', color: '#1B1B1B' }} />
+                    <input required name="name" type="text" placeholder="John Doe" maxLength={150} className="w-full h-12 px-5 rounded-2xl border text-sm transition-all duration-300 focus:outline-none" style={{ backgroundColor: '#FAF8F5', borderColor: 'rgba(0,0,0,0.06)', color: '#1B1B1B' }} />
                   </div>
                   <div>
                     <label className="block text-[10px] uppercase tracking-widest font-semibold mb-2" style={{ color: '#888888' }}>Email Address</label>
-                    <input required name="email" type="email" placeholder="john@example.com" className="w-full h-12 px-5 rounded-2xl border text-sm transition-all duration-300 focus:outline-none" style={{ backgroundColor: '#FAF8F5', borderColor: 'rgba(0,0,0,0.06)', color: '#1B1B1B' }} />
+                    <input required name="email" type="email" placeholder="john@example.com" maxLength={254} className="w-full h-12 px-5 rounded-2xl border text-sm transition-all duration-300 focus:outline-none" style={{ backgroundColor: '#FAF8F5', borderColor: 'rgba(0,0,0,0.06)', color: '#1B1B1B' }} />
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-[10px] uppercase tracking-widest font-semibold mb-2" style={{ color: '#888888' }}>Phone (optional)</label>
+                  <input name="phone" type="tel" placeholder="+91 98765 43210" maxLength={30} className="w-full h-12 px-5 rounded-2xl border text-sm transition-all duration-300 focus:outline-none" style={{ backgroundColor: '#FAF8F5', borderColor: 'rgba(0,0,0,0.06)', color: '#1B1B1B' }} />
                 </div>
 
                 <div>
@@ -148,8 +196,20 @@ export default function ContactClient() {
 
                 <div>
                   <label className="block text-[10px] uppercase tracking-widest font-semibold mb-2" style={{ color: '#888888' }}>Your Message</label>
-                  <textarea required name="message" rows={5} placeholder="Tell us about your project goals..." className="w-full p-5 rounded-2xl border text-sm transition-all duration-300 focus:outline-none resize-none" style={{ backgroundColor: '#FAF8F5', borderColor: 'rgba(0,0,0,0.06)', color: '#1B1B1B' }}></textarea>
+                  <textarea required name="message" rows={5} placeholder="Tell us about your project goals..." maxLength={5000} className="w-full p-5 rounded-2xl border text-sm transition-all duration-300 focus:outline-none resize-none" style={{ backgroundColor: '#FAF8F5', borderColor: 'rgba(0,0,0,0.06)', color: '#1B1B1B' }}></textarea>
                 </div>
+
+                {error && (
+                  <p role="alert" className="text-sm font-medium" style={{ color: '#991B1B' }}>
+                    {error}
+                  </p>
+                )}
+
+                <TurnstileWidget
+                  onVerify={(token) => setTurnstileToken(token)}
+                  onConfigured={(ok) => setCaptchaConfigured(ok)}
+                  resetSignal={captchaReset}
+                />
 
                 <button
                   disabled={isSubmitting}

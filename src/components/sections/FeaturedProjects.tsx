@@ -2,24 +2,18 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
-import { projects } from "@/data/projects";
+import { projects as staticProjects, type Project } from "@/data/projects";
+import { Reveal, RevealGroup } from "@/components/motion/Reveal";
 
-export default function FeaturedProjects() {
-  const featured = projects.slice(0, 3);
+export default function FeaturedProjects({ projects }: { projects?: Project[] }) {
+  const featured = (projects ?? staticProjects).slice(0, 3);
 
   return (
     <section className="relative overflow-hidden" style={{ backgroundColor: '#FAF8F5' }}>
       <div className="content-container py-20 md:py-32 lg:py-40">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.7 }}
-          className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16 md:mb-24"
-        >
+        <Reveal className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-16 md:mb-24">
           <div>
                 <p className="text-xs uppercase tracking-[0.2em] font-semibold mb-4" style={{ color: '#2563EB' }}>
                   Selected Work
@@ -33,21 +27,18 @@ export default function FeaturedProjects() {
               A curated selection of our recent work. Each project is a study in constraint, craft, and measurable outcomes.
             </p>
           </div>
-        </motion.div>
+        </Reveal>
 
         {/* Projects */}
-        <div className="space-y-16 md:space-y-24">
+        <RevealGroup className="space-y-16 md:space-y-24" stagger={0.12} y={30}>
           {featured.map((project, index) => (
-            <motion.div
+            <div
               key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.7, delay: index * 0.1 }}
+              data-reveal-item
               className="group grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center"
             >
               {/* Image */}
-              <div className={`relative overflow-hidden rounded-2xl ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+              <div className={`portfolio-zoom relative overflow-hidden rounded-2xl ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
                 <div className="aspect-[4/3] relative">
                   <Image
                     src={project.thumbnail}
@@ -73,10 +64,10 @@ export default function FeaturedProjects() {
 
                 <div className="flex flex-wrap gap-2 mb-8">
                   {project.tags.map(tag => (
-                    <span 
-                      key={tag} 
+                    <span
+                      key={tag}
                       className="px-3 py-1 rounded-full text-[10px] uppercase tracking-widest font-semibold"
-                      style={{ 
+                      style={{
                         backgroundColor: '#F6F3EE',
                         color: '#656565'
                       }}
@@ -88,34 +79,28 @@ export default function FeaturedProjects() {
 
                 <Link
                   href={`/projects/${project.slug}`}
-                  className="inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 hover:gap-3"
+                  className="btn-arrow inline-flex items-center gap-2 text-sm font-semibold transition-all duration-300 hover:gap-3"
                   style={{ color: '#2563EB' }}
                 >
                   View Project
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="btn-arrow-icon w-4 h-4" />
                 </Link>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </div>
+        </RevealGroup>
 
         {/* View All */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="mt-16 md:mt-24 text-center"
-        >
+        <Reveal className="mt-16 md:mt-24 text-center">
           <Link
               href="/projects"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-white font-medium transition-all duration-300 hover:translate-y-[-1px]"
+              className="btn-arrow inline-flex items-center gap-2 px-8 py-4 rounded-2xl text-white font-medium transition-all duration-300 hover:translate-y-[-1px]"
               style={{ backgroundColor: '#2563EB' }}
             >
             View All Projects
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="btn-arrow-icon w-4 h-4" />
           </Link>
-        </motion.div>
+        </Reveal>
       </div>
     </section>
   );

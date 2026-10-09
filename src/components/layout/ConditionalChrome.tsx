@@ -11,9 +11,10 @@ import GlobalFloatingButton from "@/components/ui/global-floating-button";
 /**
  * Routes listed here will render WITHOUT the global Navbar, Footer,
  * CustomCursor, ChatBot or GlobalFloatingButton. Perfect for immersive
- * cinematic / standalone experience pages.
+ * cinematic / standalone experience pages — and for the admin dashboard,
+ * which has its own shell and must never show public site chrome.
  */
-const NO_CHROME_ROUTES = ["/cinematic"];
+const NO_CHROME_ROUTES = ["/cinematic", "/admin"];
 
 export default function ConditionalChrome({
   children,

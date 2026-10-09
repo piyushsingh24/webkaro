@@ -1,7 +1,9 @@
-import { services } from "@/data/services";
+import { listPublishedServices } from "@/lib/cms/services";
 import FinalCTA from "@/components/sections/FinalCTA";
 import { Metadata } from "next";
+import { Suspense } from "react";
 import ServicesClient from "./ServicesClient";
+import ServicesSkeleton from "./_components/ServicesSkeleton";
 
 export const metadata: Metadata = {
   title: "Specialized Engineering Services | Webkaro",
@@ -19,8 +21,16 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <div className="pt-36 md:pt-44 pb-16 md:pb-24">
-      <ServicesClient services={services} />
+      <Suspense fallback={<ServicesSkeleton />}>
+        <ServicesList />
+      </Suspense>
       <FinalCTA />
     </div>
   );
+}
+
+async function ServicesList() {
+  // Published services from the CMS (static fallback when DB is unconfigured).
+  const services = await listPublishedServices();
+  return <ServicesClient services={services} />;
 }

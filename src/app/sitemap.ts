@@ -1,11 +1,14 @@
 import { MetadataRoute } from 'next';
-import { blogs } from '@/data/blogs';
-import { services } from '@/data/services';
+import { listPublishedServiceSlugs } from '@/lib/cms/services';
+import { listPublishedProjectSlugs } from '@/lib/cms/projects';
+import { listPublishedPosts } from '@/lib/cms/posts';
+import { listPublishedFaqSlugs } from '@/lib/cms/content';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://www.webkaro.in';
 
-  // Core pages
+  // Core pages (static — note: /cinematic is intentionally NOT indexed
+  // as an immersive page, but the previous sitemap listed it; preserved).
   const corePages = [
     '',
     '/about',
@@ -22,7 +25,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/compliance',
     '/faq',
     '/location/delhi-wazirabad',
-    '/location/delhi-wazirabad',
     '/cinematic',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
@@ -31,23 +33,43 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '' ? 1 : 0.8,
   }));
 
-  // Service pages (Dynamic)
-  const servicePages = services.map((service) => ({
-    url: `${baseUrl}/services/${service.id}`,
+  // Published content only — drafts never appear here.
+  const [serviceSlugs, projectSlugs, posts, faqSlugs] = await Promise.all([
+    listPublishedServiceSlugs(),
+    listPublishedProjectSlugs(),
+    listPublishedPosts(),
+    listPublishedFaqSlugs(),
+  ]);
+
+  const servicePages = serviceSlugs.map((slug) => ({
+    url: `${baseUrl}/services/${slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
-    priority: 0.9, // Higher priority for service pages
+    priority: 0.9,
   }));
 
-  // Blog pages (Dynamic)
-  const blogPages = blogs.map((blog) => ({
-    url: `${baseUrl}/blogs/${blog.slug}`,
-    lastModified: new Date(blog.date),
+  const projectPages = projectSlugs.map((slug) => ({
+    url: `${baseUrl}/projects/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }));
+
+  const blogPages = posts.map((post) => ({
+    url: `${baseUrl}/blogs/${post.slug}`,
+    lastModified: new Date(post.updatedISO),
     changeFrequency: 'weekly' as const,
     priority: 0.7,
   }));
 
-  // Category pages
+  const faqPages = faqSlugs.map((slug) => ({
+    url: `${baseUrl}/faq/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly' as const,
+    priority: 0.5,
+  }));
+
+  // Category pages (static hub routes)
   const categoryRoutes = [
     '/blogs/frontend',
     '/blogs/backend',
@@ -65,5 +87,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.6,
   }));
 
-  return [...corePages, ...servicePages, ...blogPages, ...categoryRoutes];
+  return [...corePages, ...servicePages, ...projectPages, ...blogPages, ...faqPages, ...categoryRoutes];
 }

@@ -1,14 +1,21 @@
-import { services, getServiceById } from "@/data/services";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Check, Clock, Tag, ArrowRight, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import FinalCTA from "@/components/sections/FinalCTA";
 import { ServiceIcon } from "@/components/ui/service-icon";
 import type { Metadata } from "next";
+import {
+  getPublishedService,
+  listPublishedServices,
+  listPublishedServiceSlugs,
+} from "@/lib/cms/services";
+import { listFaqsForService } from "@/lib/cms/content";
+import { getRedirectTarget } from "@/lib/cms/settings";
 
-/* ---- Static params for all 6 service routes ---- */
-export function generateStaticParams() {
-  return services.map((s) => ({ slug: s.id }));
+/* ---- Static params for published service routes (DB, static fallback) ---- */
+export async function generateStaticParams() {
+  const slugs = await listPublishedServiceSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 /* ---- Dynamic metadata ---- */
@@ -18,7 +25,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = getServiceById(slug);
+  const service = await getPublishedService(slug);
   if (!service) return { title: "Service Not Found" };
 
   const title = service.seoTitle || `${service.title} | WebKaro`;
@@ -54,11 +61,25 @@ export default async function ServiceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = getServiceById(slug);
-  if (!service) notFound();
+  const service = await getPublishedService(slug);
+  if (!service) {
+    // Retired slug with a registered redirect (slug changes in the CMS).
+    const target = await getRedirectTarget(`/services/${slug}`);
+    if (target) redirect(target);
+    notFound();
+  }
+
+  /* FAQs: embedded legacy entries, else CMS-linked FAQs for this service. */
+  const relatedFaqs =
+    service.dbId != null ? await listFaqsForService(service.dbId) : [];
+  const faqs =
+    service.faqs && service.faqs.length > 0
+      ? service.faqs
+      : relatedFaqs.map((f) => ({ question: f.question, answer: f.answer }));
 
   /* Other services for the "Explore more" strip */
-  const others = services.filter((s) => s.id !== service.id).slice(0, 3);
+  const all = await listPublishedServices();
+  const others = all.filter((s) => s.id !== service.id).slice(0, 3);
 
   return (
     <div className="pt-36 md:pt-44 pb-0">
@@ -96,12 +117,16 @@ export default async function ServiceDetailPage({
 
           {/* Price & Timeline chips */}
           <div className="flex flex-wrap items-center gap-4 mt-8">
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/25 text-primary font-bold text-sm">
-              <Tag className="w-4 h-4" /> {service.price}
-            </span>
-            <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground/5 border border-border text-foreground/70 font-semibold text-sm">
-              <Clock className="w-4 h-4" /> {service.timeline}
-            </span>
+            {service.price ? (
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 border border-primary/25 text-primary font-bold text-sm">
+                <Tag className="w-4 h-4" /> {service.price}
+              </span>
+            ) : null}
+            {service.timeline ? (
+              <span className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground/5 border border-border text-foreground/70 font-semibold text-sm">
+                <Clock className="w-4 h-4" /> {service.timeline}
+              </span>
+            ) : null}
           </div>
         </div>
       </section>
@@ -281,14 +306,14 @@ export default async function ServiceDetailPage({
       )}
 
       {/* ---- FAQ ---- */}
-      {service.faqs && (
+      {faqs.length > 0 && (
         <section className="px-6 mb-20 md:mb-28">
           <div className="max-w-5xl mx-auto">
             <h2 className="text-3xl md:text-4xl font-black text-foreground font-outfit mb-12 text-center">
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
-              {service.faqs.map((faq, i) => (
+              {faqs.map((faq, i) => (
                 <details
                   key={i}
                   className="group border border-border rounded-2xl p-6 bg-card dark:bg-white/[0.01] open:bg-primary/5 open:border-primary/20 transition-all"
@@ -371,7 +396,7 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
-      <FinalCTA />
+      <FinalCTA source="service-detail" />
     </div>
   );
 }
