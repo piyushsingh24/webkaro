@@ -364,10 +364,20 @@ export const authorStore = {
     }),
   findById: (id: string) => prisma.author.findUnique({ where: { id } }),
   findBySlug: (_slug: string) => Promise.resolve(null),
-  create: (data: { name: string; role?: string; avatar?: string }) =>
-    prisma.author.create({ data }),
-  update: (id: string, data: Partial<{ name: string; role?: string; avatar?: string }>) =>
-    prisma.author.update({ where: { id }, data }),
+  create: (data: { name: string; role?: string; avatar?: string; slug?: string }) => {
+    // Author has no slug column — drop the factory-generated slug.
+    const { slug: _slug, ...rest } = data;
+    void _slug;
+    return prisma.author.create({ data: { ...rest } });
+  },
+  update: (
+    id: string,
+    data: Partial<{ name: string; role?: string; avatar?: string; slug?: string }>
+  ) => {
+    const { slug: _slug, ...rest } = data;
+    void _slug;
+    return prisma.author.update({ where: { id }, data: { ...rest } });
+  },
   remove: async (id: string) => {
     const used = await prisma.blogPost.count({ where: { authorId: id } });
     if (used > 0) {

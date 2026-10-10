@@ -23,6 +23,7 @@ import {
   kvArrayToLines,
   submitAdminForm,
 } from "../../_components/form-utils";
+import ImageField from "../../_components/ImageField";
 
 type Props = {
   mode: "create" | "edit";
@@ -86,6 +87,8 @@ export default function ProjectForm({ mode, id, canPublish, initial }: Props) {
     register,
     handleSubmit,
     setError,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({ defaultValues: toFormValues(initial) });
 
@@ -218,8 +221,11 @@ export default function ProjectForm({ mode, id, canPublish, initial }: Props) {
                 Media & SEO
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Field label="Thumbnail URL">
-                  <TextInput {...register("thumbnail")} />
+                <Field label="Thumbnail">
+                  <ImageField
+                    value={watch("thumbnail") ?? ""}
+                    onChange={(v) => setValue("thumbnail", v)}
+                  />
                 </Field>
                 <Field label="Image alt text">
                   <TextInput {...register("imageAlt")} />
@@ -227,8 +233,11 @@ export default function ProjectForm({ mode, id, canPublish, initial }: Props) {
                 <Field label="Live demo URL">
                   <TextInput {...register("demoUrl")} />
                 </Field>
-                <Field label="OG image URL">
-                  <TextInput {...register("ogImage")} />
+                <Field label="OG image">
+                  <ImageField
+                    value={watch("ogImage") ?? ""}
+                    onChange={(v) => setValue("ogImage", v)}
+                  />
                 </Field>
               </div>
               <Field label="SEO title">

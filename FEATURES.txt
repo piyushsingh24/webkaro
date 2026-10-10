@@ -1,0 +1,127 @@
+================================================================================
+ WEBKARO — IMPLEMENTED FEATURES (as of 10 October 2026)
+ Companion to WEBSITE-DOCUMENTATION.txt (architecture + routes).
+================================================================================
+
+--------------------------------------------------------------------------------
+ A. PUBLIC WEBSITE
+--------------------------------------------------------------------------------
+ [A1] Homepage (11 sections, CMS-driven, GSAP-animated)
+      Hero with line-mask headline reveal + live dashboard illustration
+      (animated chart bars, floating Growth/Status cards, count-up trust row);
+      Services, Featured Projects, Process timeline, Why Webkaro, Statistics,
+      Founders, Testimonials carousel, Tech stack, FAQ preview, Final CTA.
+      Headline, CTAs, featured picks and section visibility/order editable
+      in Admin → Settings (static fallbacks when DB is unconfigured).
+ [A2] Services — 29 detail pages (/services/[slug]) with features,
+      deliverables, tech stack, process steps, case study, related FAQs,
+      SEO metadata + canonical URLs. Listing with category grouping.
+ [A3] Projects — 9 case studies (/projects/[slug]) converted to server
+      components with metadata; listing page.
+ [A4] Blogs — index + 8 static category hubs + article pages with Markdown
+      body, related posts, Article JSON-LD, canonical/OG/Twitter metadata.
+ [A5] FAQs — index + 10 answer pages with metadata + canonical URLs.
+ [A6] Contact page + FinalCTA quote forms (name/email/phone) → CRM-first
+      submit to /api/leads: honeypot + 2.5s time-trap + IP rate limiting +
+      Cloudflare Turnstile CAPTCHA + server zod validation + toasts.
+      Legacy Web3Forms forward kept behind WEB3FORMS_FORWARD_ENABLED=false.
+ [A7] AI chatbot (Gemini, /api/chat) + floating contact/WhatsApp buttons
+      (WhatsApp clicks send a logs-only beacon — a click is NOT a lead).
+ [A8] SEO plumbing — /sitemap.xml (published content only), /robots.txt,
+      per-page canonical URLs, Organization/WebSite/LocalBusiness JSON-LD,
+      admin area carries noindex throughout.
+ [A9] Design system — cream #FAF8F5, Playfair Display + Inter, green/blue
+      accents, card system, light/dark tokens, mobile drawer, GSAP motion
+      with reduced-motion support.
+
+--------------------------------------------------------------------------------
+ B. ADMIN PANEL (/admin — ADMIN-guarded, noindex, no public chrome)
+--------------------------------------------------------------------------------
+ [B1] Sign-in (/admin/login) — rate-limited (5/10 min), generic errors,
+      open-redirect-safe callbacks, sign-out clears session cookie.
+ [B2] Overview — user cards, Leads Snapshot (totals, NEW/qualified/
+      proposals/won, follow-ups due, recent enquiries), Administrators list.
+ [B3] Users (NEW) — ADMIN-only list + create form (name/email/role/
+      password-confirm, 12+ char policy, duplicate → 409). Passwords
+      Argon2id-hashed server-side, never returned. Verified 13/13 live:
+      401 unauth, 403 editor, 409/422 validation, both roles can sign in.
+ [B4] Services/Projects/Blogs/Testimonials/FAQs — search, status filter,
+      pagination, create/edit forms (RHF+zod), delete confirms, toasts,
+      empty/loading/DB-offline states.
+ [B5] Blog taxonomy — Categories (+hub-slug mapping), Tags, Authors managers.
+      FIXED: author creation 500 (stray slug field stripped); tags/categories
+      verified 201 end-to-end. Author avatars support Cloudinary upload [E1].
+ [B5b] Rich-text editor (NEW) — blog content + FAQ details use a Markdown
+      WYSIWYG editor (bold, headings, lists, links, code, Cloudinary image
+      button); existing Markdown loads unchanged; public rendering stays
+      XSS-safe (raw HTML never rendered).
+ [B6] Publishing workflow — DRAFT/PUBLISHED/ARCHIVED, scheduled publish
+      dates (future posts stay hidden until reached), protected draft preview
+      (/admin/blogs/[id]/preview, ADMIN + noindex + banner), SEO publishing
+      checklist (warnings + slug availability + internal-link verification).
+ [B7] Settings — business details, hero copy/CTAs, socials, featured
+      selections, homepage section visibility/order; Redirects manager
+      (loop-checked) incl. auto-redirects on published slug changes.
+ [B8] Leads CRM — list (search/status/service/source/sort/paginate), detail
+      (contact, attribution, activity timeline, notes, follow-up date,
+      assignment, edit, delete), status lifecycle NEW→WON/LOST.
+      EDITOR: notes/follow-ups/edits. ADMIN-only: status/assign/delete.
+
+--------------------------------------------------------------------------------
+ C. BACKEND & SECURITY
+--------------------------------------------------------------------------------
+ [C1] NextAuth.js v4 Credentials + Argon2id, 8h JWT in HTTP-only cookies.
+      Roles ADMIN/EDITOR baked into JWT (re-login picks up changes).
+ [C2] Prisma 6.19.3 + MySQL (16 tables + _prisma_migrations). Additive
+      migrations only (admin_panel_setup, add_lead_crm). Singleton client.
+      One-time scripts/create-admin.mjs (refuses if admin exists).
+ [C3] Server-side authorization on EVERY admin handler (requireAdmin/
+      requireEditor); mass assignment impossible (discriminated/strict
+      schemas); slug auto-suffixing; publish transitions stamp publishedAt;
+      retired URLs revalidated; generic public errors (no stack traces).
+ [C4] Lead intake guards — per-IP rate limit, origin allowlist, honeypot +
+      time-trap silent success, email-or-phone required, 24h dedup (same
+      contact+service reuses lead + NOTE activity).
+ [C5] Fail-open notifications — Resend-over-REST (no SDK): inbox alert +
+      optional visitor ack; skipped+logged without keys; email failure never
+      invalidates a saved lead.
+ [C6] Aiven free MySQL: DATABASE_URL uses ?connection_limit=5 and NO
+      ssl-mode param (Prisma manages TLS; ssl-mode breaks the handshake).
+      .env.production.local staged for Vercel paste (git-ignored).
+
+--------------------------------------------------------------------------------
+ D. VERIFIED (executed, local MySQL unless noted)
+--------------------------------------------------------------------------------
+ tsc clean · production build green · prisma validate/generate · 102-row
+ import (0 failed) · login/logout/rate-limit matrix · CMS CRUD + 401/403
+ matrix · EDITOR vs ADMIN matrix · lead intake matrix (200/422/429/dedup/
+ timeline/status/note/follow-up/delete) · Phase 4 blog matrix 26/26
+ (draft privacy, schedule gate, preview auth, publish/unpublish churn,
+ JSON-LD, redirect chain + loop guard) · Users matrix 13/13 · taxonomy
+ 201s · sitemap/list/detail smoke tests. All temp accounts, test leads,
+ posts and scripts removed afterwards (only admin@webkaro.in remains).
+ NOT yet executed: Resend delivery (no key provided); manual browser form
+ submits (API-identical payloads tested); editor toolbar + Cloudinary upload
+ click-through in a real browser (component renders; upload path needs your
+ Cloudinary preset configured — see E1 setup below).
+
+--------------------------------------------------------------------------------
+ E. MEDIA & CAPTCHA ADD-ONS
+--------------------------------------------------------------------------------
+ [E1] Cloudinary image upload — cover/OG/thumbnail/avatar fields accept pasted
+      URLs AND one-click uploads (unsigned preset, 10 MB image-only guard,
+      preview + remove). Editor toolbar has an image button inserting
+      Markdown. Needs: NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME +
+      NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET — create in Cloudinary Dashboard →
+      Settings → Upload → Upload presets → Add (mode Unsigned, folder
+      webkaro). Without keys, URL paste still works (hint shown in UI).
+ [E2] Cloudflare Turnstile CAPTCHA — replaced Google reCAPTCHA (test keys)
+      on FinalCTA + contact form. Server verifies via CLOUDFLARE_SECRET_KEY
+      (strict when set, fail-open otherwise); site key served via
+      /api/captcha/sitekey (public by design). Verified: sitekey endpoint
+      live, missing/bad tokens → 422 when enforced. Valid-token path needs
+      one manual browser submit (unsolvable by automation by design).
+
+================================================================================
+ END OF FEATURES
+================================================================================

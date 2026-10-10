@@ -11,6 +11,7 @@ import {
   CircleHelp,
   Settings,
   Inbox,
+  Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -23,6 +24,7 @@ const links = [
   { href: "/admin/testimonials", label: "Testimonials", icon: Star },
   { href: "/admin/faqs", label: "FAQs", icon: CircleHelp },
   { href: "/admin/settings", label: "Settings", icon: Settings },
+  { href: "/admin/users", label: "Users", icon: Users },
 ];
 
 const soon = ["SEO"];

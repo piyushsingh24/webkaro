@@ -465,6 +465,17 @@
              without loading.tsx 404 correctly) — blogs/services skeletons
              moved to in-page Suspense fallbacks, segment files removed.
              Matrix re-run after fixes: 26/26 PASS.
+  Users    ADMIN-only /admin/users list + create (role select, 12+ char
+             password, Argon2id, 409/422/401/403 matrix 13/13 live).
+  Taxonomy Author creation 500 — same stray-slug bug class as testimonials;
+             stripped in authorStore; tags/categories/authors verified 201.
+  Media    Cloudinary unsigned uploads (ImageField + editor toolbar button,
+             10 MB guard, preview/remove; URL paste always works; keys:
+             NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME/_UPLOAD_PRESET).
+  Editor   @uiw/react-md-editor WYSIWYG for blog content + FAQ details
+             (Markdown in/out, existing content untouched, XSS-safe render).
+  Captcha  Google reCAPTCHA (test keys) → Cloudflare Turnstile on FinalCTA +
+             contact form (strict verify when CLOUDFLARE_SECRET_KEY set).
 
 --------------------------------------------------------------------------------
  15. ENVIRONMENT VARIABLES (see .env.example — PLACEHOLDERS ONLY)

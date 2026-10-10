@@ -6,6 +6,7 @@ import { Plus } from "lucide-react";
 import { slugify } from "@/lib/cms/db";
 import { PageHeader, Card, Field, TextInput, Textarea } from "./ui";
 import { DeleteButton } from "./controls";
+import ImageField from "./ImageField";
 
 export type TaxField = {
   key: string;
@@ -13,6 +14,8 @@ export type TaxField = {
   placeholder?: string;
   textarea?: boolean;
   number?: boolean;
+  /** Render the Cloudinary image field instead of a text input. */
+  image?: boolean;
 };
 
 /**
@@ -110,7 +113,12 @@ export default function TaxonomyManager({
           <form onSubmit={create} className="space-y-4">
             {fields.map((f) => (
               <Field key={f.key} label={f.label}>
-                {f.textarea ? (
+                {f.image ? (
+                  <ImageField
+                    value={form[f.key] ?? ""}
+                    onChange={(v) => set(f.key, v)}
+                  />
+                ) : f.textarea ? (
                   <Textarea
                     rows={2}
                     value={form[f.key] ?? ""}

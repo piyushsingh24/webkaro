@@ -15,6 +15,7 @@ import {
   GhostButton,
 } from "../../_components/ui";
 import { submitAdminForm } from "../../_components/form-utils";
+import RichTextEditor from "../../_components/RichTextEditor";
 
 type ServiceOption = { id: string; title: string };
 
@@ -53,6 +54,8 @@ export default function FaqForm({ mode, id, services, canPublish, initial }: Pro
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
@@ -122,8 +125,12 @@ export default function FaqForm({ mode, id, services, canPublish, initial }: Pro
           <Field label="Answer" hint="Short answer shown in accordions." error={errors.answer?.message}>
             <Textarea rows={3} invalid={Boolean(errors.answer)} {...register("answer", { required: "Answer is required." })} />
           </Field>
-          <Field label="Details (Markdown, optional)" hint="Long answer on the detail page. Raw HTML is never rendered.">
-            <Textarea rows={8} {...register("details")} className="font-mono text-[13px]" />
+          <Field label="Details (optional)" hint="Rich text shown on the detail page.">
+            <RichTextEditor
+              height={300}
+              value={watch("details") ?? ""}
+              onChange={(v) => setValue("details", v)}
+            />
           </Field>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <Field label="Category (optional)">

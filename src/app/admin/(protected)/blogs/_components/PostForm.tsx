@@ -19,6 +19,8 @@ import {
 } from "../../_components/ui";
 import { submitAdminForm } from "../../_components/form-utils";
 import SeoChecklist from "./SeoChecklist";
+import ImageField from "../../_components/ImageField";
+import RichTextEditor from "../../_components/RichTextEditor";
 
 type Option = { id: string; name: string };
 
@@ -57,6 +59,7 @@ export default function PostForm({
     handleSubmit,
     setError,
     watch,
+    setValue,
     formState: { errors },
     // Input type (pre-defaults) vs output type differ due to schema defaults.
   } = useForm<z.input<typeof blogPostSchema>, unknown, BlogPostInput>({
@@ -146,13 +149,10 @@ export default function PostForm({
               <Field label="Excerpt" hint="Listing cards + meta description fallback." error={err("excerpt")}>
                 <Textarea rows={3} invalid={Boolean(err("excerpt"))} {...register("excerpt")} />
               </Field>
-              <Field label="Content (Markdown)" error={err("content")}>
-                <Textarea
-                  rows={18}
-                  invalid={Boolean(err("content"))}
-                  {...register("content")}
-                  className="font-mono text-[13px]"
-                  placeholder={"## Heading\n\nWrite in Markdown. **Bold**, lists, `code`, links all supported."}
+              <Field label="Content" hint="Rich text with headings, bold, lists, links and images. Stored as Markdown." error={err("content")}>
+                <RichTextEditor
+                  value={watch("content") ?? ""}
+                  onChange={(v) => setValue("content", v, { shouldValidate: true })}
                 />
               </Field>
             </Card>
@@ -162,14 +162,20 @@ export default function PostForm({
                 SEO & media
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Field label="Cover image URL">
-                  <TextInput {...register("coverImage")} />
+                <Field label="Cover image">
+                  <ImageField
+                    value={watch("coverImage") ?? ""}
+                    onChange={(v) => setValue("coverImage", v, { shouldValidate: true })}
+                  />
                 </Field>
                 <Field label="Image alt text">
                   <TextInput {...register("imageAlt")} />
                 </Field>
-                <Field label="OG image URL">
-                  <TextInput {...register("ogImage")} />
+                <Field label="OG image">
+                  <ImageField
+                    value={watch("ogImage") ?? ""}
+                    onChange={(v) => setValue("ogImage", v, { shouldValidate: true })}
+                  />
                 </Field>
                 <Field label="Canonical URL" hint="Only when republishing duplicate content.">
                   <TextInput {...register("canonicalUrl")} placeholder="/blogs/slug" />

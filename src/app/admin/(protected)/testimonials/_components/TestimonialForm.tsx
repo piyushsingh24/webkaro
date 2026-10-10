@@ -15,6 +15,7 @@ import {
   GhostButton,
 } from "../../_components/ui";
 import { submitAdminForm } from "../../_components/form-utils";
+import ImageField from "../../_components/ImageField";
 
 type Props = {
   mode: "create" | "edit";
@@ -54,6 +55,8 @@ export default function TestimonialForm({ mode, id, canPublish, initial }: Props
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     defaultValues: {
@@ -133,8 +136,11 @@ export default function TestimonialForm({ mode, id, canPublish, initial }: Props
           <Field label="Quote" error={errors.content?.message}>
             <Textarea rows={4} invalid={Boolean(errors.content)} {...register("content", { required: "Quote is required." })} />
           </Field>
-          <Field label="Avatar URL (optional)">
-            <TextInput {...register("avatar")} />
+          <Field label="Avatar (optional)">
+            <ImageField
+              value={watch("avatar") ?? ""}
+              onChange={(v) => setValue("avatar", v)}
+            />
           </Field>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <Field label="Status" hint={canPublish ? undefined : "Editors can only save drafts."}>

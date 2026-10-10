@@ -23,6 +23,7 @@ import {
   parseJsonArray,
   submitAdminForm,
 } from "../../_components/form-utils";
+import ImageField from "../../_components/ImageField";
 
 type Category = { id: string; name: string };
 
@@ -116,6 +117,8 @@ export default function ServiceForm({
     register,
     handleSubmit,
     setError,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<FormValues>({
     // Field-level validity is enforced on submit via serviceSchema.
@@ -292,14 +295,20 @@ export default function ServiceForm({
                 SEO & image
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <Field label="Featured image URL">
-                  <TextInput {...register("featuredImage")} placeholder="/images/... or https://..." />
+                <Field label="Featured image">
+                  <ImageField
+                    value={watch("featuredImage") ?? ""}
+                    onChange={(v) => setValue("featuredImage", v)}
+                  />
                 </Field>
                 <Field label="Image alt text">
                   <TextInput {...register("imageAlt")} />
                 </Field>
-                <Field label="OG image URL">
-                  <TextInput {...register("ogImage")} placeholder="Defaults to site logo." />
+                <Field label="OG image">
+                  <ImageField
+                    value={watch("ogImage") ?? ""}
+                    onChange={(v) => setValue("ogImage", v)}
+                  />
                 </Field>
               </div>
               <Field label="SEO title" hint="Defaults to “Title | WebKaro”.">

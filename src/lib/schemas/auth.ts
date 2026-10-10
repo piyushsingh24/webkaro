@@ -25,3 +25,14 @@ export const adminCreateSchema = z.object({
     .max(128, "ADMIN_PASSWORD must be at most 128 characters."),
   name: z.string().trim().max(100).optional(),
 });
+
+/**
+ * Team-member creation validation — used by POST /api/admin/users.
+ * Same password policy as the setup script, plus an explicit role.
+ */
+export const adminUserCreateSchema = adminCreateSchema.extend({
+  name: z.string().trim().min(1, "Name is required.").max(100),
+  role: z.enum(["ADMIN", "EDITOR"]),
+});
+
+export type AdminUserCreateInput = z.infer<typeof adminUserCreateSchema>;
