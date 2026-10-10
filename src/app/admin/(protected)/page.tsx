@@ -252,7 +252,7 @@ export default async function AdminOverviewPage() {
         </div>
       </div>
 
-      {/* Setup checklist */}
+      {/* Setup checklist
       <div
         className="p-6 md:p-8 rounded-2xl border"
         style={{ backgroundColor: "#FFFFFF", borderColor: "rgba(0,0,0,0.06)" }}
@@ -283,7 +283,7 @@ export default async function AdminOverviewPage() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
